@@ -10,8 +10,7 @@ using System.Data.SQLite;
 namespace Filyama
 {
     public partial class Form1 : Form
-    {        
-        SQLiteConnection connectionLocal;
+    {                
         public Form1()
         {
             InitializeComponent();
@@ -19,19 +18,19 @@ namespace Filyama
             this.Text = String.Format("Filyama - {0}", version);
             //Добавление Категорий
             TreeNode mainNode=treeCategory.Nodes.Add("Все категории");            
-            connectionLocal = new SQLiteConnection("Data Source=main.db; Version=3;");
+            Common.connectionLocal = new SQLiteConnection("Data Source=main.db; Version=3;");
             try
             {
-                connectionLocal.Open();
+                Common.connectionLocal.Open();
             }
             catch (SQLiteException ex)
             {
                 Console.WriteLine(ex.Message);
             }
             //Инициализация соединения с локальной базой
-            if (connectionLocal.State == ConnectionState.Open)
+            if (Common.connectionLocal.State == ConnectionState.Open)
             {
-                SQLiteCommand cmd = connectionLocal.CreateCommand();
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
                 /*string sql_command_create = "DROP TABLE IF EXISTS films;"
                   + "CREATE TABLE films("
                   + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -84,7 +83,17 @@ namespace Filyama
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            connectionLocal.Dispose();
+            Common.connectionLocal.Dispose();
+        }
+
+        private void buttonAddCategory_Click(object sender, EventArgs e)
+        {
+            FormAddCategory formAddCategory=new FormAddCategory();
+            DialogResult dr = formAddCategory.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                MessageBox.Show("Create");
+            }
         }
     }
 }

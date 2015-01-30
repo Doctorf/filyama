@@ -43,10 +43,17 @@
             this.buttonAddCategory = new System.Windows.Forms.Button();
             this.treeCategory = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.labelSerials = new System.Windows.Forms.Label();
+            this.buttonDeleteSerials = new System.Windows.Forms.Button();
+            this.buttonEditSerials = new System.Windows.Forms.Button();
+            this.buttonAddSerials = new System.Windows.Forms.Button();
+            this.treeViewListSerials = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pushToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,10 +66,10 @@
             this.toolStripButtonElementAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
-            this.pushToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -125,21 +132,25 @@
             // 
             this.ColumntCategory.HeaderText = "Category";
             this.ColumntCategory.Name = "ColumntCategory";
+            this.ColumntCategory.ReadOnly = true;
             // 
             // ColumntExistImage
             // 
             this.ColumntExistImage.HeaderText = "Image";
             this.ColumntExistImage.Name = "ColumntExistImage";
+            this.ColumntExistImage.ReadOnly = true;
             // 
             // ColumnId
             // 
             this.ColumnId.HeaderText = "№";
             this.ColumnId.Name = "ColumnId";
+            this.ColumnId.ReadOnly = true;
             // 
             // ColumnNameFilm
             // 
             this.ColumnNameFilm.HeaderText = "Название";
             this.ColumnNameFilm.Name = "ColumnNameFilm";
+            this.ColumnNameFilm.ReadOnly = true;
             // 
             // labelCategory
             // 
@@ -173,6 +184,7 @@
             this.buttonAddCategory.Size = new System.Drawing.Size(25, 25);
             this.buttonAddCategory.TabIndex = 1;
             this.buttonAddCategory.UseVisualStyleBackColor = true;
+            this.buttonAddCategory.Click += new System.EventHandler(this.buttonAddCategory_Click);
             // 
             // treeCategory
             // 
@@ -183,6 +195,11 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.labelSerials);
+            this.tabPage2.Controls.Add(this.buttonDeleteSerials);
+            this.tabPage2.Controls.Add(this.buttonEditSerials);
+            this.tabPage2.Controls.Add(this.buttonAddSerials);
+            this.tabPage2.Controls.Add(this.treeViewListSerials);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -190,6 +207,46 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabTVShows";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // labelSerials
+            // 
+            this.labelSerials.AutoSize = true;
+            this.labelSerials.Location = new System.Drawing.Point(172, 16);
+            this.labelSerials.Name = "labelSerials";
+            this.labelSerials.Size = new System.Drawing.Size(52, 13);
+            this.labelSerials.TabIndex = 4;
+            this.labelSerials.Text = "Сериалы";
+            // 
+            // buttonDeleteSerials
+            // 
+            this.buttonDeleteSerials.Location = new System.Drawing.Point(76, 13);
+            this.buttonDeleteSerials.Name = "buttonDeleteSerials";
+            this.buttonDeleteSerials.Size = new System.Drawing.Size(25, 25);
+            this.buttonDeleteSerials.TabIndex = 3;
+            this.buttonDeleteSerials.UseVisualStyleBackColor = true;
+            // 
+            // buttonEditSerials
+            // 
+            this.buttonEditSerials.Location = new System.Drawing.Point(45, 12);
+            this.buttonEditSerials.Name = "buttonEditSerials";
+            this.buttonEditSerials.Size = new System.Drawing.Size(25, 25);
+            this.buttonEditSerials.TabIndex = 2;
+            this.buttonEditSerials.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddSerials
+            // 
+            this.buttonAddSerials.Location = new System.Drawing.Point(14, 13);
+            this.buttonAddSerials.Name = "buttonAddSerials";
+            this.buttonAddSerials.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddSerials.TabIndex = 1;
+            this.buttonAddSerials.UseVisualStyleBackColor = true;
+            // 
+            // treeViewListSerials
+            // 
+            this.treeViewListSerials.Location = new System.Drawing.Point(14, 44);
+            this.treeViewListSerials.Name = "treeViewListSerials";
+            this.treeViewListSerials.Size = new System.Drawing.Size(224, 385);
+            this.treeViewListSerials.TabIndex = 0;
             // 
             // tabPage3
             // 
@@ -218,6 +275,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
             this.pushToolStripMenuItem,
+            this.preferenseToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -227,18 +285,30 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.loadToolStripMenuItem.Text = "Load";
+            // 
+            // pushToolStripMenuItem
+            // 
+            this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
+            this.pushToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.pushToolStripMenuItem.Text = "Push";
+            // 
+            // preferenseToolStripMenuItem
+            // 
+            this.preferenseToolStripMenuItem.Name = "preferenseToolStripMenuItem";
+            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.preferenseToolStripMenuItem.Text = "Preferense";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(97, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -330,12 +400,6 @@
             this.toolStripButtonFind.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonFind.Text = "toolStripButton1";
             // 
-            // pushToolStripMenuItem
-            // 
-            this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
-            this.pushToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pushToolStripMenuItem.Text = "Push";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -344,6 +408,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Fylyama - 0.0.1";
@@ -352,6 +417,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -394,6 +461,12 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonElementRemove;
         private System.Windows.Forms.ToolStripButton toolStripButtonFind;
         private System.Windows.Forms.ToolStripMenuItem pushToolStripMenuItem;
+        private System.Windows.Forms.Label labelSerials;
+        private System.Windows.Forms.Button buttonDeleteSerials;
+        private System.Windows.Forms.Button buttonEditSerials;
+        private System.Windows.Forms.Button buttonAddSerials;
+        private System.Windows.Forms.TreeView treeViewListSerials;
+        private System.Windows.Forms.ToolStripMenuItem preferenseToolStripMenuItem;
     }
 }
 
