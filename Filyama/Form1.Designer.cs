@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -66,6 +67,7 @@
             this.toolStripButtonElementAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
+            this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
@@ -168,6 +170,7 @@
             this.buttonDeleteCategory.Size = new System.Drawing.Size(25, 25);
             this.buttonDeleteCategory.TabIndex = 3;
             this.buttonDeleteCategory.UseVisualStyleBackColor = true;
+            this.buttonDeleteCategory.Click += new System.EventHandler(this.buttonDeleteCategory_Click);
             // 
             // buttonEditCategory
             // 
@@ -176,6 +179,7 @@
             this.buttonEditCategory.Size = new System.Drawing.Size(25, 25);
             this.buttonEditCategory.TabIndex = 2;
             this.buttonEditCategory.UseVisualStyleBackColor = true;
+            this.buttonEditCategory.Click += new System.EventHandler(this.buttonEditCategory_Click);
             // 
             // buttonAddCategory
             // 
@@ -188,8 +192,11 @@
             // 
             // treeCategory
             // 
+            this.treeCategory.ImageIndex = 0;
+            this.treeCategory.ImageList = this.imageListCategory;
             this.treeCategory.Location = new System.Drawing.Point(8, 37);
             this.treeCategory.Name = "treeCategory";
+            this.treeCategory.SelectedImageIndex = 0;
             this.treeCategory.Size = new System.Drawing.Size(169, 388);
             this.treeCategory.TabIndex = 0;
             // 
@@ -348,6 +355,7 @@
             this.toolStripButtonDatabase.Name = "toolStripButtonDatabase";
             this.toolStripButtonDatabase.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonDatabase.Text = "toolStripButton1";
+            this.toolStripButtonDatabase.ToolTipText = "Database";
             // 
             // toolStripButtonSave
             // 
@@ -357,6 +365,7 @@
             this.toolStripButtonSave.Name = "toolStripButtonSave";
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSave.Text = "toolStripButton1";
+            this.toolStripButtonSave.ToolTipText = "Save";
             // 
             // toolStripSeparator1
             // 
@@ -371,6 +380,7 @@
             this.toolStripButtonElementEdit.Name = "toolStripButtonElementEdit";
             this.toolStripButtonElementEdit.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonElementEdit.Text = "toolStripButton1";
+            this.toolStripButtonElementEdit.ToolTipText = "Edit";
             // 
             // toolStripButtonElementAdd
             // 
@@ -380,6 +390,7 @@
             this.toolStripButtonElementAdd.Name = "toolStripButtonElementAdd";
             this.toolStripButtonElementAdd.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonElementAdd.Text = "toolStripButton1";
+            this.toolStripButtonElementAdd.ToolTipText = "Add";
             // 
             // toolStripButtonElementRemove
             // 
@@ -389,6 +400,7 @@
             this.toolStripButtonElementRemove.Name = "toolStripButtonElementRemove";
             this.toolStripButtonElementRemove.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonElementRemove.Text = "toolStripButton1";
+            this.toolStripButtonElementRemove.ToolTipText = "Remove";
             // 
             // toolStripButtonFind
             // 
@@ -399,6 +411,12 @@
             this.toolStripButtonFind.Name = "toolStripButtonFind";
             this.toolStripButtonFind.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonFind.Text = "toolStripButton1";
+            // 
+            // imageListCategory
+            // 
+            this.imageListCategory.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListCategory.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageListCategory.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // Form1
             // 
@@ -467,6 +485,7 @@
         private System.Windows.Forms.Button buttonAddSerials;
         private System.Windows.Forms.TreeView treeViewListSerials;
         private System.Windows.Forms.ToolStripMenuItem preferenseToolStripMenuItem;
+        private System.Windows.Forms.ImageList imageListCategory;
     }
 }
 

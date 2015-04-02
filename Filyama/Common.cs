@@ -5,15 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
+using System.Drawing;
 
 namespace Filyama
 {
+    public struct Category
+    {
+        public int id;
+        public String name;
+        public int idParent;
+        public override string ToString()
+        {
+            return name;
+        }
+    }
 
     class Common
     {
         static public SQLiteConnection connectionLocal;
 
-        static byte[] GetBytes(SQLiteDataReader reader)
+        public static Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+
+        public static byte[] GetBytes(SQLiteDataReader reader)
         {
             const int CHUNK_SIZE = 2 * 1024;
             byte[] buffer = new byte[CHUNK_SIZE];

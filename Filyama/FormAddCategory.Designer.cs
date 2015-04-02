@@ -81,6 +81,7 @@
             this.listViewPictures.Size = new System.Drawing.Size(375, 141);
             this.listViewPictures.TabIndex = 4;
             this.listViewPictures.UseCompatibleStateImageBehavior = false;
+            this.listViewPictures.View = System.Windows.Forms.View.SmallIcon;
             // 
             // labelPicture
             // 
@@ -100,6 +101,7 @@
             this.buttonOK.TabIndex = 6;
             this.buttonOK.Text = "ОК";
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // buttonCancel
             // 
