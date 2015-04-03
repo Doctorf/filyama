@@ -10,7 +10,7 @@ using System.Data.SQLite;
 namespace Filyama
 {
     public partial class Form1 : Form
-    {        
+    {
         public void RefreshCategory()
         {
             //Добавление Категорий
@@ -28,15 +28,23 @@ namespace Filyama
                         Category categoryVar = new Category();
                         categoryVar.id = Convert.ToInt32(r["id"]);
                         categoryVar.name = Convert.ToString(r["name"]);
-                        categoryVar.idImage = Convert.ToInt32(r["id_image"]);
+                        if (r["id_image"] != DBNull.Value)
+                        {
+                            categoryVar.idImage = Convert.ToInt32(r["id_image"]);
+                        } else {
+                            categoryVar.idImage = -1;
+                        }
+                        
                         if (r["id_parent"] != DBNull.Value)
                         {
                             categoryVar.idParent = Convert.ToInt32(r["id_parent"]);
                         }
                         TreeNode node=mainNode.Nodes.Add(categoryVar.name);
-                        node.Tag = categoryVar;                        
-                        node.ImageIndex = Common.imageCategoryList[categoryVar.idImage];
-                        node.SelectedImageIndex = node.ImageIndex;
+                        node.Tag = categoryVar;
+                        if (categoryVar.idImage!=-1) {
+                            node.ImageIndex = Common.imageCategoryList[categoryVar.idImage];
+                            node.SelectedImageIndex = node.ImageIndex;
+                        }
                     }
                     r.Close();
                 }
@@ -76,7 +84,7 @@ namespace Filyama
         {
             InitializeComponent(); Common.imageCategoryList = new Dictionary<int, int>();
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            this.Text = String.Format("Filyama - {0}", version);            
+            this.Text = String.Format("Filyama - {0}", version);
             Common.connectionLocal = new SQLiteConnection("Data Source=main.db; Version=3;");
             try
             {
@@ -117,6 +125,8 @@ namespace Filyama
                   + "INSERT INTO category_films VALUES(1,1)";
                 cmd.CommandText = sql_command_create;
                 cmd.ExecuteNonQuery();*/
+                RefreshCategoryImages();
+                RefreshCategory();  
                 string sql_command = "SELECT * FROM films;";
                 cmd.CommandText = sql_command;
                 try
@@ -124,16 +134,45 @@ namespace Filyama
                     SQLiteDataReader r = cmd.ExecuteReader();                    
                     while (r.Read())
                     {
-                        dataGridViewFilms.Rows.Add(null, null, r["id"].ToString(), r["name"]);
+                        int idFilms = Convert.ToInt32(r["id"]); byte[] imageFilms=null,coverFilms=null;
+                        string sql_command_detail = "SELECT * FROM category_films cf LEFT JOIN category c ON c.id=cf.id_category WHERE id_films=@id_films;";
+                        SQLiteCommand cmd_detail = Common.connectionLocal.CreateCommand();
+                        cmd_detail.CommandText = sql_command_detail;
+                        cmd_detail.Parameters.AddWithValue("@id_films", idFilms);
+                        try
+                        {
+                            SQLiteDataReader reader_detail = cmd_detail.ExecuteReader();
+                            while (reader_detail.Read())
+                            {
+                                if (reader_detail["id_image"]!=DBNull.Value)
+                                {
+                                    int idImage=Common.imageCategoryList[Convert.ToInt32(reader_detail["id_image"])];
+                                    //MessageBox.Show(imageListCategory.Images[idImage].Width + "x" + imageListCategory.Images[idImage].Height);
+                                    imageFilms = Common.imageToByteArray(imageListCategory.Images[idImage]);
+                                }
+                            }
+                            reader_detail.Close();
+                        }
+                        catch (SQLiteException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        if (Convert.ToBoolean(r["existCover"]))
+                        {
+                            coverFilms = Common.imageToByteArray(imageListCategory.Images[2]);
+                        }
+                        else
+                        {
+                            coverFilms = Common.imageToByteArray(imageListCategory.Images[1]);
+                        }
+                        dataGridViewFilms.Rows.Add(imageFilms, coverFilms, r["id"].ToString(), r["name"]);
                     }
                     r.Close();
                 }
                 catch (SQLiteException ex)
                 {
                     Console.WriteLine(ex.Message);
-                }
-                RefreshCategoryImages();
-                RefreshCategory();               
+                }             
             }            
         }
 

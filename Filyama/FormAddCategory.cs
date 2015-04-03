@@ -47,8 +47,10 @@ namespace Filyama
             listViewPictures.SmallImageList = images;
             /* Reserved images
              * 0 - folder
+             * 1 - cross
+             * 2 - check
              * */
-            for (int i = 1; i < images.Images.Count; i++)
+            for (int i = 3; i < images.Images.Count; i++)
             {
                 listViewPictures.Items.Add(new ListViewItem { ImageIndex = i });
             }

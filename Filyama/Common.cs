@@ -34,6 +34,13 @@ namespace Filyama
             return returnImage;
         }
 
+        public static byte[] imageToByteArray(Image x)
+        {
+            ImageConverter _imageConverter = new ImageConverter();
+            byte[] xByte = (byte[])_imageConverter.ConvertTo(x, typeof(byte[]));
+            return xByte;
+        }
+
         public static byte[] GetBytes(SQLiteDataReader reader)
         {
             const int CHUNK_SIZE = 2 * 1024;
