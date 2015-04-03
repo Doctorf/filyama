@@ -10,7 +10,7 @@ using System.Data.SQLite;
 namespace Filyama
 {
     public partial class Form1 : Form
-    {
+    {        
         public void RefreshCategory()
         {
             //Добавление Категорий
@@ -28,12 +28,15 @@ namespace Filyama
                         Category categoryVar = new Category();
                         categoryVar.id = Convert.ToInt32(r["id"]);
                         categoryVar.name = Convert.ToString(r["name"]);
+                        categoryVar.idImage = Convert.ToInt32(r["id_image"]);
                         if (r["id_parent"] != DBNull.Value)
                         {
                             categoryVar.idParent = Convert.ToInt32(r["id_parent"]);
                         }
                         TreeNode node=mainNode.Nodes.Add(categoryVar.name);
-                        node.Tag = categoryVar;
+                        node.Tag = categoryVar;                        
+                        node.ImageIndex = Common.imageCategoryList[categoryVar.idImage];
+                        node.SelectedImageIndex = node.ImageIndex;
                     }
                     r.Close();
                 }
@@ -47,7 +50,7 @@ namespace Filyama
 
         public void RefreshCategoryImages()
         {
-            imageListCategory.Images.Clear();
+            imageListCategory.Images.Clear(); Common.imageCategoryList.Clear();
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
@@ -58,6 +61,7 @@ namespace Filyama
                     while (r.Read())
                     {
                         byte[] data = (byte[])r["value"];
+                        Common.imageCategoryList.Add(Convert.ToInt32(r["id"]), imageListCategory.Images.Count);
                         imageListCategory.Images.Add(Common.byteArrayToImage(data));
                     }
                 }
@@ -70,7 +74,7 @@ namespace Filyama
 
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); Common.imageCategoryList = new Dictionary<int, int>();
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.Text = String.Format("Filyama - {0}", version);            
             Common.connectionLocal = new SQLiteConnection("Data Source=main.db; Version=3;");
@@ -104,6 +108,15 @@ namespace Filyama
                   + "value BLOB);";                  
                 cmd.CommandText = sql_command_create;
                 cmd.ExecuteNonQuery();*/
+                /*string sql_command_create = "DROP TABLE IF EXISTS category_films;"
+                  + "CREATE TABLE category_films("
+                  + "id_films INTEGER, "
+                  + "id_category INTEGER,"
+                  + "FOREIGN KEY(id_films) REFERENCES films(id),"
+                  + " FOREIGN KEY(id_category) REFERENCES category(id));"
+                  + "INSERT INTO category_films VALUES(1,1)";
+                cmd.CommandText = sql_command_create;
+                cmd.ExecuteNonQuery();*/
                 string sql_command = "SELECT * FROM films;";
                 cmd.CommandText = sql_command;
                 try
@@ -119,8 +132,8 @@ namespace Filyama
                 {
                     Console.WriteLine(ex.Message);
                 }
-                RefreshCategory();
                 RefreshCategoryImages();
+                RefreshCategory();               
             }            
         }
 

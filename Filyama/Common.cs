@@ -14,6 +14,8 @@ namespace Filyama
         public int id;
         public String name;
         public int idParent;
+        public int idImage;
+
         public override string ToString()
         {
             return name;
@@ -23,6 +25,7 @@ namespace Filyama
     class Common
     {
         static public SQLiteConnection connectionLocal;
+        static public Dictionary<int, int> imageCategoryList;
 
         public static Image byteArrayToImage(byte[] byteArrayIn)
         {
