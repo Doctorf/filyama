@@ -43,6 +43,7 @@
             this.buttonEditCategory = new System.Windows.Forms.Button();
             this.buttonAddCategory = new System.Windows.Forms.Button();
             this.treeCategory = new System.Windows.Forms.TreeView();
+            this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.labelSerials = new System.Windows.Forms.Label();
             this.buttonDeleteSerials = new System.Windows.Forms.Button();
@@ -67,7 +68,6 @@
             this.toolStripButtonElementAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
-            this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
@@ -199,6 +199,13 @@
             this.treeCategory.SelectedImageIndex = 0;
             this.treeCategory.Size = new System.Drawing.Size(169, 388);
             this.treeCategory.TabIndex = 0;
+            this.treeCategory.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeCategory_AfterSelect);
+            // 
+            // imageListCategory
+            // 
+            this.imageListCategory.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageListCategory.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageListCategory.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tabPage2
             // 
@@ -411,12 +418,6 @@
             this.toolStripButtonFind.Name = "toolStripButtonFind";
             this.toolStripButtonFind.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonFind.Text = "toolStripButton1";
-            // 
-            // imageListCategory
-            // 
-            this.imageListCategory.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListCategory.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageListCategory.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // Form1
             // 

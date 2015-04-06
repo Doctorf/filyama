@@ -26,6 +26,7 @@ namespace Filyama
     {
         static public SQLiteConnection connectionLocal;
         static public Dictionary<int, int> imageCategoryList;
+        static public Dictionary<int, byte[]> imageCategoryListData;
 
         public static Image byteArrayToImage(byte[] byteArrayIn)
         {

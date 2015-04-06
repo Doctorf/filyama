@@ -56,6 +56,59 @@ namespace Filyama
             }
         }
 
+        public FormAddCategory(Category categoryGlobal, ImageList source)
+        {
+            InitializeComponent();
+            images = source;
+            categoryLocal = categoryGlobal;
+            comboBoxParents.Items.Clear();
+            comboBoxParents.Items.Add("-----"); bool findParent = false;
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "SELECT * FROM category";
+                try
+                {
+                    SQLiteDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        int index=comboBoxParents.Items.Add(r["name"].ToString());
+                        if (Convert.ToInt32(r["id"]) == categoryLocal.idParent)
+                        {
+                            comboBoxParents.SelectedIndex = index;
+                            findParent = true;
+                        }
+                    }
+                    r.Close();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            if (!findParent)
+            {
+                comboBoxParents.SelectedIndex = 0;
+            }
+            listViewPictures.LargeImageList = images;
+            listViewPictures.SmallImageList = images;
+            int indexImage=-1;
+            if (Common.imageCategoryList.ContainsKey(categoryLocal.idImage))
+            {
+                indexImage = Common.imageCategoryList[categoryLocal.idImage];
+            }
+            for (int i = 3; i < images.Images.Count; i++)
+            {
+                ListViewItem item=listViewPictures.Items.Add(new ListViewItem { ImageIndex = i });                
+                if (i == indexImage)
+                {
+                    item.Selected = true;
+                }
+            }
+            listViewPictures.Select();
+            textBoxName.Text = categoryLocal.name;
+        }
+
         private void buttonLoadPicture_Click(object sender, EventArgs e)
         {
             DialogResult dr = openFileDialog1.ShowDialog();
@@ -74,13 +127,24 @@ namespace Filyama
                 }
                 listViewPictures.Items.Add(new ListViewItem { ImageIndex = index - 1 }).Selected = true;
                 listViewPictures.Select();
+                Database.RefreshCategoryImages();
             }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             categoryLocal.name = textBoxName.Text;
-            categoryLocal.idParent = comboBoxParents.SelectedIndex;
+            if (comboBoxParents.SelectedIndex == 0)
+            {
+                categoryLocal.idParent = -1;
+            }
+            else
+            {
+                categoryLocal.idParent = comboBoxParents.SelectedIndex;
+            }
+            var indices = listViewPictures.SelectedIndices;
+            int imageIndex = listViewPictures.Items[indices[0]].ImageIndex;
+            categoryLocal.idImage = Common.imageCategoryList.FirstOrDefault(x => x.Value == imageIndex).Key;
         }
     }
 }
