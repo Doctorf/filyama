@@ -133,7 +133,7 @@ namespace Filyama
                         {
                             coverFilms = Common.imageToByteArray(imageListCategory.Images[1]);
                         }
-                        dataGridViewFilms.Rows.Add(imageFilms, coverFilms, r["id"].ToString(), r["name"]);
+                        dataGridViewFilms.Rows.Add(imageFilms, coverFilms, r["id"].ToString(), r["name_rus"]);
                     }
                     r.Close();
                 }
