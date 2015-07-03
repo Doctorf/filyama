@@ -22,11 +22,56 @@ namespace Filyama
         }
     }
 
+    public struct Media
+    {
+        public String name;
+        public String filter;
+        public Boolean foto;
+
+        public override string ToString()
+        {
+            return name;
+        }
+    }
+
+    public struct Film
+    {
+        public int id;
+        //------Отображание
+        public String nameOrig;
+        public String nameRus;        
+        public String coverURL;
+        public String categoriesString;
+        public DateTime dateWorld;
+        public DateTime dateRus;
+
+        //------Сохранение в БД
+        public long coverId;
+        public List<int> categories;
+
+        public override string ToString()
+        {
+            String output = nameRus;
+            if (!nameOrig.Equals(""))
+            {
+                output+="("+nameOrig+")";
+            }
+            if (dateWorld != default(DateTime))
+            {
+                output+="["+dateWorld.Year+"]";
+            }
+            return output;
+        }
+    }
+
     class Common
     {
         static public SQLiteConnection connectionLocal;
+        static public String imagesPath="\\images\\";
         static public Dictionary<int, int> imageCategoryList;
+        static public Dictionary<int, Category> categoryList;
         static public Dictionary<int, byte[]> imageCategoryListData;
+        static public Dictionary<int, Film> films;
 
         public static Image byteArrayToImage(byte[] byteArrayIn)
         {

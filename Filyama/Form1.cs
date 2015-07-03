@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.IO;
+using Microsoft.Win32;
 
 namespace Filyama
 {
@@ -14,7 +16,7 @@ namespace Filyama
         public void RefreshCategory()
         {
             //Добавление Категорий
-            treeCategory.Nodes.Clear();
+            treeCategory.Nodes.Clear(); Common.categoryList = new Dictionary<int, Category>();
             TreeNode mainNode = treeCategory.Nodes.Add("Все категории");            
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
@@ -49,6 +51,7 @@ namespace Filyama
                             node.ImageIndex = Common.imageCategoryList[categoryVar.idImage];
                             node.SelectedImageIndex = node.ImageIndex;
                         }
+                        Common.categoryList.Add(categoryVar.id, categoryVar);
                     }
                     r.Close();
                 }
@@ -72,7 +75,7 @@ namespace Filyama
 
         public void RefreshFilms()
         {
-            Boolean filterCategory = false; dataGridViewFilms.Rows.Clear();
+            Boolean filterCategory = false; dataGridViewFilms.Rows.Clear(); Common.films.Clear();
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
@@ -102,7 +105,9 @@ namespace Filyama
                     SQLiteDataReader r = cmd.ExecuteReader();
                     while (r.Read())
                     {
-                        int idFilms = Convert.ToInt32(r["id"]); byte[] imageFilms = null, coverFilms = null;
+                        int idFilms = Convert.ToInt32(r["id"]); byte[] imageFilms = null, coverFilms = null; Film selectFilm = new Film(); String categories = "";
+                        //-----------Жанры
+                        selectFilm.categories = new List<int>();
                         string sql_command_detail = "SELECT * FROM category_films cf LEFT JOIN category c ON c.id=cf.id_category WHERE id_films=@id_films;";
                         SQLiteCommand cmd_detail = Common.connectionLocal.CreateCommand();
                         cmd_detail.CommandText = sql_command_detail;
@@ -112,6 +117,8 @@ namespace Filyama
                             SQLiteDataReader reader_detail = cmd_detail.ExecuteReader();
                             while (reader_detail.Read())
                             {
+                                categories += Convert.ToString(reader_detail["name"])+", ";
+                                selectFilm.categories.Add(Convert.ToInt32(reader_detail["id"]));
                                 if (reader_detail["id_image"] != DBNull.Value)
                                 {
                                     int idImage = Common.imageCategoryList[Convert.ToInt32(reader_detail["id_image"])];
@@ -125,15 +132,44 @@ namespace Filyama
                         {
                             Console.WriteLine(ex.Message);
                         }
-                        if (Convert.ToBoolean(r["existCover"]))
+                        if (!categories.Equals("")) categories = categories.Substring(0, categories.Length - 2);
+                        selectFilm.categoriesString = categories;
+                        //-----------Обложка
+
+                        if (r["id_cover"] != DBNull.Value)
                         {
                             coverFilms = Common.imageToByteArray(imageListCategory.Images[2]);
+                            selectFilm.coverId = Convert.ToInt32(r["id_cover"]);
+                            string sql_command_detail_cover = "SELECT url FROM binary_data WHERE id=@id;";
+                            SQLiteCommand cmd_detail_cover = Common.connectionLocal.CreateCommand();
+                            cmd_detail_cover.CommandText = sql_command_detail_cover;
+                            cmd_detail_cover.Parameters.AddWithValue("@id", selectFilm.coverId);
+                            try
+                            {
+                                selectFilm.coverURL = Convert.ToString(cmd_detail_cover.ExecuteScalar());
+                            }
+                            catch (SQLiteException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                         }
                         else
                         {
                             coverFilms = Common.imageToByteArray(imageListCategory.Images[1]);
                         }
-                        dataGridViewFilms.Rows.Add(imageFilms, coverFilms, r["id"].ToString(), r["name_rus"]);
+                        selectFilm.nameRus=Convert.ToString(r["name_rus"]);
+                        selectFilm.nameOrig = Convert.ToString(r["name_orig"]);
+                        selectFilm.id=Convert.ToInt32(r["id"]);
+                        if (r["date_world"] != DBNull.Value)
+                        {
+                            selectFilm.dateWorld = Convert.ToDateTime(r["date_world"]);
+                        } 
+                        if (r["date_rus"] != DBNull.Value)
+                        {
+                            selectFilm.dateRus = Convert.ToDateTime(r["date_rus"]);
+                        }
+                        Common.films.Add(selectFilm.id, selectFilm);
+                        dataGridViewFilms.Rows.Add(imageFilms, coverFilms, selectFilm.id,selectFilm.nameRus );
                     }
                     r.Close();
                 }
@@ -144,11 +180,34 @@ namespace Filyama
             }
         }
 
+        private void CreateFolders()
+        {            
+            System.IO.Directory.CreateDirectory(Application.StartupPath+Common.imagesPath);            
+        }
+        private void AddBrowser()
+        {
+            String filename=System.Reflection.Assembly.GetExecutingAssembly().GetName().Name+".exe";
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION", true);
+            if (key != null)
+            {
+                key.SetValue(filename, 11001, RegistryValueKind.DWord);
+            }
+
+            key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION", true);
+            if (key != null)
+            {
+                key.SetValue(filename, 11001, RegistryValueKind.DWord);
+            }
+        } 
+
         public Form1()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            CreateFolders();
+            AddBrowser();
             Common.imageCategoryList = new Dictionary<int, int>();
             Common.imageCategoryListData = new Dictionary<int, byte[]>();
+            Common.films = new Dictionary<int, Film>();
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.Text = String.Format("Filyama - {0}", version);
             Common.connectionLocal = new SQLiteConnection("Data Source=main.db; Version=3;");
@@ -247,7 +306,7 @@ namespace Filyama
         private void buttonEditCategory_Click(object sender, EventArgs e)
         {
             TreeNode node = treeCategory.SelectedNode;
-            if (node.Tag!=null) {
+            if (node!=null && node.Tag!=null) {
                 Category categoryVar = (Category)node.Tag;
                 FormAddCategory formAddCategory = new FormAddCategory(categoryVar,imageListCategory);
                 DialogResult dr = formAddCategory.ShowDialog();
@@ -312,6 +371,77 @@ namespace Filyama
         private void treeCategory_AfterSelect(object sender, TreeViewEventArgs e)
         {
             RefreshFilms();
+        }
+
+        private void toolStripButtonElementAdd_Click(object sender, EventArgs e)
+        {
+            FormAddVideo addVideo = new FormAddVideo();
+            if (addVideo.ShowDialog()==DialogResult.OK)
+            {
+                RefreshFilms();
+            }
+        }
+
+        public static String ChangeTemplate(String input,Film selectFilm)
+        {
+            input = input.Replace("${films.title}", selectFilm.nameRus);
+            input = input.Replace("${films.title_orig}", selectFilm.nameOrig);
+            input = input.Replace("${films.cover}", Application.StartupPath+"\\"+selectFilm.coverURL);
+            input = input.Replace("${films.categorys}", selectFilm.categoriesString);
+            input = input.Replace("${films.year}", selectFilm.dateWorld.Year.ToString());
+            String output = input;
+            return output;
+        }
+        public static String AddCss(String input)
+        {
+            System.IO.StreamReader reader = new System.IO.StreamReader(Application.StartupPath + "\\Templates\\Default\\" + "style.css");
+            string style = reader.ReadToEnd();
+            reader.Close();
+            input = input.Replace("${html.css}", style);            
+            return input;
+        }
+        int curRow = -1;
+        private void dataGridViewFilms_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewFilms.CurrentRow.Index != curRow)
+            {
+                curRow = dataGridViewFilms.CurrentRow.Index;
+                int idFilm = Convert.ToInt32(dataGridViewFilms.Rows[curRow].Cells[2].Value);
+                if (idFilm != 0)
+                {
+                    string template = System.IO.File.ReadAllText(Application.StartupPath + "\\Templates\\Default\\" + "Window_Film.html");
+                    webBrowser1.DocumentText = AddCss(ChangeTemplate(template,Common.films[idFilm]));
+                }
+            }
+            
+        }
+
+        private void toolStripButtonElementRemove_Click(object sender, EventArgs e)
+        {
+            String Message = "Вы действительно хотите удалить {0} \"{1}\"?";
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0: {
+                    int idFilm = Convert.ToInt32(dataGridViewFilms.Rows[curRow].Cells[2].Value);
+                    Message = String.Format(Message, "фильм", Common.films[idFilm]);
+                    if (MessageBox.Show(Message, "Удаление фильма", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        Database.DeleteFilm(Common.films[idFilm]);
+                        RefreshFilms();
+                    }
+                }break;
+            }
+        }
+
+        private void toolStripButtonElementEdit_Click(object sender, EventArgs e)
+        {
+            int idFilm = Convert.ToInt32(dataGridViewFilms.Rows[curRow].Cells[2].Value);
+                if (idFilm != 0)
+                {
+                    FormAddVideo editVideo = new FormAddVideo(Common.films[idFilm]);
+                    editVideo.ShowDialog();
+                    RefreshFilms();
+                }
         }
     }
 }

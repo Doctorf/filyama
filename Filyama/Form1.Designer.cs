@@ -106,10 +106,10 @@
             // 
             // webBrowser1
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(694, 6);
+            this.webBrowser1.Location = new System.Drawing.Point(724, 6);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(396, 419);
+            this.webBrowser1.Size = new System.Drawing.Size(366, 419);
             this.webBrowser1.TabIndex = 6;
             // 
             // dataGridViewFilms
@@ -127,8 +127,9 @@
             this.dataGridViewFilms.Name = "dataGridViewFilms";
             this.dataGridViewFilms.ReadOnly = true;
             this.dataGridViewFilms.RowHeadersVisible = false;
-            this.dataGridViewFilms.Size = new System.Drawing.Size(491, 422);
+            this.dataGridViewFilms.Size = new System.Drawing.Size(518, 422);
             this.dataGridViewFilms.TabIndex = 5;
+            this.dataGridViewFilms.SelectionChanged += new System.EventHandler(this.dataGridViewFilms_SelectionChanged);
             // 
             // ColumntCategory
             // 
@@ -138,7 +139,7 @@
             // 
             // ColumntExistImage
             // 
-            this.ColumntExistImage.HeaderText = "Image";
+            this.ColumntExistImage.HeaderText = "Cover";
             this.ColumntExistImage.Name = "ColumntExistImage";
             this.ColumntExistImage.ReadOnly = true;
             // 
@@ -153,6 +154,7 @@
             this.ColumnNameFilm.HeaderText = "Название";
             this.ColumnNameFilm.Name = "ColumnNameFilm";
             this.ColumnNameFilm.ReadOnly = true;
+            this.ColumnNameFilm.Width = 210;
             // 
             // labelCategory
             // 
@@ -388,6 +390,7 @@
             this.toolStripButtonElementEdit.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonElementEdit.Text = "toolStripButton1";
             this.toolStripButtonElementEdit.ToolTipText = "Edit";
+            this.toolStripButtonElementEdit.Click += new System.EventHandler(this.toolStripButtonElementEdit_Click);
             // 
             // toolStripButtonElementAdd
             // 
@@ -398,6 +401,7 @@
             this.toolStripButtonElementAdd.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonElementAdd.Text = "toolStripButton1";
             this.toolStripButtonElementAdd.ToolTipText = "Add";
+            this.toolStripButtonElementAdd.Click += new System.EventHandler(this.toolStripButtonElementAdd_Click);
             // 
             // toolStripButtonElementRemove
             // 
@@ -408,6 +412,7 @@
             this.toolStripButtonElementRemove.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonElementRemove.Text = "toolStripButton1";
             this.toolStripButtonElementRemove.ToolTipText = "Remove";
+            this.toolStripButtonElementRemove.Click += new System.EventHandler(this.toolStripButtonElementRemove_Click);
             // 
             // toolStripButtonFind
             // 
@@ -463,10 +468,6 @@
         private System.Windows.Forms.Button buttonAddCategory;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.DataGridView dataGridViewFilms;
-        private System.Windows.Forms.DataGridViewImageColumn ColumntCategory;
-        private System.Windows.Forms.DataGridViewImageColumn ColumntExistImage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNameFilm;
         private System.Windows.Forms.Label labelCategory;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
@@ -487,6 +488,10 @@
         private System.Windows.Forms.TreeView treeViewListSerials;
         private System.Windows.Forms.ToolStripMenuItem preferenseToolStripMenuItem;
         private System.Windows.Forms.ImageList imageListCategory;
+        private System.Windows.Forms.DataGridViewImageColumn ColumntCategory;
+        private System.Windows.Forms.DataGridViewImageColumn ColumntExistImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNameFilm;
     }
 }
 
