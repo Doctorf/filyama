@@ -187,16 +187,23 @@ namespace Filyama
         private void AddBrowser()
         {
             String filename=System.Reflection.Assembly.GetExecutingAssembly().GetName().Name+".exe";
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION", true);
-            if (key != null)
+            try
             {
-                key.SetValue(filename, 11001, RegistryValueKind.DWord);
-            }
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION", true);
+                if (key != null)
+                {
+                    key.SetValue(filename, 11001, RegistryValueKind.DWord);
+                }
 
-            key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION", true);
-            if (key != null)
+                key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION", true);
+                if (key != null)
+                {
+                    key.SetValue(filename, 11001, RegistryValueKind.DWord);
+                }
+            }
+            catch (System.Security.SecurityException ex)
             {
-                key.SetValue(filename, 11001, RegistryValueKind.DWord);
+                Console.WriteLine(ex.Message);
             }
         } 
 

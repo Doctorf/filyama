@@ -34,6 +34,20 @@ namespace Filyama
         }
     }
 
+    public struct BinaryData
+    {
+        public int id;
+        public String path;
+        public String fullpath;
+        public String name;
+        public Boolean foto;
+
+        public override string ToString()
+        {
+            return name;
+        }
+    }
+
     public struct Film
     {
         public int id;

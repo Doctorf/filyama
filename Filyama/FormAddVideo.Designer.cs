@@ -38,9 +38,9 @@
             this.textBoxNameOrig = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxFiles = new System.Windows.Forms.ListBox();
-            this.button7 = new System.Windows.Forms.Button();
+            this.buttonSearch = new System.Windows.Forms.Button();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.buttonLoadCover = new System.Windows.Forms.Button();
             this.checkedListBoxCategory = new System.Windows.Forms.CheckedListBox();
             this.textBoxNumber = new System.Windows.Forms.TextBox();
             this.labelNumber = new System.Windows.Forms.Label();
@@ -52,7 +52,9 @@
             this.labelDateRus = new System.Windows.Forms.Label();
             this.dateTimePickerDateRus = new System.Windows.Forms.DateTimePicker();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelPath
@@ -71,6 +73,7 @@
             this.textBoxFullPath.ReadOnly = true;
             this.textBoxFullPath.Size = new System.Drawing.Size(225, 20);
             this.textBoxFullPath.TabIndex = 1;
+            this.textBoxFullPath.Text = "\\\\SERVER44\\Downloads\\media\\films\\Movies(Фильмы)\\9 (Девять)";
             // 
             // buttonLoad
             // 
@@ -116,40 +119,43 @@
             // 
             // listBoxFiles
             // 
+            this.listBoxFiles.AllowDrop = true;
             this.listBoxFiles.FormattingEnabled = true;
             this.listBoxFiles.Location = new System.Drawing.Point(18, 170);
             this.listBoxFiles.Name = "listBoxFiles";
             this.listBoxFiles.Size = new System.Drawing.Size(241, 147);
             this.listBoxFiles.TabIndex = 16;
+            this.listBoxFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxFiles_MouseDown);
             // 
-            // button7
+            // buttonSearch
             // 
-            this.button7.Location = new System.Drawing.Point(507, 38);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(91, 23);
-            this.button7.TabIndex = 15;
-            this.button7.Text = "Search";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.buttonSearch.Location = new System.Drawing.Point(507, 38);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(91, 23);
+            this.buttonSearch.TabIndex = 15;
+            this.buttonSearch.Text = "Search";
+            this.buttonSearch.UseVisualStyleBackColor = true;
             // 
             // pictureBoxImage
             // 
-            this.pictureBoxImage.Location = new System.Drawing.Point(278, 6);
+            this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBoxImage.Location = new System.Drawing.Point(13, 1);
             this.pictureBoxImage.Name = "pictureBoxImage";
             this.pictureBoxImage.Size = new System.Drawing.Size(197, 257);
             this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxImage.TabIndex = 13;
             this.pictureBoxImage.TabStop = false;
+            this.pictureBoxImage.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBoxImage_DragDrop);
             // 
-            // button6
+            // buttonLoadCover
             // 
-            this.button6.Location = new System.Drawing.Point(507, 6);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(91, 23);
-            this.button6.TabIndex = 12;
-            this.button6.Text = "Load";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.buttonLoadCover.Location = new System.Drawing.Point(507, 6);
+            this.buttonLoadCover.Name = "buttonLoadCover";
+            this.buttonLoadCover.Size = new System.Drawing.Size(91, 23);
+            this.buttonLoadCover.TabIndex = 12;
+            this.buttonLoadCover.Text = "Load";
+            this.buttonLoadCover.UseVisualStyleBackColor = true;
+            this.buttonLoadCover.Click += new System.EventHandler(this.buttonLoadCover_Click);
             // 
             // checkedListBoxCategory
             // 
@@ -236,11 +242,23 @@
             this.treeView1.Size = new System.Drawing.Size(626, 116);
             this.treeView1.TabIndex = 25;
             // 
+            // panel1
+            // 
+            this.panel1.AllowDrop = true;
+            this.panel1.Controls.Add(this.pictureBoxImage);
+            this.panel1.Location = new System.Drawing.Point(265, 5);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(231, 311);
+            this.panel1.TabIndex = 26;
+            this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
+            this.panel1.DragOver += new System.Windows.Forms.DragEventHandler(this.panel1_DragOver);
+            // 
             // FormAddVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 543);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.textBoxNameRus);
             this.Controls.Add(this.labelPath);
@@ -259,15 +277,15 @@
             this.Controls.Add(this.buttonCancel2);
             this.Controls.Add(this.listBoxFiles);
             this.Controls.Add(this.checkedListBoxCategory);
-            this.Controls.Add(this.pictureBoxImage);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.buttonSearch);
+            this.Controls.Add(this.buttonLoadCover);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAddVideo";
             this.Text = "FormAddVideo";
             this.Load += new System.EventHandler(this.FormAddVideo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,9 +302,9 @@
         private System.Windows.Forms.TextBox textBoxNumber;
         private System.Windows.Forms.Label labelNumber;
         private System.Windows.Forms.PictureBox pictureBoxImage;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button buttonLoadCover;
         private System.Windows.Forms.CheckedListBox checkedListBoxCategory;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.ListBox listBoxFiles;
         private System.Windows.Forms.OpenFileDialog openFileDialogImage;
         private System.Windows.Forms.TextBox textBoxNameRus;
@@ -298,5 +316,6 @@
         private System.Windows.Forms.Label labelDateRus;
         private System.Windows.Forms.DateTimePicker dateTimePickerDateRus;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
