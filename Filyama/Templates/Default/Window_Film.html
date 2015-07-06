@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        ${html.css}
+</head>
+<body>
+    <div id="headerFilm" class="feature_film_background country_num1">
+        <h1 class="moviename-big" itemprop="name">${films.title}</h1>
+        <span itemprop="alternativeHeadline">${films.title_orig}</span>
+        <!--<div class="movieFlags"><div class="flag flag1" title="США"><a href="/lists/m_act%5Bcountry%5D/1/"></a></div></div>-->
+        <div id="film-img-box">
+            <img src="${films.cover}" alt="Обложка фильма" width="205">
+        </div>
+    </div>    
+    <div id="infoTable">
+        <table class="info">
+            <tr>
+                <td class="type">Жанры:</td>
+                <td>
+                    <div style="position: relative">
+                        ${films.categorys}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="type">Год:</td>
+                <td>
+                    <div style="position: relative">
+                        ${films.year}
+                    </div>
+                </td>
+            </tr>
+            </table>
+        </div>
+</body>
+</html>

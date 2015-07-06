@@ -1,0 +1,36 @@
+<style>
+H1.moviename-big{vertical-align:middle;padding-left:10px;margin:5px 0;font-size:25px;font-weight:normal}
+#headerFilm>span{color:#666;font-size:13px}
+body{
+    background-color: #E6E6E6; /* ÷вет фона веб-страницы */
+    width: 850px;
+    float: left;
+   } 
+#infoTable {
+    float: left;
+    outline: 0;
+    zoom: 1;
+}
+.film-img-box {
+    position: relative;
+    left: -12px;
+    min-height: 205px;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: gray;
+}
+.info .type {
+    background: url(/images/sqr-grey.gif) 0 11px no-repeat;
+    color: #f60;
+}
+div {
+    display: block;
+}
+</style>
