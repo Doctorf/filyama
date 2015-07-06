@@ -75,37 +75,45 @@ namespace Filyama
             this.Close();
         }
 
-        private void RecursiveAddMedia(TreeNode node, List<String> files)
+        private void RecursiveAddMedia(TreeNode node, List<BinaryData> files,String path)
         {
-            if (files == null) files = new List<string>();
-            if (node.Tag != null /*&& !medias[Convert.ToInt32(node.Tag)].foto*/)
+            if (files == null) files = new List<BinaryData>();
+            String newpath = "";
+            if (node.Tag != null)
             {
-                files.Add(node.Text);
+                BinaryData data = new BinaryData();
+                data.foto = medias[Convert.ToInt32(node.Tag)].foto;
+                data.name = node.Text;
+                data.path = path + "\\" + node.Text;
+                data.fullpath = node.FullPath;
+                newpath = path + "\\" + node.Text;
+                files.Add(data);
             }
             foreach (TreeNode newNode in node.Nodes)
             {
-                RecursiveAddMedia(newNode, files);
+                RecursiveAddMedia(newNode, files,newpath);
             }
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
+            //if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            //{
                 treeView1.Nodes.Clear();
-                TreeNode rootnode = new TreeNode(folderBrowserDialog1.SelectedPath);
+                //TreeNode rootnode = new TreeNode(folderBrowserDialog1.SelectedPath);
+                TreeNode rootnode = new TreeNode(textBoxFullPath.Text);
                 treeView1.Nodes.Add(rootnode);
                 FillChildNodes(rootnode);
                 treeView1.ExpandAll();
-                textBoxFullPath.Text = folderBrowserDialog1.SelectedPath;
-                List<String> files = new List<string>();
-                RecursiveAddMedia(treeView1.Nodes[0], files);
+                //textBoxFullPath.Text = folderBrowserDialog1.SelectedPath;
+                List<BinaryData> files = new List<BinaryData>();
+                RecursiveAddMedia(treeView1.Nodes[0], files,"");
                 listBoxFiles.Items.Clear();
-                foreach (String s in files)
+                foreach (BinaryData s in files)
                 {
                     listBoxFiles.Items.Add(s);
                 }
-            }
+            //}
         }
 
         private void buttonNext_Click(object sender, EventArgs e)
@@ -133,6 +141,10 @@ namespace Filyama
                 {
                     dateTimePickerDateRus.Value = editFilma.dateRus;
                 }
+                if (editFilma.coverURL != null)
+                {
+                    LoadCover(Application.StartupPath + "\\" + editFilma.coverURL);
+                }
             }
 
             foreach (KeyValuePair<int, Category> category in Common.categoryList)
@@ -143,20 +155,6 @@ namespace Filyama
                     find=editFilma.categories.Contains(category.Key);
                 }
                 checkedListBoxCategory.Items.Add(category.Value,find);
-            }
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            if (openFileDialogImage.ShowDialog() == DialogResult.OK)
-            {
-                coverURL = openFileDialogImage.FileName;
-                pictureBoxImage.Load(openFileDialogImage.FileName);
             }
         }
 
@@ -195,6 +193,54 @@ namespace Filyama
             else
             {
                 Database.UpdateFilm(editFilma, newFilma);
+            }
+        }
+
+        private void listBoxFiles_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (listBoxFiles.Items.Count == 0)
+                return;
+
+            int index = listBoxFiles.IndexFromPoint(e.X, e.Y);
+            BinaryData s = (BinaryData)listBoxFiles.Items[index];
+            if (s.foto)
+            {
+                DragDropEffects dde1 = DoDragDrop(s.fullpath,
+                    DragDropEffects.All);
+            }
+            else return;
+        }
+
+        private void pictureBoxImage_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void panel1_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                string str = (string)e.Data.GetData(
+                    DataFormats.StringFormat);
+                LoadCover(str);
+            }
+        }
+
+        private void panel1_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
+
+        private void LoadCover(String filename)
+        {
+            coverURL = filename;
+            pictureBoxImage.Load(filename);
+        }
+        private void buttonLoadCover_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogImage.ShowDialog() == DialogResult.OK)
+            {
+                LoadCover(openFileDialogImage.FileName);                
             }
         }
     }
