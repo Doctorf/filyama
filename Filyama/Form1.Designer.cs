@@ -39,9 +39,6 @@
             this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnNameFilm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelCategory = new System.Windows.Forms.Label();
-            this.buttonDeleteCategory = new System.Windows.Forms.Button();
-            this.buttonEditCategory = new System.Windows.Forms.Button();
-            this.buttonAddCategory = new System.Windows.Forms.Button();
             this.treeCategory = new System.Windows.Forms.TreeView();
             this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -61,13 +58,16 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonDatabase = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonElementEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
+            this.buttonDeleteCategory = new System.Windows.Forms.Button();
+            this.buttonEditCategory = new System.Windows.Forms.Button();
+            this.buttonAddCategory = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
@@ -166,36 +166,6 @@
             this.labelCategory.TabIndex = 4;
             this.labelCategory.Text = "Категории";
             // 
-            // buttonDeleteCategory
-            // 
-            this.buttonDeleteCategory.BackgroundImage = global::Filyama.Properties.Resources.Minus;
-            this.buttonDeleteCategory.Location = new System.Drawing.Point(70, 6);
-            this.buttonDeleteCategory.Name = "buttonDeleteCategory";
-            this.buttonDeleteCategory.Size = new System.Drawing.Size(25, 25);
-            this.buttonDeleteCategory.TabIndex = 3;
-            this.buttonDeleteCategory.UseVisualStyleBackColor = true;
-            this.buttonDeleteCategory.Click += new System.EventHandler(this.buttonDeleteCategory_Click);
-            // 
-            // buttonEditCategory
-            // 
-            this.buttonEditCategory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonEditCategory.BackgroundImage")));
-            this.buttonEditCategory.Location = new System.Drawing.Point(39, 6);
-            this.buttonEditCategory.Name = "buttonEditCategory";
-            this.buttonEditCategory.Size = new System.Drawing.Size(25, 25);
-            this.buttonEditCategory.TabIndex = 2;
-            this.buttonEditCategory.UseVisualStyleBackColor = true;
-            this.buttonEditCategory.Click += new System.EventHandler(this.buttonEditCategory_Click);
-            // 
-            // buttonAddCategory
-            // 
-            this.buttonAddCategory.BackgroundImage = global::Filyama.Properties.Resources.Plus;
-            this.buttonAddCategory.Location = new System.Drawing.Point(8, 6);
-            this.buttonAddCategory.Name = "buttonAddCategory";
-            this.buttonAddCategory.Size = new System.Drawing.Size(25, 25);
-            this.buttonAddCategory.TabIndex = 1;
-            this.buttonAddCategory.UseVisualStyleBackColor = true;
-            this.buttonAddCategory.Click += new System.EventHandler(this.buttonAddCategory_Click);
-            // 
             // treeCategory
             // 
             this.treeCategory.ImageIndex = 0;
@@ -223,7 +193,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1091, 437);
+            this.tabPage2.Size = new System.Drawing.Size(1220, 437);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabTVShows";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -273,7 +243,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1091, 437);
+            this.tabPage3.Size = new System.Drawing.Size(1220, 437);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabAnime";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -360,6 +330,11 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonDatabase
             // 
             this.toolStripButtonDatabase.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -379,11 +354,6 @@
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSave.Text = "toolStripButton1";
             this.toolStripButtonSave.ToolTipText = "Save";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonElementEdit
             // 
@@ -427,6 +397,37 @@
             this.toolStripButtonFind.Name = "toolStripButtonFind";
             this.toolStripButtonFind.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonFind.Text = "toolStripButton1";
+            this.toolStripButtonFind.Click += new System.EventHandler(this.toolStripButtonFind_Click);
+            // 
+            // buttonDeleteCategory
+            // 
+            this.buttonDeleteCategory.BackgroundImage = global::Filyama.Properties.Resources.Minus;
+            this.buttonDeleteCategory.Location = new System.Drawing.Point(70, 6);
+            this.buttonDeleteCategory.Name = "buttonDeleteCategory";
+            this.buttonDeleteCategory.Size = new System.Drawing.Size(25, 25);
+            this.buttonDeleteCategory.TabIndex = 3;
+            this.buttonDeleteCategory.UseVisualStyleBackColor = true;
+            this.buttonDeleteCategory.Click += new System.EventHandler(this.buttonDeleteCategory_Click);
+            // 
+            // buttonEditCategory
+            // 
+            this.buttonEditCategory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonEditCategory.BackgroundImage")));
+            this.buttonEditCategory.Location = new System.Drawing.Point(39, 6);
+            this.buttonEditCategory.Name = "buttonEditCategory";
+            this.buttonEditCategory.Size = new System.Drawing.Size(25, 25);
+            this.buttonEditCategory.TabIndex = 2;
+            this.buttonEditCategory.UseVisualStyleBackColor = true;
+            this.buttonEditCategory.Click += new System.EventHandler(this.buttonEditCategory_Click);
+            // 
+            // buttonAddCategory
+            // 
+            this.buttonAddCategory.BackgroundImage = global::Filyama.Properties.Resources.Plus;
+            this.buttonAddCategory.Location = new System.Drawing.Point(8, 6);
+            this.buttonAddCategory.Name = "buttonAddCategory";
+            this.buttonAddCategory.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddCategory.TabIndex = 1;
+            this.buttonAddCategory.UseVisualStyleBackColor = true;
+            this.buttonAddCategory.Click += new System.EventHandler(this.buttonAddCategory_Click);
             // 
             // Form1
             // 

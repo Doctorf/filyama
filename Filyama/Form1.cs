@@ -455,5 +455,11 @@ namespace Filyama
                     RefreshFilms();
                 }
         }
+
+        private void toolStripButtonFind_Click(object sender, EventArgs e)
+        {
+            FormSearch fromSearch = new FormSearch();
+            fromSearch.ShowDialog();
+        }
     }
 }
