@@ -396,6 +396,11 @@ namespace Filyama
             input = input.Replace("${films.cover}", Application.StartupPath+"\\"+selectFilm.coverURL);
             input = input.Replace("${films.categorys}", selectFilm.categoriesString);
             input = input.Replace("${films.year}", selectFilm.dateWorld.Year.ToString());
+            input = input.Replace("${films.dateWorld}", selectFilm.dateWorld.ToString("dd-MM-yyyy"));
+            input = input.Replace("${films.dateRus}", selectFilm.dateWorld.ToString("dd-MM-yyyy"));
+            input = input.Replace("${films.dateRus}", selectFilm.dateWorld.ToString("dd-MM-yyyy"));
+            input = input.Replace("${films.director}", "Режисер");
+            input = input.Replace("${films.time}", "100 минут");
             String output = input;
             return output;
         }

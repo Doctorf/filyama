@@ -1,15 +1,22 @@
 <style>
-H1.moviename-big{vertical-align:middle;padding-left:10px;margin:5px 0;font-size:25px;font-weight:normal}
-#headerFilm>span{color:#666;font-size:13px}
 body{
-    background-color: #E6E6E6; /* ÷вет фона веб-страницы */
+    background-color: #E6E6E6;
     width: 850px;
-    float: left;
    } 
-#infoTable {
-    float: left;
-    outline: 0;
-    zoom: 1;
+.moviename-big{
+	vertical-align: middle;padding-left: 10px;margin: 5px0;font-size: 25px;font-weight: normal;
+}
+.moviename-orig{
+	color: #666;font-size: 13px
+}   
+.headerFilm{
+	position: relative;
+	float: left;
+}   
+.infoTable {
+    position: relative;
+    top: 100px; 
+	left: 50px;
 }
 .film-img-box {
     position: relative;
@@ -21,10 +28,13 @@ td, th {
     vertical-align: inherit;
 }
 table {
-    display: table;
-    border-collapse: separate;
+    display: table;	
+    border-collapse: collapse; 
     border-spacing: 2px;
     border-color: gray;
+}
+tr.border_bottom td {
+  border-bottom:1pt dotted black;
 }
 .info .type {
     background: url(/images/sqr-grey.gif) 0 11px no-repeat;

@@ -1,36 +1,77 @@
 ﻿<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        ${html.css}
-</head>
-<body>
-    <div id="headerFilm" class="feature_film_background country_num1">
-        <h1 class="moviename-big" itemprop="name">${films.title}</h1>
-        <span itemprop="alternativeHeadline">${films.title_orig}</span>
-        <!--<div class="movieFlags"><div class="flag flag1" title="США"><a href="/lists/m_act%5Bcountry%5D/1/"></a></div></div>-->
-        <div id="film-img-box">
-            <img src="${films.cover}" alt="Обложка фильма" width="205">
-        </div>
-    </div>    
-    <div id="infoTable">
-        <table class="info">
-            <tr>
-                <td class="type">Жанры:</td>
-                <td>
-                    <div style="position: relative">
-                        ${films.categorys}
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="type">Год:</td>
-                <td>
-                    <div style="position: relative">
-                        ${films.year}
-                    </div>
-                </td>
-            </tr>
-            </table>
-        </div>
-</body>
-</html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+			<link rel="stylesheet" type="text/css" href="style.css">
+				${html.css}
+			</head>
+			<body>
+				<div class="film">
+					<div class="headerFilm">
+						<h1 class="moviename-big">${films.title}</h1>
+						<span class="moviename-orig">${films.title_orig}</span>
+						<!--<div class="movieFlags"><div class="flag flag1" title="США"><a href="/lists/m_act%5Bcountry%5D/1/"></a></div></div>-->
+						<div class="film-img-box">
+							<img src="${films.cover}" alt="Обложка фильма" width="205"/>
+						</div>
+					</div>    
+					<div class="infoTable">
+						<table class="info">
+							<tr class="border_bottom">
+								<td class="type">год</td>
+								<td>
+									<div style="position: relative">
+											${films.year}
+									</div>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+								<td class="type">режиссер</td>
+								<td>
+									<div style="position: relative">
+											${films.director}
+									</div>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+								<td class="type">жанр</td>
+								<td>
+									<div style="position: relative">
+											${films.categorys}
+									</div>
+								</td>
+							</tr>										
+							<tr class="border_bottom">
+								<td class="type">премьера (мир)</td>
+								<td>
+									<div style="position: relative">
+											${films.dateWorld}
+									</div>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+								<td class="type">премьера (РФ)</td>
+								<td>
+									<div style="position: relative">
+											${films.dateRus}
+									</div>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+								<td class="type">Продолжительность</td>
+								<td>
+									<div style="position: relative">
+											${films.time}
+									</div>
+								</td>
+							</tr>
+						</table>
+						<h4 class="type">В главных ролях:</h4>
+						<ul>
+							<li>Я</li>
+							<li>Ты</li>
+							<li>Она</li>
+						</ul>
+					</div>
+				</div>
+			</body>
+		</html>
