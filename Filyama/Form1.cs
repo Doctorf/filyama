@@ -16,51 +16,20 @@ namespace Filyama
         public void RefreshCategory()
         {
             //Добавление Категорий
-            treeCategory.Nodes.Clear(); Common.categoryList = new Dictionary<int, Category>();
-            TreeNode mainNode = treeCategory.Nodes.Add("Все категории");            
-            if (Common.connectionLocal.State == ConnectionState.Open)
+            treeCategory.Nodes.Clear(); Database.RefreshCategory();
+            TreeNode mainNode = treeCategory.Nodes.Add("Все категории");
+            foreach (var categoryVarElem in Common.categoryList)
             {
-                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
-                cmd.CommandText = "SELECT * FROM category";
-                try
+                Category categoryVar = categoryVarElem.Value;
+                TreeNode node = mainNode.Nodes.Add(categoryVar.name);
+                node.Tag = categoryVar;
+                if (categoryVar.idImage != -1)
                 {
-                    SQLiteDataReader r = cmd.ExecuteReader();
-                    while (r.Read())
-                    {
-                        Category categoryVar = new Category();
-                        categoryVar.id = Convert.ToInt32(r["id"]);
-                        categoryVar.name = Convert.ToString(r["name"]);
-                        if (r["id_image"] != DBNull.Value)
-                        {
-                            categoryVar.idImage = Convert.ToInt32(r["id_image"]);
-                        } else {
-                            categoryVar.idImage = -1;
-                        }
-                        
-                        if (r["id_parent"] != DBNull.Value)
-                        {
-                            categoryVar.idParent = Convert.ToInt32(r["id_parent"]);
-                        }
-                        else
-                        {
-                            categoryVar.idParent = -1;
-                        }
-                        TreeNode node=mainNode.Nodes.Add(categoryVar.name);
-                        node.Tag = categoryVar;
-                        if (categoryVar.idImage!=-1) {
-                            node.ImageIndex = Common.imageCategoryList[categoryVar.idImage];
-                            node.SelectedImageIndex = node.ImageIndex;
-                        }
-                        Common.categoryList.Add(categoryVar.id, categoryVar);
-                    }
-                    r.Close();
+                    node.ImageIndex = Common.imageCategoryList[categoryVar.idImage];
+                    node.SelectedImageIndex = node.ImageIndex;
                 }
-                catch (SQLiteException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                mainNode.Expand();
             }
+            mainNode.Expand();           
         }
 
         public void RefreshCategoryImages()
@@ -452,6 +421,7 @@ namespace Filyama
                 {
                     FormAddVideo editVideo = new FormAddVideo(Common.films[idFilm]);
                     editVideo.ShowDialog();
+                    RefreshCategory();
                     RefreshFilms();
                 }
         }

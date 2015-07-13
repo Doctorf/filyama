@@ -12,10 +12,20 @@ using System.Net;
 using System.IO;
 using System.Web;
 
+using TMDbLib.Client;
+using TMDbLib.Objects.General;
+using TMDbLib.Objects.Search;
+using TMDbLib.Objects.Movies;
 namespace Filyama
 {
     public partial class FormSearch : Form
     {
+        public String originTitle = "";
+        public String rusTitle;
+        public DateTime dateWorld;
+        public DateTime dateRus;
+        public List<String> genres = new List<string>();
+
         public FormSearch()
         {
             InitializeComponent();
@@ -23,39 +33,7 @@ namespace Filyama
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            using (WebClient client = new WebClient())
-            {
-                client.Encoding = System.Text.Encoding.Default;
-                var doc = new HtmlAgilityPack.HtmlDocument();
-                //doc.LoadHtml(client.DownloadString("http://m.kinopoisk.ru/search/" + HttpUtility.UrlEncode(textBoxNameSearch.Text) + "/view/movie/"));
-                doc.LoadHtml(client.DownloadString("http://m.kinopoisk.ru/search/" + HttpUtility.UrlEncode("Need FOr Speed") + "/view/movie/"));
-                HtmlNode node = doc.DocumentNode.SelectNodes("//div[@class='block search']")[0];
-                foreach (HtmlNode node2 in node.SelectNodes(".//span"))
-                {
-                    foreach (HtmlNode nodeA in node2.SelectNodes(".//a"))
-                    {
-                        String value = nodeA.InnerText; string attributeValue = nodeA.GetAttributeValue("href", "");
-                        String[] values = value.Split(',');
-                        String year = null;
-                        String name = null;
-                        if (values != null && values.Length >= 2)
-                        {
-                            year = values[values.Length-1].Trim();
-                            for (int i = 0; i < values.Length - 1; i++)
-                            {
-                                name += values[i] + ",";
-                            }
-                            name = name.Substring(0, name.Length - 1);
-                        }
-                        else
-                        {
-                            name = value;
-                        }
-                        dataGridView1.Rows.Add(year, name,attributeValue);
-                    }
-                }                    
-            }         
+            LoadFilms("Need for speed");      
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -74,21 +52,53 @@ namespace Filyama
             
         }
 
-        private void LoadFilm(String uri)
+        private void LoadFilm(String id)
         {
-            using (WebClient client = new WebClient())
+            TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
+            Movie movie = client.GetMovie(id, "ru");
+
+            Console.WriteLine("Movie name: {0}", movie.Title);
+            textBoxTitleOrigin.Text = movie.OriginalTitle;
+            textBoxTitleRus.Text = movie.Title;
+            dateTimePickerDateWorld.Value = movie.ReleaseDate ?? default(DateTime);
+            foreach (Genre genre in movie.Genres)
             {
-                client.Encoding = System.Text.Encoding.Default;
-                var doc = new HtmlAgilityPack.HtmlDocument();
-                doc.LoadHtml(client.DownloadString(uri));
-                HtmlNodeCollection node = doc.DocumentNode.SelectNodes("//div[@id='content']");
-                int a = 1;
-                a++;
-                /*foreach (HtmlNode nodeB in node.SelectNodes(".//b"))
+                checkedListBox1.Items.Add(Common.format(genre.Name),true);
+            }
+            //String ut= client.Config.Images.PosterSizes.First();
+            //String path = movie.PosterPath;
+            //String poster = client.GetImageUrl("",movie.PosterPath);
+            
+
+        }
+        private void LoadFilms(String uri)
+        {
+            TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
+            SearchContainer<SearchMovie> results = client.SearchMovie(uri, "ru");
+
+            Console.WriteLine("Got {0} of {1} results", results.Results.Count, results.TotalResults);
+            dataGridView1.Rows.Clear(); checkedListBox1.Items.Clear();
+            foreach (SearchMovie result in results.Results){
+                Console.WriteLine(result.Title);
+                String year = null;
+                if (result.ReleaseDate != null)
                 {
-                    textBox1.Text = nodeB.InnerText;                    
-                }*/
-            }         
+                    year = result.ReleaseDate.Value.Year.ToString();
+                }
+                dataGridView1.Rows.Add(year,result.Title,result.Id);
+            }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            originTitle = textBoxTitleOrigin.Text;
+            rusTitle = textBoxTitleRus.Text;
+            dateWorld = dateTimePickerDateWorld.Value;
+            dateRus = dateTimePickerDateRus.Value;
+            foreach (object itemChecked in checkedListBox1.CheckedItems)
+            {
+                genres.Add((String)itemChecked);
+            }
         }
     }
 }

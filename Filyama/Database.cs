@@ -33,6 +33,50 @@ namespace Filyama
                 }
             }
         }
+
+        public static void RefreshCategory()
+        {
+            //Добавление Категорий
+            Common.categoryList = new Dictionary<int, Category>();
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "SELECT * FROM category";
+                try
+                {
+                    SQLiteDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        Category categoryVar = new Category();
+                        categoryVar.id = Convert.ToInt32(r["id"]);
+                        categoryVar.name = Convert.ToString(r["name"]);
+                        if (r["id_image"] != DBNull.Value)
+                        {
+                            categoryVar.idImage = Convert.ToInt32(r["id_image"]);
+                        }
+                        else
+                        {
+                            categoryVar.idImage = -1;
+                        }
+
+                        if (r["id_parent"] != DBNull.Value)
+                        {
+                            categoryVar.idParent = Convert.ToInt32(r["id_parent"]);
+                        }
+                        else
+                        {
+                            categoryVar.idParent = -1;
+                        }                        
+                        Common.categoryList.Add(categoryVar.id, categoryVar);
+                    }
+                    r.Close();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
         public static int NewFilms()
         {
             int newRow = -1;
@@ -196,6 +240,7 @@ namespace Filyama
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                //--------Основная информация
                 cmd.CommandText = "UPDATE films SET "; int countSet = 0;
                 if (!oldFilm.nameOrig.Equals(newFilm.nameOrig))
                 {
@@ -227,6 +272,93 @@ namespace Filyama
                 }
                 cmd.CommandText += " WHERE id=@id";
                 cmd.Parameters.Add(new SQLiteParameter("@id", newFilm.id));
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                //--------Жанры
+                var removeGenre = oldFilm.categories.Except(newFilm.categories).ToList();
+                foreach (int removeCategory in removeGenre)
+                {
+                    Database.removeCategoryFromFilm(removeCategory, newFilm.id);
+                }
+                var addGenre = newFilm.categories.Except(oldFilm.categories).ToList();
+                foreach (int addCategory in addGenre)
+                {
+                    Database.addCategoryToiFilm(addCategory, newFilm.id);
+                }
+            }
+        }
+
+        public static long AddCategory(String name,int idParent,int idImage) {
+            long lastId = -1;
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {                
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO category(name,id_parent,id_image) VALUES(@name,@id_parent,@id_image)";
+                cmd.Parameters.AddWithValue("@name", name);
+                if (idParent != -1)
+                {
+                    cmd.Parameters.AddWithValue("@id_parent", idParent);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@id_parent", null);
+                }
+                if (idImage != -1)
+                {
+                    cmd.Parameters.AddWithValue("@id_image", idImage);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@id_image", null);
+                }
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                string sql = @"select last_insert_rowid()";
+                cmd.CommandText = sql;
+                lastId = (long)cmd.ExecuteScalar();
+            }
+            return lastId;
+        }
+
+        public static void removeCategoryFromFilm(int idCategory, int idFilm)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "DELETE FROM category_films WHERE id_films=@id_films AND id_category=@id_category";
+                cmd.Parameters.AddWithValue("@id_films", idFilm);
+                cmd.Parameters.AddWithValue("@id_category", idCategory);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public static void addCategoryToiFilm(int idCategory, int idFilm)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO category_films(id_films,id_category) VALUES(@id_films,@id_category)";
+                cmd.Parameters.AddWithValue("@id_films", idFilm);
+                cmd.Parameters.AddWithValue("@id_category", idCategory);
                 try
                 {
                     cmd.ExecuteNonQuery();

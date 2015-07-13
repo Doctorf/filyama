@@ -20,6 +20,15 @@ namespace Filyama
         {
             return name;
         }
+        public static bool operator ==(Category c1, Category c2)
+        {
+            return c1.name.Equals(c2.name);
+        }
+
+        public static bool operator !=(Category c1, Category c2)
+        {
+            return !c1.name.Equals(c2.name);
+        }
     }
 
     public struct Media
@@ -116,6 +125,13 @@ namespace Filyama
                 }
                 return stream.ToArray();
             }
+        }
+
+        public static String format(String source)
+        {
+            if (String.IsNullOrEmpty(source))
+                throw new ArgumentException("String not found!");
+            return source.First().ToString().ToUpper() + source.Substring(1);
         }
     }
 }

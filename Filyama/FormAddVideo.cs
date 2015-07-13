@@ -121,6 +121,37 @@ namespace Filyama
 
         }
 
+        private void RefreshCategories()
+        {
+            Database.RefreshCategory();
+           
+                checkedListBoxCategory.Items.Clear();
+                foreach (KeyValuePair<int, Category> category in Common.categoryList)
+                {
+                    Boolean find = false;
+                    if (editFilma.id != 0 && editFilma.categories != null)
+                    {
+                        find = editFilma.categories.Contains(category.Key);
+                    }
+                    checkedListBoxCategory.Items.Add(category.Value, find);
+                }            
+        }
+
+        private void RefreshCategories(List<String> newCategories)
+        {
+            Database.RefreshCategory();
+
+            checkedListBoxCategory.Items.Clear();
+            foreach (KeyValuePair<int, Category> category in Common.categoryList)
+            {
+                Boolean find = false;
+                if (editFilma.id != 0 && newCategories != null)
+                {
+                    find = newCategories.Contains(category.Value.name);
+                }
+                checkedListBoxCategory.Items.Add(category.Value, find);
+            }
+        }
         private void FormAddVideo_Load(object sender, EventArgs e)
         {
             checkedListBoxCategory.Items.Clear();
@@ -146,16 +177,7 @@ namespace Filyama
                     LoadCover(Application.StartupPath + "\\" + editFilma.coverURL);
                 }
             }
-
-            foreach (KeyValuePair<int, Category> category in Common.categoryList)
-            {
-                Boolean find = false;
-                if (editFilma.id != 0 && editFilma.categories != null)
-                {
-                    find=editFilma.categories.Contains(category.Key);
-                }
-                checkedListBoxCategory.Items.Add(category.Value,find);
-            }
+            RefreshCategories();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -174,7 +196,7 @@ namespace Filyama
             {
                 System.IO.Directory.CreateDirectory(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString());
             }
-            if (coverURL != null)
+            if (coverURL != null&&System.IO.File.Exists(coverURL))
             {
                 System.IO.File.Copy(coverURL, destFile, true);
                 long coverId = Database.AddBinaryData(destPath, false, false, true);
@@ -234,13 +256,59 @@ namespace Filyama
         private void LoadCover(String filename)
         {
             coverURL = filename;
-            pictureBoxImage.Load(filename);
+            try
+            {
+                pictureBoxImage.Load(filename);
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
         private void buttonLoadCover_Click(object sender, EventArgs e)
         {
             if (openFileDialogImage.ShowDialog() == DialogResult.OK)
             {
                 LoadCover(openFileDialogImage.FileName);                
+            }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            FormSearch search = new FormSearch();
+            if (DialogResult.OK==search.ShowDialog())
+            {
+                textBoxNameOrig.Text = search.originTitle;
+                textBoxNameRus.Text = search.rusTitle;
+                dateTimePickerDateWorld.Value = search.dateWorld;
+                dateTimePickerDateRus.Value = search.dateRus;
+                foreach (int i in checkedListBoxCategory.CheckedIndices)
+                {
+                    checkedListBoxCategory.SetItemCheckState(i, CheckState.Unchecked);
+                }
+                foreach (String newCategory in search.genres)
+                {
+                    int findCategory = -1; int index = -1;
+                    foreach (object itemChecked in checkedListBoxCategory.Items)
+                    {
+                        Category category = (Category)itemChecked; index++;
+                        if (newCategory.Equals(category.name))
+                        {
+                            findCategory = category.id; break;
+                        }
+                    }
+                    if (findCategory == -1)
+                    {
+                        long idCategory=Database.AddCategory(newCategory, -1, -1);
+                        //checkedListBoxCategory.SetItemCheckState(index, CheckState.Checked);
+                    }
+                    else
+                    {
+                        editFilma.categories.Add(findCategory);
+                        //checkedListBoxCategory.SetItemCheckState(index, CheckState.Checked);
+                    }
+                }
+                RefreshCategories(search.genres);
             }
         }
     }
