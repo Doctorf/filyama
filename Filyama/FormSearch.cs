@@ -25,6 +25,7 @@ namespace Filyama
         public DateTime dateWorld;
         public DateTime dateRus;
         public List<String> genres = new List<string>();
+        public String coverURL = "";
 
         public FormSearch()
         {
@@ -33,16 +34,16 @@ namespace Filyama
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LoadFilms("Need for speed");      
+            LoadFilms(textBoxNameSearch.Text);      
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-             if (dataGridView1.SelectedCells.Count > 0)
+             if (dataGridViewFindingFilms.SelectedCells.Count > 0)
          {
-             int selectedrowindex = dataGridView1.SelectedCells[0].RowIndex;
+             int selectedrowindex = dataGridViewFindingFilms.SelectedCells[0].RowIndex;
 
-             DataGridViewRow selectedRow = dataGridView1.Rows[selectedrowindex];  
+             DataGridViewRow selectedRow = dataGridViewFindingFilms.Rows[selectedrowindex];  
 
               string uri = Convert.ToString(selectedRow.Cells[2].Value);
               LoadFilm(uri);
@@ -55,6 +56,7 @@ namespace Filyama
         private void LoadFilm(String id)
         {
             TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
+            client.GetConfig();
             Movie movie = client.GetMovie(id, "ru");
 
             Console.WriteLine("Movie name: {0}", movie.Title);
@@ -67,8 +69,16 @@ namespace Filyama
             }
             //String ut= client.Config.Images.PosterSizes.First();
             //String path = movie.PosterPath;
-            //String poster = client.GetImageUrl("",movie.PosterPath);
             
+            Uri poster = client.GetImageUrl("original",movie.PosterPath);
+            string filename= System.IO.Path.GetFileName(poster.LocalPath);
+            String newCover = System.IO.Path.GetTempPath() + "\\" + filename;
+            using (var clientPoster = new WebClient())
+            {
+                clientPoster.DownloadFile(poster, newCover);
+                coverURL = newCover;
+            }
+            pictureBox1.Load(newCover);
 
         }
         private void LoadFilms(String uri)
@@ -77,7 +87,7 @@ namespace Filyama
             SearchContainer<SearchMovie> results = client.SearchMovie(uri, "ru");
 
             Console.WriteLine("Got {0} of {1} results", results.Results.Count, results.TotalResults);
-            dataGridView1.Rows.Clear(); checkedListBox1.Items.Clear();
+            dataGridViewFindingFilms.Rows.Clear(); checkedListBox1.Items.Clear();
             foreach (SearchMovie result in results.Results){
                 Console.WriteLine(result.Title);
                 String year = null;
@@ -85,7 +95,7 @@ namespace Filyama
                 {
                     year = result.ReleaseDate.Value.Year.ToString();
                 }
-                dataGridView1.Rows.Add(year,result.Title,result.Id);
+                dataGridViewFindingFilms.Rows.Add(year,result.Title,result.Id);
             }
         }
 
@@ -98,6 +108,14 @@ namespace Filyama
             foreach (object itemChecked in checkedListBox1.CheckedItems)
             {
                 genres.Add((String)itemChecked);
+            }
+        }
+
+        private void textBoxNameSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoadFilms(textBoxNameSearch.Text);   
             }
         }
     }

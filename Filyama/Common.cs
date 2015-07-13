@@ -90,7 +90,10 @@ namespace Filyama
     class Common
     {
         static public SQLiteConnection connectionLocal;
+
         static public String imagesPath="\\images\\";
+        static public int indexElement = 4;
+
         static public Dictionary<int, int> imageCategoryList;
         static public Dictionary<int, Category> categoryList;
         static public Dictionary<int, byte[]> imageCategoryListData;

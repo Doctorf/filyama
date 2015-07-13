@@ -42,7 +42,7 @@ namespace Filyama
             }                            
         }
 
-        public void RefreshFilms()
+        public void RefreshFilms(String filterName="")
         {
             Boolean filterCategory = false; dataGridViewFilms.Rows.Clear(); Common.films.Clear();
             if (Common.connectionLocal.State == ConnectionState.Open)
@@ -59,11 +59,11 @@ namespace Filyama
                         indexCategory = categoryVar.id;
                     }                    
                 }
-                string sql_command = "SELECT * FROM films;";
+                string sql_command = "SELECT * FROM films WHERE 1=1";
                 if (filterCategory)
                 {
-                    sql_command = "SELECT DISTINCT f.* FROM films f LEFT JOIN category_films cf ON cf.id_films=f.id WHERE cf.id_category=@id_category;";
-                }                
+                    sql_command = "SELECT DISTINCT f.* FROM films f LEFT JOIN category_films cf ON cf.id_films=f.id WHERE cf.id_category=@id_category";
+                }
                 cmd.CommandText = sql_command;
                 if (filterCategory)
                 {
@@ -138,7 +138,17 @@ namespace Filyama
                             selectFilm.dateRus = Convert.ToDateTime(r["date_rus"]);
                         }
                         Common.films.Add(selectFilm.id, selectFilm);
-                        dataGridViewFilms.Rows.Add(imageFilms, coverFilms, selectFilm.id,selectFilm.nameRus );
+                        if (!filterName.Equals(String.Empty))
+                        {
+                            if (selectFilm.ToString().IndexOf(filterName, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                            {
+                                dataGridViewFilms.Rows.Add(imageFilms, coverFilms, selectFilm.id, selectFilm.nameRus);
+                            }
+                        }
+                        else
+                        {
+                            dataGridViewFilms.Rows.Add(imageFilms, coverFilms, selectFilm.id, selectFilm.nameRus);
+                        }
                     }
                     r.Close();
                 }
@@ -354,7 +364,9 @@ namespace Filyama
             FormAddVideo addVideo = new FormAddVideo();
             if (addVideo.ShowDialog()==DialogResult.OK)
             {
+                RefreshCategory();
                 RefreshFilms();
+                updateWIndowFilm();
             }
         }
 
@@ -366,8 +378,7 @@ namespace Filyama
             input = input.Replace("${films.categorys}", selectFilm.categoriesString);
             input = input.Replace("${films.year}", selectFilm.dateWorld.Year.ToString());
             input = input.Replace("${films.dateWorld}", selectFilm.dateWorld.ToString("dd-MM-yyyy"));
-            input = input.Replace("${films.dateRus}", selectFilm.dateWorld.ToString("dd-MM-yyyy"));
-            input = input.Replace("${films.dateRus}", selectFilm.dateWorld.ToString("dd-MM-yyyy"));
+            input = input.Replace("${films.dateRus}", selectFilm.dateRus.ToString("dd-MM-yyyy"));            
             input = input.Replace("${films.director}", "Режисер");
             input = input.Replace("${films.time}", "100 минут");
             String output = input;
@@ -382,17 +393,37 @@ namespace Filyama
             return input;
         }
         int curRow = -1;
-        private void dataGridViewFilms_SelectionChanged(object sender, EventArgs e)
+
+        private void updateWIndowFilm()
         {
-            if (dataGridViewFilms.CurrentRow.Index != curRow)
+            Boolean blank = false;
+            if (dataGridViewFilms.CurrentRow != null)
             {
                 curRow = dataGridViewFilms.CurrentRow.Index;
                 int idFilm = Convert.ToInt32(dataGridViewFilms.Rows[curRow].Cells[2].Value);
                 if (idFilm != 0)
                 {
                     string template = System.IO.File.ReadAllText(Application.StartupPath + "\\Templates\\Default\\" + "Window_Film.html");
-                    webBrowser1.DocumentText = AddCss(ChangeTemplate(template,Common.films[idFilm]));
+                    webBrowser1.DocumentText = AddCss(ChangeTemplate(template, Common.films[idFilm]));
                 }
+                else
+                {
+                    blank = true;
+                }
+            } else {
+                blank=true;
+            }
+            if ( blank)
+            {
+                webBrowser1.Navigate("about:blank");
+            }
+        }
+
+        private void dataGridViewFilms_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewFilms.CurrentRow.Index != curRow)
+            {
+                updateWIndowFilm();
             }
             
         }
@@ -423,13 +454,22 @@ namespace Filyama
                     editVideo.ShowDialog();
                     RefreshCategory();
                     RefreshFilms();
+                    updateWIndowFilm();
                 }
         }
 
         private void toolStripButtonFind_Click(object sender, EventArgs e)
         {
-            FormSearch fromSearch = new FormSearch();
-            fromSearch.ShowDialog();
+
+        }
+
+        private void toolStripTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                RefreshFilms(toolStripTextBox1.Text);
+                updateWIndowFilm();
+            }
         }
     }
 }

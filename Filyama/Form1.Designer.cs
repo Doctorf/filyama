@@ -34,11 +34,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.dataGridViewFilms = new System.Windows.Forms.DataGridView();
-            this.ColumntCategory = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ColumntExistImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnNameFilm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelCategory = new System.Windows.Forms.Label();
+            this.buttonDeleteCategory = new System.Windows.Forms.Button();
+            this.buttonEditCategory = new System.Windows.Forms.Button();
+            this.buttonAddCategory = new System.Windows.Forms.Button();
             this.treeCategory = new System.Windows.Forms.TreeView();
             this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -58,16 +57,18 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonDatabase = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonElementEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonElementRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
-            this.buttonDeleteCategory = new System.Windows.Forms.Button();
-            this.buttonEditCategory = new System.Windows.Forms.Button();
-            this.buttonAddCategory = new System.Windows.Forms.Button();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.ColumntCategory = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumntExistImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnNameFilm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
@@ -107,10 +108,10 @@
             // 
             // webBrowser1
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(707, 6);
+            this.webBrowser1.Location = new System.Drawing.Point(594, 3);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(505, 419);
+            this.webBrowser1.Size = new System.Drawing.Size(618, 419);
             this.webBrowser1.TabIndex = 6;
             // 
             // dataGridViewFilms
@@ -128,34 +129,9 @@
             this.dataGridViewFilms.Name = "dataGridViewFilms";
             this.dataGridViewFilms.ReadOnly = true;
             this.dataGridViewFilms.RowHeadersVisible = false;
-            this.dataGridViewFilms.Size = new System.Drawing.Size(518, 422);
+            this.dataGridViewFilms.Size = new System.Drawing.Size(405, 422);
             this.dataGridViewFilms.TabIndex = 5;
             this.dataGridViewFilms.SelectionChanged += new System.EventHandler(this.dataGridViewFilms_SelectionChanged);
-            // 
-            // ColumntCategory
-            // 
-            this.ColumntCategory.HeaderText = "Category";
-            this.ColumntCategory.Name = "ColumntCategory";
-            this.ColumntCategory.ReadOnly = true;
-            // 
-            // ColumntExistImage
-            // 
-            this.ColumntExistImage.HeaderText = "Cover";
-            this.ColumntExistImage.Name = "ColumntExistImage";
-            this.ColumntExistImage.ReadOnly = true;
-            // 
-            // ColumnId
-            // 
-            this.ColumnId.HeaderText = "№";
-            this.ColumnId.Name = "ColumnId";
-            this.ColumnId.ReadOnly = true;
-            // 
-            // ColumnNameFilm
-            // 
-            this.ColumnNameFilm.HeaderText = "Название";
-            this.ColumnNameFilm.Name = "ColumnNameFilm";
-            this.ColumnNameFilm.ReadOnly = true;
-            this.ColumnNameFilm.Width = 210;
             // 
             // labelCategory
             // 
@@ -165,6 +141,36 @@
             this.labelCategory.Size = new System.Drawing.Size(60, 13);
             this.labelCategory.TabIndex = 4;
             this.labelCategory.Text = "Категории";
+            // 
+            // buttonDeleteCategory
+            // 
+            this.buttonDeleteCategory.BackgroundImage = global::Filyama.Properties.Resources.Minus;
+            this.buttonDeleteCategory.Location = new System.Drawing.Point(70, 6);
+            this.buttonDeleteCategory.Name = "buttonDeleteCategory";
+            this.buttonDeleteCategory.Size = new System.Drawing.Size(25, 25);
+            this.buttonDeleteCategory.TabIndex = 3;
+            this.buttonDeleteCategory.UseVisualStyleBackColor = true;
+            this.buttonDeleteCategory.Click += new System.EventHandler(this.buttonDeleteCategory_Click);
+            // 
+            // buttonEditCategory
+            // 
+            this.buttonEditCategory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonEditCategory.BackgroundImage")));
+            this.buttonEditCategory.Location = new System.Drawing.Point(39, 6);
+            this.buttonEditCategory.Name = "buttonEditCategory";
+            this.buttonEditCategory.Size = new System.Drawing.Size(25, 25);
+            this.buttonEditCategory.TabIndex = 2;
+            this.buttonEditCategory.UseVisualStyleBackColor = true;
+            this.buttonEditCategory.Click += new System.EventHandler(this.buttonEditCategory_Click);
+            // 
+            // buttonAddCategory
+            // 
+            this.buttonAddCategory.BackgroundImage = global::Filyama.Properties.Resources.Plus;
+            this.buttonAddCategory.Location = new System.Drawing.Point(8, 6);
+            this.buttonAddCategory.Name = "buttonAddCategory";
+            this.buttonAddCategory.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddCategory.TabIndex = 1;
+            this.buttonAddCategory.UseVisualStyleBackColor = true;
+            this.buttonAddCategory.Click += new System.EventHandler(this.buttonAddCategory_Click);
             // 
             // treeCategory
             // 
@@ -323,17 +329,13 @@
             this.toolStripButtonElementEdit,
             this.toolStripButtonElementAdd,
             this.toolStripButtonElementRemove,
-            this.toolStripButtonFind});
+            this.toolStripButtonFind,
+            this.toolStripTextBox1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1228, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonDatabase
             // 
@@ -354,6 +356,11 @@
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSave.Text = "toolStripButton1";
             this.toolStripButtonSave.ToolTipText = "Save";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonElementEdit
             // 
@@ -399,35 +406,41 @@
             this.toolStripButtonFind.Text = "toolStripButton1";
             this.toolStripButtonFind.Click += new System.EventHandler(this.toolStripButtonFind_Click);
             // 
-            // buttonDeleteCategory
+            // toolStripTextBox1
             // 
-            this.buttonDeleteCategory.BackgroundImage = global::Filyama.Properties.Resources.Minus;
-            this.buttonDeleteCategory.Location = new System.Drawing.Point(70, 6);
-            this.buttonDeleteCategory.Name = "buttonDeleteCategory";
-            this.buttonDeleteCategory.Size = new System.Drawing.Size(25, 25);
-            this.buttonDeleteCategory.TabIndex = 3;
-            this.buttonDeleteCategory.UseVisualStyleBackColor = true;
-            this.buttonDeleteCategory.Click += new System.EventHandler(this.buttonDeleteCategory_Click);
+            this.toolStripTextBox1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(250, 25);
+            this.toolStripTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.toolStripTextBox1_KeyDown);
             // 
-            // buttonEditCategory
+            // ColumntCategory
             // 
-            this.buttonEditCategory.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonEditCategory.BackgroundImage")));
-            this.buttonEditCategory.Location = new System.Drawing.Point(39, 6);
-            this.buttonEditCategory.Name = "buttonEditCategory";
-            this.buttonEditCategory.Size = new System.Drawing.Size(25, 25);
-            this.buttonEditCategory.TabIndex = 2;
-            this.buttonEditCategory.UseVisualStyleBackColor = true;
-            this.buttonEditCategory.Click += new System.EventHandler(this.buttonEditCategory_Click);
+            this.ColumntCategory.HeaderText = "Category";
+            this.ColumntCategory.Name = "ColumntCategory";
+            this.ColumntCategory.ReadOnly = true;
             // 
-            // buttonAddCategory
+            // ColumntExistImage
             // 
-            this.buttonAddCategory.BackgroundImage = global::Filyama.Properties.Resources.Plus;
-            this.buttonAddCategory.Location = new System.Drawing.Point(8, 6);
-            this.buttonAddCategory.Name = "buttonAddCategory";
-            this.buttonAddCategory.Size = new System.Drawing.Size(25, 25);
-            this.buttonAddCategory.TabIndex = 1;
-            this.buttonAddCategory.UseVisualStyleBackColor = true;
-            this.buttonAddCategory.Click += new System.EventHandler(this.buttonAddCategory_Click);
+            this.ColumntExistImage.FillWeight = 50F;
+            this.ColumntExistImage.HeaderText = "Cover";
+            this.ColumntExistImage.Name = "ColumntExistImage";
+            this.ColumntExistImage.ReadOnly = true;
+            this.ColumntExistImage.Width = 50;
+            // 
+            // ColumnId
+            // 
+            this.ColumnId.FillWeight = 30F;
+            this.ColumnId.HeaderText = "№";
+            this.ColumnId.Name = "ColumnId";
+            this.ColumnId.ReadOnly = true;
+            this.ColumnId.Width = 30;
+            // 
+            // ColumnNameFilm
+            // 
+            this.ColumnNameFilm.HeaderText = "Название";
+            this.ColumnNameFilm.Name = "ColumnNameFilm";
+            this.ColumnNameFilm.ReadOnly = true;
+            this.ColumnNameFilm.Width = 210;
             // 
             // Form1
             // 
@@ -493,6 +506,7 @@
         private System.Windows.Forms.TreeView treeViewListSerials;
         private System.Windows.Forms.ToolStripMenuItem preferenseToolStripMenuItem;
         private System.Windows.Forms.ImageList imageListCategory;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.DataGridViewImageColumn ColumntCategory;
         private System.Windows.Forms.DataGridViewImageColumn ColumntExistImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;

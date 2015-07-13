@@ -145,7 +145,7 @@ namespace Filyama
             foreach (KeyValuePair<int, Category> category in Common.categoryList)
             {
                 Boolean find = false;
-                if (editFilma.id != 0 && newCategories != null)
+                if (newCategories != null)
                 {
                     find = newCategories.Contains(category.Value.name);
                 }
@@ -299,15 +299,10 @@ namespace Filyama
                     }
                     if (findCategory == -1)
                     {
-                        long idCategory=Database.AddCategory(newCategory, -1, -1);
-                        //checkedListBoxCategory.SetItemCheckState(index, CheckState.Checked);
-                    }
-                    else
-                    {
-                        editFilma.categories.Add(findCategory);
-                        //checkedListBoxCategory.SetItemCheckState(index, CheckState.Checked);
-                    }
+                        long idCategory=Database.AddCategory(newCategory, -1, Common.indexElement);                      
+                    };
                 }
+                LoadCover(search.coverURL);
                 RefreshCategories(search.genres);
             }
         }

@@ -49,8 +49,9 @@ namespace Filyama
              * 0 - folder
              * 1 - cross
              * 2 - check
+             * 3 - element
              * */
-            for (int i = 3; i < images.Images.Count; i++)
+            for (int i = 4; i < images.Images.Count; i++)
             {
                 listViewPictures.Items.Add(new ListViewItem { ImageIndex = i });
             }
