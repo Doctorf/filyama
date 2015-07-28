@@ -153,6 +153,11 @@ namespace Filyama
             return lastId;
         }
 
+        public static long AddMediaFile(String url)
+        {
+            return AddBinaryData(url, false, false, false);
+        }
+
         public static void AddFilm(Film newFilm) {
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
@@ -206,6 +211,21 @@ namespace Filyama
                     cmd.CommandText = "UPDATE films SET id_cover=@id_cover WHERE id=@id;";
                     cmd.Parameters.Add(new SQLiteParameter("@id", newFilm.id));
                     cmd.Parameters.Add(new SQLiteParameter("@id_cover", lastIdCover));
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                //-------Медиафайлы
+                for (int i = 0; i < newFilm.mediafiles.Count; i++)
+                {
+                    cmd.CommandText = "INSERT INTO binary_data_films(id_films,id_binary_data) VALUES(@id_films,@id_binary_data);";
+                    cmd.Parameters.Add(new SQLiteParameter("@id_films", newFilm.id));
+                    cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", newFilm.mediafiles[i]));
                     try
                     {
                         cmd.ExecuteNonQuery();
@@ -291,6 +311,8 @@ namespace Filyama
                 {
                     Database.addCategoryToiFilm(addCategory, newFilm.id);
                 }
+                //--------Медиа файлы
+
             }
         }
 

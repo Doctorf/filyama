@@ -53,7 +53,7 @@ namespace Filyama
 
         public override string ToString()
         {
-            return name;
+            return path;
         }
     }
 
@@ -71,6 +71,7 @@ namespace Filyama
         //------Сохранение в БД
         public long coverId;
         public List<int> categories;
+        public List<long> mediafiles;
 
         public override string ToString()
         {

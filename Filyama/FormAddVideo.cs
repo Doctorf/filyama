@@ -75,7 +75,7 @@ namespace Filyama
             this.Close();
         }
 
-        private void RecursiveAddMedia(TreeNode node, List<BinaryData> files,String path)
+        private void RecursiveAddMedia(TreeNode node,Boolean rootNode,List<BinaryData> files,String path)
         {
             if (files == null) files = new List<BinaryData>();
             String newpath = "";
@@ -85,35 +85,38 @@ namespace Filyama
                 data.foto = medias[Convert.ToInt32(node.Tag)].foto;
                 data.name = node.Text;
                 data.path = path + "\\" + node.Text;
-                data.fullpath = node.FullPath;
-                newpath = path + "\\" + node.Text;
+                data.fullpath = node.FullPath;                
                 files.Add(data);
             }
             foreach (TreeNode newNode in node.Nodes)
             {
-                RecursiveAddMedia(newNode, files,newpath);
+                if (!rootNode)
+                {
+                    newpath = path + "\\" + node.Text;
+                }
+                RecursiveAddMedia(newNode,false,files,newpath);
             }
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            //if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            //{
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
                 treeView1.Nodes.Clear();
-                //TreeNode rootnode = new TreeNode(folderBrowserDialog1.SelectedPath);
-                TreeNode rootnode = new TreeNode(textBoxFullPath.Text);
+                TreeNode rootnode = new TreeNode(folderBrowserDialog1.SelectedPath);
+                //TreeNode rootnode = new TreeNode(textBoxFullPath.Text);
                 treeView1.Nodes.Add(rootnode);
                 FillChildNodes(rootnode);
                 treeView1.ExpandAll();
-                //textBoxFullPath.Text = folderBrowserDialog1.SelectedPath;
+                textBoxFullPath.Text = folderBrowserDialog1.SelectedPath;
                 List<BinaryData> files = new List<BinaryData>();
-                RecursiveAddMedia(treeView1.Nodes[0], files,"");
+                RecursiveAddMedia(treeView1.Nodes[0],true,files,"");
                 listBoxFiles.Items.Clear();
                 foreach (BinaryData s in files)
                 {
                     listBoxFiles.Items.Add(s);
                 }
-            //}
+            }
         }
 
         private void buttonNext_Click(object sender, EventArgs e)
@@ -176,6 +179,9 @@ namespace Filyama
                 {
                     LoadCover(Application.StartupPath + "\\" + editFilma.coverURL);
                 }
+                for(int i=0;i<editFilma.mediafiles.Count;i++) {
+                    listBoxFiles.Items.Add(editFilma.mediafiles[i]);
+                }
             }
             RefreshCategories();
         }
@@ -189,7 +195,7 @@ namespace Filyama
             newFilma.dateWorld = dateTimePickerDateWorld.Value;
             newFilma.dateRus = dateTimePickerDateRus.Value;
             String destPath = Common.imagesPath + "\\" + newFilma.id.ToString() + "\\" + "cover" + Path.GetExtension(coverURL);
-            string destFile = System.IO.Path.Combine(Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString(), "\\cover"+Path.GetExtension(coverURL));
+            string destFile = Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString()+ "\\cover"+Path.GetExtension(coverURL);
             // To copy a folder's contents to a new location:
             // Create a new target folder, if necessary.
             if (!System.IO.Directory.Exists(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString()))
@@ -202,11 +208,22 @@ namespace Filyama
                 long coverId = Database.AddBinaryData(destPath, false, false, true);
                 newFilma.coverId = coverId;
             }            
+            //--------Категории фильма
             newFilma.categories=new List<int>();            
             foreach (object itemChecked in checkedListBoxCategory.CheckedItems)
             {
                 Category category = (Category)itemChecked;
                 newFilma.categories.Add(category.id);
+            }
+            //-------Медиа файлы
+            newFilma.mediafiles = new List<long>();
+            foreach (var item in listBoxFiles.Items)
+            {
+                BinaryData data=(BinaryData)item;
+                if (!data.foto) {
+                    long mediaId = Database.AddMediaFile(data.path);
+                    newFilma.mediafiles.Add(mediaId);
+                }
             }
             if (newFilm)
             {
@@ -229,6 +246,7 @@ namespace Filyama
             {
                 DragDropEffects dde1 = DoDragDrop(s.fullpath,
                     DragDropEffects.All);
+                listBoxFiles.Items.RemoveAt(index);
             }
             else return;
         }
