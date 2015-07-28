@@ -369,5 +369,54 @@ namespace Filyama
                 }
             }
         }
+
+        public static void RefreshSerials()
+        {
+            Common.serials = new Dictionary<int, Serial>();
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "SELECT * FROM serials";
+                try
+                {
+                    SQLiteDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        Serial serial = new Serial();
+                        serial.id = Convert.ToInt32(r["id"]);
+                        serial.name = Convert.ToString(r["name"]);
+                        SQLiteCommand cmd_seasons = Common.connectionLocal.CreateCommand();
+                        cmd_seasons.CommandText = "SELECT * FROM season_serial LEFT JOIN seasons ON seasons.id=season_serial.id_season WHERE id_serial=@id_serial";
+                        cmd_seasons.Parameters.AddWithValue("@id_serial", serial.id);
+                        try
+                        {
+                            SQLiteDataReader r_seasons = cmd_seasons.ExecuteReader();
+                            while (r_seasons.Read())
+                            {
+                                if (serial.seasons == null)
+                                {
+                                    serial.seasons = new List<Season>();
+                                }
+                                Season season = new Season();
+                                season.id = Convert.ToInt32(r_seasons["id"]);
+                                season.number = Convert.ToInt32(r_seasons["number"]);
+                                season.name = Convert.ToString(r_seasons["name"]);
+                                serial.seasons.Add(season);
+                            }
+                        }
+                        catch (SQLiteException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        Common.serials.Add(serial.id, serial);
+
+                    }
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }            
+        }
     }
 }

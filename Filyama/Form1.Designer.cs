@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.webBrowserFilm = new System.Windows.Forms.WebBrowser();
             this.dataGridViewFilms = new System.Windows.Forms.DataGridView();
             this.ColumntCategory = new System.Windows.Forms.DataGridViewImageColumn();
             this.ColumntExistImage = new System.Windows.Forms.DataGridViewImageColumn();
@@ -72,10 +72,17 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.saveZipFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openZipFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.webBrowserSerial = new System.Windows.Forms.WebBrowser();
+            this.webBrowserAnime = new System.Windows.Forms.WebBrowser();
+            this.treeAnime = new System.Windows.Forms.TreeView();
+            this.buttonAddAnime = new System.Windows.Forms.Button();
+            this.buttonEditAnime = new System.Windows.Forms.Button();
+            this.buttonDeleteAnime = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -89,12 +96,13 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 52);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1228, 463);
+            this.tabControl1.Size = new System.Drawing.Size(1228, 522);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.webBrowser1);
+            this.tabPage1.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage1.Controls.Add(this.webBrowserFilm);
             this.tabPage1.Controls.Add(this.dataGridViewFilms);
             this.tabPage1.Controls.Add(this.labelCategory);
             this.tabPage1.Controls.Add(this.buttonDeleteCategory);
@@ -104,18 +112,17 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1220, 437);
+            this.tabPage1.Size = new System.Drawing.Size(1220, 496);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabFilms";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // webBrowser1
+            // webBrowserFilm
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(594, 3);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(618, 419);
-            this.webBrowser1.TabIndex = 6;
+            this.webBrowserFilm.Location = new System.Drawing.Point(594, 3);
+            this.webBrowserFilm.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserFilm.Name = "webBrowserFilm";
+            this.webBrowserFilm.Size = new System.Drawing.Size(618, 485);
+            this.webBrowserFilm.TabIndex = 6;
             // 
             // dataGridViewFilms
             // 
@@ -132,7 +139,7 @@
             this.dataGridViewFilms.Name = "dataGridViewFilms";
             this.dataGridViewFilms.ReadOnly = true;
             this.dataGridViewFilms.RowHeadersVisible = false;
-            this.dataGridViewFilms.Size = new System.Drawing.Size(405, 422);
+            this.dataGridViewFilms.Size = new System.Drawing.Size(405, 485);
             this.dataGridViewFilms.TabIndex = 5;
             this.dataGridViewFilms.SelectionChanged += new System.EventHandler(this.dataGridViewFilms_SelectionChanged);
             // 
@@ -211,7 +218,7 @@
             this.treeCategory.Location = new System.Drawing.Point(8, 37);
             this.treeCategory.Name = "treeCategory";
             this.treeCategory.SelectedImageIndex = 0;
-            this.treeCategory.Size = new System.Drawing.Size(169, 388);
+            this.treeCategory.Size = new System.Drawing.Size(169, 451);
             this.treeCategory.TabIndex = 0;
             this.treeCategory.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeCategory_AfterSelect);
             // 
@@ -223,6 +230,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage2.Controls.Add(this.webBrowserSerial);
             this.tabPage2.Controls.Add(this.labelSerials);
             this.tabPage2.Controls.Add(this.buttonDeleteSerials);
             this.tabPage2.Controls.Add(this.buttonEditSerials);
@@ -231,10 +240,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1220, 437);
+            this.tabPage2.Size = new System.Drawing.Size(1220, 496);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabTVShows";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // labelSerials
             // 
@@ -247,6 +255,7 @@
             // 
             // buttonDeleteSerials
             // 
+            this.buttonDeleteSerials.BackgroundImage = global::Filyama.Properties.Resources.Minus;
             this.buttonDeleteSerials.Location = new System.Drawing.Point(76, 13);
             this.buttonDeleteSerials.Name = "buttonDeleteSerials";
             this.buttonDeleteSerials.Size = new System.Drawing.Size(25, 25);
@@ -255,6 +264,7 @@
             // 
             // buttonEditSerials
             // 
+            this.buttonEditSerials.BackgroundImage = global::Filyama.Properties.Resources.edit_25;
             this.buttonEditSerials.Location = new System.Drawing.Point(45, 12);
             this.buttonEditSerials.Name = "buttonEditSerials";
             this.buttonEditSerials.Size = new System.Drawing.Size(25, 25);
@@ -263,6 +273,7 @@
             // 
             // buttonAddSerials
             // 
+            this.buttonAddSerials.BackgroundImage = global::Filyama.Properties.Resources.Plus;
             this.buttonAddSerials.Location = new System.Drawing.Point(14, 13);
             this.buttonAddSerials.Name = "buttonAddSerials";
             this.buttonAddSerials.Size = new System.Drawing.Size(25, 25);
@@ -273,18 +284,23 @@
             // 
             this.treeViewListSerials.Location = new System.Drawing.Point(14, 44);
             this.treeViewListSerials.Name = "treeViewListSerials";
-            this.treeViewListSerials.Size = new System.Drawing.Size(224, 385);
+            this.treeViewListSerials.Size = new System.Drawing.Size(224, 436);
             this.treeViewListSerials.TabIndex = 0;
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage3.Controls.Add(this.buttonDeleteAnime);
+            this.tabPage3.Controls.Add(this.buttonEditAnime);
+            this.tabPage3.Controls.Add(this.buttonAddAnime);
+            this.tabPage3.Controls.Add(this.treeAnime);
+            this.tabPage3.Controls.Add(this.webBrowserAnime);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1220, 437);
+            this.tabPage3.Size = new System.Drawing.Size(1220, 496);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabAnime";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -466,11 +482,61 @@
             this.openZipFileDialog.DefaultExt = "zip";
             this.openZipFileDialog.Filter = "Zip file|*.zip";
             // 
+            // webBrowserSerial
+            // 
+            this.webBrowserSerial.Location = new System.Drawing.Point(248, 11);
+            this.webBrowserSerial.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserSerial.Name = "webBrowserSerial";
+            this.webBrowserSerial.Size = new System.Drawing.Size(956, 469);
+            this.webBrowserSerial.TabIndex = 5;
+            // 
+            // webBrowserAnime
+            // 
+            this.webBrowserAnime.Location = new System.Drawing.Point(351, 13);
+            this.webBrowserAnime.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserAnime.Name = "webBrowserAnime";
+            this.webBrowserAnime.Size = new System.Drawing.Size(848, 463);
+            this.webBrowserAnime.TabIndex = 0;
+            // 
+            // treeAnime
+            // 
+            this.treeAnime.Location = new System.Drawing.Point(17, 41);
+            this.treeAnime.Name = "treeAnime";
+            this.treeAnime.Size = new System.Drawing.Size(227, 435);
+            this.treeAnime.TabIndex = 1;
+            // 
+            // buttonAddAnime
+            // 
+            this.buttonAddAnime.BackgroundImage = global::Filyama.Properties.Resources.Plus;
+            this.buttonAddAnime.Location = new System.Drawing.Point(17, 6);
+            this.buttonAddAnime.Name = "buttonAddAnime";
+            this.buttonAddAnime.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddAnime.TabIndex = 2;
+            this.buttonAddAnime.UseVisualStyleBackColor = true;
+            // 
+            // buttonEditAnime
+            // 
+            this.buttonEditAnime.BackgroundImage = global::Filyama.Properties.Resources.edit_25;
+            this.buttonEditAnime.Location = new System.Drawing.Point(48, 6);
+            this.buttonEditAnime.Name = "buttonEditAnime";
+            this.buttonEditAnime.Size = new System.Drawing.Size(25, 25);
+            this.buttonEditAnime.TabIndex = 3;
+            this.buttonEditAnime.UseVisualStyleBackColor = true;
+            // 
+            // buttonDeleteAnime
+            // 
+            this.buttonDeleteAnime.BackgroundImage = global::Filyama.Properties.Resources.Minus;
+            this.buttonDeleteAnime.Location = new System.Drawing.Point(79, 6);
+            this.buttonDeleteAnime.Name = "buttonDeleteAnime";
+            this.buttonDeleteAnime.Size = new System.Drawing.Size(25, 25);
+            this.buttonDeleteAnime.TabIndex = 4;
+            this.buttonDeleteAnime.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 515);
+            this.ClientSize = new System.Drawing.Size(1228, 574);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -485,6 +551,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -508,7 +575,7 @@
         private System.Windows.Forms.Button buttonDeleteCategory;
         private System.Windows.Forms.Button buttonEditCategory;
         private System.Windows.Forms.Button buttonAddCategory;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.WebBrowser webBrowserFilm;
         private System.Windows.Forms.DataGridView dataGridViewFilms;
         private System.Windows.Forms.Label labelCategory;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
@@ -538,6 +605,12 @@
         private System.Windows.Forms.ToolStripMenuItem saveZipToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveZipFileDialog;
         private System.Windows.Forms.OpenFileDialog openZipFileDialog;
+        private System.Windows.Forms.WebBrowser webBrowserSerial;
+        private System.Windows.Forms.WebBrowser webBrowserAnime;
+        private System.Windows.Forms.Button buttonDeleteAnime;
+        private System.Windows.Forms.Button buttonEditAnime;
+        private System.Windows.Forms.Button buttonAddAnime;
+        private System.Windows.Forms.TreeView treeAnime;
     }
 }
 

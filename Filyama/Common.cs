@@ -87,6 +87,20 @@ namespace Filyama
         }
     }
 
+    public struct Serial
+    {
+        public int id;
+        public String name;
+        public List<Season> seasons;
+    }
+
+    public struct Season
+    {
+        public int id;
+        public int number;
+        public String name;
+    }
+
     class Common
     {
         static public SQLiteConnection connectionLocal;
@@ -98,6 +112,7 @@ namespace Filyama
         static public Dictionary<int, Category> categoryList;
         static public Dictionary<int, byte[]> imageCategoryListData;
         static public Dictionary<int, Film> films;
+        static public Dictionary<int, Serial> serials;
 
         public static Image byteArrayToImage(byte[] byteArrayIn)
         {

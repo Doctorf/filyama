@@ -186,8 +186,25 @@ namespace Filyama
             {
                 Console.WriteLine(ex.Message);
             }
-        } 
+        }
 
+        private void RefreshSerials()
+        {
+            Database.RefreshSerials();
+            treeViewListSerials.Nodes.Clear();            
+            foreach (var serialVarElem in Common.serials)
+            {
+                Serial serialVar = serialVarElem.Value;
+                TreeNode node = treeViewListSerials.Nodes.Add(serialVar.name);
+                node.Tag = serialVar;
+                foreach (var seasonsVarElem in serialVar.seasons)
+                {
+                    TreeNode node_season = node.Nodes.Add(seasonsVarElem.name);
+                    node_season.Tag = seasonsVarElem;
+                }
+            }
+            treeViewListSerials.ExpandAll();   
+        }
         public Form1()
         {
             InitializeComponent();
@@ -242,6 +259,7 @@ namespace Filyama
             RefreshCategoryImages();
             RefreshCategory();
             RefreshFilms();
+            RefreshSerials();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -406,7 +424,7 @@ namespace Filyama
                 if (idFilm != 0)
                 {
                     string template = System.IO.File.ReadAllText(Application.StartupPath + "\\Templates\\Default\\" + "Window_Film.html");
-                    webBrowser1.DocumentText = AddCss(ChangeTemplate(template, Common.films[idFilm]));
+                    webBrowserFilm.DocumentText = AddCss(ChangeTemplate(template, Common.films[idFilm]));
                 }
                 else
                 {
@@ -417,7 +435,7 @@ namespace Filyama
             }
             if ( blank)
             {
-                webBrowser1.Navigate("about:blank");
+                webBrowserFilm.Navigate("about:blank");
             }
         }
 
