@@ -15,8 +15,9 @@ body{
 }   
 .infoTable {
     position: relative;
+    float: right;
     top: 100px; 
-	left: 50px;
+	left: -100px;
 }
 .film-img-box {
     position: relative;
@@ -31,7 +32,7 @@ table {
     display: table;	
     border-collapse: collapse; 
     border-spacing: 2px;
-    border-color: gray;
+    border-color: gray;    
 }
 tr.border_bottom td {
   border-bottom:1pt dotted black;
