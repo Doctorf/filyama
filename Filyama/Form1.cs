@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.IO;
 using Microsoft.Win32;
+using System.IO.Compression;
+using Ionic.Zip;
 
 namespace Filyama
 {
@@ -469,6 +471,67 @@ namespace Filyama
             {
                 RefreshFilms(toolStripTextBox1.Text);
                 updateWIndowFilm();
+            }
+        }
+
+        private void saveZipToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveZipFileDialog.FileName = "backup-" + string.Format("{0:yyyy-MM-dd_HH-mm-ss}", DateTime.Now);
+            if (saveZipFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (ZipFile zip = new ZipFile())
+                {
+                    zip.AddFile("main.db");                    
+                    zip.AddDirectory("images","images");
+                    zip.AddDirectory("Templates", "Templates");                    
+                    zip.AddEntry("property.ini","version="+System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                    zip.Save(saveZipFileDialog.FileName);                    
+                }
+                MessageBox.Show("Архив сохранен");
+            }
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openZipFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (ZipFile zip = ZipFile.Read(openZipFileDialog.FileName))
+                {
+                    ZipEntry zipEn = zip["property.ini"];
+                    var stream = new MemoryStream();
+                    zipEn.Extract(stream);
+                    IniParser parser = new IniParser(stream);
+                    String version = parser.GetSetting(null, "version");
+                    if (version.Equals(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()))
+                    {
+                        Common.connectionLocal.Close();
+                        ZipEntry zipCon = zip["main.db"];
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        zipCon.Extract(".", ExtractExistingFileAction.OverwriteSilently);
+                        Common.connectionLocal.Open();
+                        foreach (ZipEntry file in zip)
+                        {
+                            if (!file.FileName.Equals("property.ini") && !file.FileName.Equals("main.db"))
+                            {
+                                file.Extract(".", ExtractExistingFileAction.OverwriteSilently);
+                            }
+                        }
+                        RefreshCategoryImages();
+                        RefreshCategory();
+                        RefreshFilms();
+                        updateWIndowFilm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не подходящая версия");
+                    }
+                }
             }
         }
     }

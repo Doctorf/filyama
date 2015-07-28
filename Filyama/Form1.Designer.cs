@@ -34,6 +34,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.dataGridViewFilms = new System.Windows.Forms.DataGridView();
+            this.ColumntCategory = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumntExistImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnNameFilm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelCategory = new System.Windows.Forms.Label();
             this.buttonDeleteCategory = new System.Windows.Forms.Button();
             this.buttonEditCategory = new System.Windows.Forms.Button();
@@ -50,6 +54,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveZipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pushToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -65,10 +70,8 @@
             this.toolStripButtonElementRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.ColumntCategory = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ColumntExistImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnNameFilm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saveZipFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openZipFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
@@ -132,6 +135,35 @@
             this.dataGridViewFilms.Size = new System.Drawing.Size(405, 422);
             this.dataGridViewFilms.TabIndex = 5;
             this.dataGridViewFilms.SelectionChanged += new System.EventHandler(this.dataGridViewFilms_SelectionChanged);
+            // 
+            // ColumntCategory
+            // 
+            this.ColumntCategory.HeaderText = "Category";
+            this.ColumntCategory.Name = "ColumntCategory";
+            this.ColumntCategory.ReadOnly = true;
+            // 
+            // ColumntExistImage
+            // 
+            this.ColumntExistImage.FillWeight = 50F;
+            this.ColumntExistImage.HeaderText = "Cover";
+            this.ColumntExistImage.Name = "ColumntExistImage";
+            this.ColumntExistImage.ReadOnly = true;
+            this.ColumntExistImage.Width = 50;
+            // 
+            // ColumnId
+            // 
+            this.ColumnId.FillWeight = 30F;
+            this.ColumnId.HeaderText = "№";
+            this.ColumnId.Name = "ColumnId";
+            this.ColumnId.ReadOnly = true;
+            this.ColumnId.Width = 30;
+            // 
+            // ColumnNameFilm
+            // 
+            this.ColumnNameFilm.HeaderText = "Название";
+            this.ColumnNameFilm.Name = "ColumnNameFilm";
+            this.ColumnNameFilm.ReadOnly = true;
+            this.ColumnNameFilm.Width = 210;
             // 
             // labelCategory
             // 
@@ -270,6 +302,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
+            this.saveZipToolStripMenuItem,
             this.pushToolStripMenuItem,
             this.preferenseToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -281,30 +314,38 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Text = "Load zip";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // saveZipToolStripMenuItem
+            // 
+            this.saveZipToolStripMenuItem.Name = "saveZipToolStripMenuItem";
+            this.saveZipToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveZipToolStripMenuItem.Text = "Save zip";
+            this.saveZipToolStripMenuItem.Click += new System.EventHandler(this.saveZipToolStripMenuItem_Click);
             // 
             // pushToolStripMenuItem
             // 
             this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
-            this.pushToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.pushToolStripMenuItem.Text = "Push";
+            this.pushToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pushToolStripMenuItem.Text = "Push zip";
             // 
             // preferenseToolStripMenuItem
             // 
             this.preferenseToolStripMenuItem.Name = "preferenseToolStripMenuItem";
-            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferenseToolStripMenuItem.Text = "Preferense";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -413,34 +454,17 @@
             this.toolStripTextBox1.Size = new System.Drawing.Size(250, 25);
             this.toolStripTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.toolStripTextBox1_KeyDown);
             // 
-            // ColumntCategory
+            // saveZipFileDialog
             // 
-            this.ColumntCategory.HeaderText = "Category";
-            this.ColumntCategory.Name = "ColumntCategory";
-            this.ColumntCategory.ReadOnly = true;
+            this.saveZipFileDialog.DefaultExt = "zip";
+            this.saveZipFileDialog.FileName = "backup";
+            this.saveZipFileDialog.Filter = "Zip file|*.zip";
+            this.saveZipFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // ColumntExistImage
+            // openZipFileDialog
             // 
-            this.ColumntExistImage.FillWeight = 50F;
-            this.ColumntExistImage.HeaderText = "Cover";
-            this.ColumntExistImage.Name = "ColumntExistImage";
-            this.ColumntExistImage.ReadOnly = true;
-            this.ColumntExistImage.Width = 50;
-            // 
-            // ColumnId
-            // 
-            this.ColumnId.FillWeight = 30F;
-            this.ColumnId.HeaderText = "№";
-            this.ColumnId.Name = "ColumnId";
-            this.ColumnId.ReadOnly = true;
-            this.ColumnId.Width = 30;
-            // 
-            // ColumnNameFilm
-            // 
-            this.ColumnNameFilm.HeaderText = "Название";
-            this.ColumnNameFilm.Name = "ColumnNameFilm";
-            this.ColumnNameFilm.ReadOnly = true;
-            this.ColumnNameFilm.Width = 210;
+            this.openZipFileDialog.DefaultExt = "zip";
+            this.openZipFileDialog.Filter = "Zip file|*.zip";
             // 
             // Form1
             // 
@@ -511,6 +535,9 @@
         private System.Windows.Forms.DataGridViewImageColumn ColumntExistImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnNameFilm;
+        private System.Windows.Forms.ToolStripMenuItem saveZipToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveZipFileDialog;
+        private System.Windows.Forms.OpenFileDialog openZipFileDialog;
     }
 }
 

@@ -189,14 +189,14 @@ namespace Filyama
             newFilma.dateWorld = dateTimePickerDateWorld.Value;
             newFilma.dateRus = dateTimePickerDateRus.Value;
             String destPath = Common.imagesPath + "\\" + newFilma.id.ToString() + "\\" + "cover" + Path.GetExtension(coverURL);
-            string destFile = System.IO.Path.Combine(Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString(), "cover"+Path.GetExtension(coverURL));
+            string destFile = System.IO.Path.Combine(Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString(), "\\cover"+Path.GetExtension(coverURL));
             // To copy a folder's contents to a new location:
             // Create a new target folder, if necessary.
             if (!System.IO.Directory.Exists(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString()))
             {
                 System.IO.Directory.CreateDirectory(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString());
             }
-            if (coverURL != null&&System.IO.File.Exists(coverURL))
+            if (coverURL != null&&System.IO.File.Exists(coverURL)&&!coverURL.Equals(destFile))
             {
                 System.IO.File.Copy(coverURL, destFile, true);
                 long coverId = Database.AddBinaryData(destPath, false, false, true);
