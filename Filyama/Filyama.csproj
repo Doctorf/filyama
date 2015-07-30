@@ -100,8 +100,9 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TMDbLib">
-      <HintPath>..\packages\TMDbLib.0.7.7\lib\net40\TMDbLib.dll</HintPath>
+    <Reference Include="TMDbLib, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\TMDbLib.0.8.3\lib\net45\TMDbLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,24 @@
     </Compile>
     <Compile Include="FormAddCategory.Designer.cs">
       <DependentUpon>FormAddCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAddEpisode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddEpisode.Designer.cs">
+      <DependentUpon>FormAddEpisode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAddSeason.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddSeason.Designer.cs">
+      <DependentUpon>FormAddSeason.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAddSerial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddSerial.Designer.cs">
+      <DependentUpon>FormAddSerial.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAddVideo.cs">
       <SubType>Form</SubType>
@@ -140,6 +159,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddCategory.resx">
       <DependentUpon>FormAddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAddEpisode.resx">
+      <DependentUpon>FormAddEpisode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAddSeason.resx">
+      <DependentUpon>FormAddSeason.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAddSerial.resx">
+      <DependentUpon>FormAddSerial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddVideo.resx">
       <DependentUpon>FormAddVideo.cs</DependentUpon>

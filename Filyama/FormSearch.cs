@@ -16,6 +16,9 @@ using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Movies;
+using TMDbLib.Objects.TvShows;
+
+
 namespace Filyama
 {
     public partial class FormSearch : Form
@@ -34,7 +37,14 @@ namespace Filyama
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LoadFilms(textBoxNameSearch.Text);      
+            if (radioButton1.Checked)
+            {
+                LoadFilms(textBoxNameSearch.Text);
+            }
+            else
+            {
+                LoadSerials(textBoxNameSearch.Text);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -46,8 +56,16 @@ namespace Filyama
              DataGridViewRow selectedRow = dataGridViewFindingFilms.Rows[selectedrowindex];  
 
               string uri = Convert.ToString(selectedRow.Cells[2].Value);
-              LoadFilm(uri);
-              tabControl1.SelectedIndex = 1;
+              if (radioButton1.Checked)
+              {
+                  LoadFilm(uri);
+                  tabControl1.SelectedIndex = 1;
+              }
+              else
+              {
+                  LoadSerial(uri);
+                  tabControl1.SelectedIndex = 2;
+              }
 
          }
             
@@ -65,7 +83,7 @@ namespace Filyama
             dateTimePickerDateWorld.Value = movie.ReleaseDate ?? default(DateTime);
             foreach (Genre genre in movie.Genres)
             {
-                checkedListBox1.Items.Add(Common.format(genre.Name),true);
+                checkedListBoxGenreFilm.Items.Add(Common.format(genre.Name),true);
             }
             //String ut= client.Config.Images.PosterSizes.First();
             //String path = movie.PosterPath;
@@ -87,7 +105,7 @@ namespace Filyama
             SearchContainer<SearchMovie> results = client.SearchMovie(uri, "ru");
 
             Console.WriteLine("Got {0} of {1} results", results.Results.Count, results.TotalResults);
-            dataGridViewFindingFilms.Rows.Clear(); checkedListBox1.Items.Clear();
+            dataGridViewFindingFilms.Rows.Clear(); checkedListBoxGenreFilm.Items.Clear();
             foreach (SearchMovie result in results.Results){
                 Console.WriteLine(result.Title);
                 String year = null;
@@ -99,13 +117,41 @@ namespace Filyama
             }
         }
 
+        private void LoadSerial(String id)
+        {
+            TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
+            client.GetConfig();
+            TvShow serial = client.GetTvShow(Convert.ToInt32(id));
+
+            Console.WriteLine("Show name: {0}", serial.Name);
+            foreach (Genre genre in serial.Genres)
+            {
+                checkedListBoxGenreSerial.Items.Add(Common.format(genre.Name), true);
+            }
+
+        }
+
+        private void LoadSerials(String uri)
+        {
+            TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
+            SearchContainer<SearchTv> results = client.SearchTvShow(uri);
+
+            Console.WriteLine("Got {0} of {1} results", results.Results.Count, results.TotalResults);
+            dataGridViewFindingFilms.Rows.Clear(); checkedListBoxGenreFilm.Items.Clear();
+            foreach (var result in results.Results)
+            {
+                Console.WriteLine(result.Name);
+                String year = null;                
+                dataGridViewFindingFilms.Rows.Add(year, result.Name, result.Id);
+            }
+        }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             originTitle = textBoxTitleOrigin.Text;
             rusTitle = textBoxTitleRus.Text;
             dateWorld = dateTimePickerDateWorld.Value;
             dateRus = dateTimePickerDateRus.Value;
-            foreach (object itemChecked in checkedListBox1.CheckedItems)
+            foreach (object itemChecked in checkedListBoxGenreFilm.CheckedItems)
             {
                 genres.Add((String)itemChecked);
             }

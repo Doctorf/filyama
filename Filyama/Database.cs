@@ -77,16 +77,16 @@ namespace Filyama
                 }
             }
         }
-        public static int NewFilms()
+        private static int NewObject(String table)
         {
             int newRow = -1;
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
-                cmd.CommandText = "SELECT MAX(id)+1 FROM films";
+                cmd.CommandText = "SELECT MAX(id)+1 FROM "+table;
                 try
                 {
-                    Object result= cmd.ExecuteScalar();
+                    Object result = cmd.ExecuteScalar();
                     if (result != null)
                     {
                         newRow = Convert.ToInt32(result);
@@ -98,6 +98,26 @@ namespace Filyama
                 }
             }
             return newRow;
+        }
+
+        public static int NewFilms()
+        {
+            return NewObject("films");
+        }
+
+        public static int NewSerial()
+        {            
+            return NewObject("serials");
+        }
+
+        public static int NewSeason()
+        {
+            return NewObject("seasons");
+        }
+
+        public static int NewEpisode()
+        {
+            return NewObject("episodes");
         }
 
         public static List<Media> getMediaExtensions()
@@ -217,14 +237,13 @@ namespace Filyama
                 }
             }
         }
-
-        public static void DeleteFilm(Film deleteFilm)
+        private static void DeleteObject(String table,int id)
         {
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
-                cmd.CommandText = "DELETE FROM films WHERE id=@id;";
-                cmd.Parameters.Add(new SQLiteParameter("@id",deleteFilm.id));                
+                cmd.CommandText = "DELETE FROM "+table+" WHERE id=@id;";
+                cmd.Parameters.Add(new SQLiteParameter("@id", id));
                 try
                 {
                     cmd.ExecuteNonQuery();
@@ -235,6 +254,27 @@ namespace Filyama
                 }
             }
         }
+
+        public static void DeleteFilm(Film deleteFilm)
+        {
+            DeleteObject("films", deleteFilm.id);            
+        }
+
+        public static void DeleteSerial(Serial deleteSerial)
+        {
+            DeleteObject("serials", deleteSerial.id);
+        }
+
+        public static void DeleteSeason(Season deleteSeason)
+        {
+            DeleteObject("seasons", deleteSeason.id);
+        }
+
+        public static void DeleteEpisode(Episode deleteEpisode)
+        {
+            DeleteObject("episodes", deleteEpisode.id);
+        }
+
         public static void UpdateFilm(Film oldFilm,Film newFilm)
         {
             if (Common.connectionLocal.State == ConnectionState.Open)
@@ -385,22 +425,47 @@ namespace Filyama
                         Serial serial = new Serial();
                         serial.id = Convert.ToInt32(r["id"]);
                         serial.name = Convert.ToString(r["name"]);
+                        serial.seasons = new List<Season>();
                         SQLiteCommand cmd_seasons = Common.connectionLocal.CreateCommand();
-                        cmd_seasons.CommandText = "SELECT * FROM season_serial LEFT JOIN seasons ON seasons.id=season_serial.id_season WHERE id_serial=@id_serial";
+                        cmd_seasons.CommandText = "SELECT * FROM season_serial INNER JOIN seasons ON seasons.id=season_serial.id_season WHERE id_serial=@id_serial";
                         cmd_seasons.Parameters.AddWithValue("@id_serial", serial.id);
                         try
                         {
                             SQLiteDataReader r_seasons = cmd_seasons.ExecuteReader();
                             while (r_seasons.Read())
-                            {
-                                if (serial.seasons == null)
-                                {
-                                    serial.seasons = new List<Season>();
-                                }
+                            {                                
                                 Season season = new Season();
                                 season.id = Convert.ToInt32(r_seasons["id"]);
-                                season.number = Convert.ToInt32(r_seasons["number"]);
+                                season.parent_id = serial.id;
+                                if (r_seasons["number"] != DBNull.Value)
+                                {
+                                    season.number = Convert.ToInt32(r_seasons["number"]);
+                                }
                                 season.name = Convert.ToString(r_seasons["name"]);
+                                season.episodes = new List<Episode>();
+                                SQLiteCommand cmd_episodes = Common.connectionLocal.CreateCommand();
+                                cmd_episodes.CommandText = "SELECT * FROM episode_season INNER JOIN episodes ON episodes.id=episode_season.id_episode WHERE id_season=@id_season";
+                                cmd_episodes.Parameters.AddWithValue("@id_season", season.id);
+                                try
+                                {
+                                    SQLiteDataReader r_episodes = cmd_episodes.ExecuteReader();
+                                    while (r_episodes.Read())
+                                    {                                        
+                                        Episode episode=new Episode();
+                                        episode.id = Convert.ToInt32(r_episodes["id"]);
+                                        episode.parent_id = season.id;
+                                        if (r_episodes["number"] != DBNull.Value)
+                                        {
+                                            episode.number = Convert.ToInt32(r_episodes["number"]);
+                                        }
+                                        episode.name = Convert.ToString(r_episodes["name"]);
+                                        season.episodes.Add(episode);
+                                    }
+                                }
+                                catch (SQLiteException ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
                                 serial.seasons.Add(season);
                             }
                         }
@@ -417,6 +482,84 @@ namespace Filyama
                     Console.WriteLine(ex.Message);
                 }
             }            
+        }
+
+        public static void AddSerail(Serial serial)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO serials(name) VALUES(@name)";
+                cmd.Parameters.AddWithValue("@name", serial.name);                
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public static void AddSeason(Season season,int serialId)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO seasons(name,number) VALUES(@name,@number)";
+                cmd.Parameters.AddWithValue("@name", season.name);
+                cmd.Parameters.AddWithValue("@number", season.number);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                cmd.CommandText = "INSERT INTO season_serial(id_season,id_serial) VALUES(@id_season,@id_serial)";
+                cmd.Parameters.AddWithValue("@id_season", season.id);
+                cmd.Parameters.AddWithValue("@id_serial", serialId);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public static void AddEpisode(Episode episode,int seasonId)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO episodes(name,number) VALUES(@name,@number)";
+                cmd.Parameters.AddWithValue("@name", episode.name);
+                cmd.Parameters.AddWithValue("@number", episode.number);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                cmd.CommandText = "INSERT INTO episode_season(id_episode,id_season) VALUES(@id_episode,@id_season)";
+                cmd.Parameters.AddWithValue("@id_episode", episode.id);
+                cmd.Parameters.AddWithValue("@id_season", seasonId);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
     }
 }

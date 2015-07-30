@@ -97,8 +97,26 @@ namespace Filyama
     public struct Season
     {
         public int id;
+        public int parent_id;
         public int number;
         public String name;
+        public List<Episode> episodes;
+        public override string ToString()
+        {
+            return String.Format("{0} season '{1}'", number, name);
+        }
+    }
+
+    public struct Episode
+    {
+        public int id;
+        public int parent_id;
+        public int number;
+        public String name;
+        public override string ToString()
+        {
+            return String.Format("{0} episode '{1}'", number, name);
+        }
     }
 
     class Common

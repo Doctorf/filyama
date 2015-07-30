@@ -199,8 +199,13 @@ namespace Filyama
                 node.Tag = serialVar;
                 foreach (var seasonsVarElem in serialVar.seasons)
                 {
-                    TreeNode node_season = node.Nodes.Add(seasonsVarElem.name);
+                    TreeNode node_season = node.Nodes.Add(seasonsVarElem.ToString());                    
                     node_season.Tag = seasonsVarElem;
+                    foreach (var episodeVarElem in seasonsVarElem.episodes)
+                    {
+                        TreeNode node_episode = node_season.Nodes.Add(episodeVarElem.ToString());
+                        node_episode.Tag = episodeVarElem;
+                    }
                 }
             }
             treeViewListSerials.ExpandAll();   
@@ -551,6 +556,76 @@ namespace Filyama
                     }
                 }
             }
+        }
+
+        private void buttonAddSerials_Click(object sender, EventArgs e)
+        {
+            TreeNode selectNode=treeViewListSerials.SelectedNode;
+            if (selectNode != null)
+            {
+                if (selectNode.Tag is Serial)
+                {
+                    FormAddSeason addSeason = new FormAddSeason(((Serial)selectNode.Tag).id);
+                    if (addSeason.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshSerials();
+                    }                    
+                }
+                if (selectNode.Tag is Season)
+                {
+                    FormAddEpisode addEpisode = new FormAddEpisode(((Season)selectNode.Tag).id);
+                    if (addEpisode.ShowDialog() == DialogResult.OK)
+                    {
+                        RefreshSerials();
+                    }
+                }
+            }
+            else
+            {
+                FormAddSerial addSerail = new FormAddSerial();
+                if (addSerail.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshSerials();
+                }
+            }
+        }
+
+        private void buttonDeleteSerials_Click(object sender, EventArgs e)
+        {
+            TreeNode selectNode = treeViewListSerials.SelectedNode;
+            if (selectNode != null)
+            {
+                if (selectNode.Tag is Serial)
+                {
+                    Serial serialVar = (Serial)selectNode.Tag;
+                    DialogResult dr = MessageBox.Show(String.Format("Remove '{0}' serial?", serialVar.name));
+                    if (dr == DialogResult.OK)
+                    {
+                        Database.DeleteSerial(serialVar);
+                        RefreshSerials();
+                    }
+                }
+                if (selectNode.Tag is Season)
+                {
+                    Season seasonVar = (Season)selectNode.Tag;
+                    DialogResult dr = MessageBox.Show(String.Format("Remove '{0}' season?", seasonVar.name));
+                    if (dr == DialogResult.OK)
+                    {
+                        Database.DeleteSeason(seasonVar);
+                        RefreshSerials();
+                    }
+                }
+                if (selectNode.Tag is Episode)
+                {
+                    Episode episodeVar = (Episode)selectNode.Tag;
+                    DialogResult dr = MessageBox.Show(String.Format("Remove '{0}' episode?", episodeVar.name));
+                    if (dr == DialogResult.OK)
+                    {
+                        Database.DeleteEpisode(episodeVar);
+                        RefreshSerials();
+                    }
+                }
+            }            
         }
     }
 }

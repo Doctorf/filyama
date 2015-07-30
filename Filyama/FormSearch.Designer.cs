@@ -33,12 +33,14 @@
             this.buttonDetail = new System.Windows.Forms.Button();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.dataGridViewFindingFilms = new System.Windows.Forms.DataGridView();
+            this.Год = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Название = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.href = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBoxNameSearch = new System.Windows.Forms.TextBox();
             this.labelNameSearch = new System.Windows.Forms.Label();
             this.tabPageData = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxGenreFilm = new System.Windows.Forms.CheckedListBox();
             this.dateTimePickerDateRus = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
             this.dateTimePickerDateWorld = new System.Windows.Forms.DateTimePicker();
@@ -47,20 +49,27 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxTitleOrigin = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.Год = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Название = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.href = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tabPageDataSerial = new System.Windows.Forms.TabPage();
+            this.checkedListBoxGenreSerial = new System.Windows.Forms.CheckedListBox();
             this.tabControl1.SuspendLayout();
             this.tabPageSourceFilm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFindingFilms)).BeginInit();
             this.tabPageData.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabPageDataSerial.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageSourceFilm);
             this.tabControl1.Controls.Add(this.tabPageData);
+            this.tabControl1.Controls.Add(this.tabPageDataSerial);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -70,6 +79,8 @@
             // 
             // tabPageSourceFilm
             // 
+            this.tabPageSourceFilm.Controls.Add(this.comboBox1);
+            this.tabPageSourceFilm.Controls.Add(this.groupBox1);
             this.tabPageSourceFilm.Controls.Add(this.buttonDetail);
             this.tabPageSourceFilm.Controls.Add(this.buttonSearch);
             this.tabPageSourceFilm.Controls.Add(this.dataGridViewFindingFilms);
@@ -80,7 +91,7 @@
             this.tabPageSourceFilm.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageSourceFilm.Size = new System.Drawing.Size(629, 432);
             this.tabPageSourceFilm.TabIndex = 0;
-            this.tabPageSourceFilm.Text = "Фильм";
+            this.tabPageSourceFilm.Text = "Поиск";
             this.tabPageSourceFilm.UseVisualStyleBackColor = true;
             // 
             // buttonDetail
@@ -112,12 +123,32 @@
             this.Год,
             this.Название,
             this.href});
-            this.dataGridViewFindingFilms.Location = new System.Drawing.Point(16, 121);
+            this.dataGridViewFindingFilms.Location = new System.Drawing.Point(16, 133);
             this.dataGridViewFindingFilms.Name = "dataGridViewFindingFilms";
             this.dataGridViewFindingFilms.ReadOnly = true;
             this.dataGridViewFindingFilms.RowHeadersVisible = false;
-            this.dataGridViewFindingFilms.Size = new System.Drawing.Size(538, 278);
+            this.dataGridViewFindingFilms.Size = new System.Drawing.Size(538, 266);
             this.dataGridViewFindingFilms.TabIndex = 4;
+            // 
+            // Год
+            // 
+            this.Год.HeaderText = "Year";
+            this.Год.Name = "Год";
+            this.Год.ReadOnly = true;
+            // 
+            // Название
+            // 
+            this.Название.HeaderText = "Name";
+            this.Название.Name = "Название";
+            this.Название.ReadOnly = true;
+            this.Название.Width = 250;
+            // 
+            // href
+            // 
+            this.href.HeaderText = "href";
+            this.href.Name = "href";
+            this.href.ReadOnly = true;
+            this.href.Visible = false;
             // 
             // textBoxNameSearch
             // 
@@ -140,7 +171,7 @@
             // 
             this.tabPageData.Controls.Add(this.pictureBox1);
             this.tabPageData.Controls.Add(this.buttonAdd);
-            this.tabPageData.Controls.Add(this.checkedListBox1);
+            this.tabPageData.Controls.Add(this.checkedListBoxGenreFilm);
             this.tabPageData.Controls.Add(this.dateTimePickerDateRus);
             this.tabPageData.Controls.Add(this.label6);
             this.tabPageData.Controls.Add(this.dateTimePickerDateWorld);
@@ -154,18 +185,8 @@
             this.tabPageData.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageData.Size = new System.Drawing.Size(629, 432);
             this.tabPageData.TabIndex = 1;
-            this.tabPageData.Text = "Данные";
+            this.tabPageData.Text = "Фильм";
             this.tabPageData.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBox1.Location = new System.Drawing.Point(361, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(197, 257);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
             // 
             // buttonAdd
             // 
@@ -178,13 +199,13 @@
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // checkedListBox1
+            // checkedListBoxGenreFilm
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(21, 190);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(293, 124);
-            this.checkedListBox1.TabIndex = 8;
+            this.checkedListBoxGenreFilm.FormattingEnabled = true;
+            this.checkedListBoxGenreFilm.Location = new System.Drawing.Point(21, 190);
+            this.checkedListBoxGenreFilm.Name = "checkedListBoxGenreFilm";
+            this.checkedListBoxGenreFilm.Size = new System.Drawing.Size(293, 124);
+            this.checkedListBoxGenreFilm.TabIndex = 8;
             // 
             // dateTimePickerDateRus
             // 
@@ -252,25 +273,77 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "label3";
             // 
-            // Год
+            // groupBox1
             // 
-            this.Год.HeaderText = "Year";
-            this.Год.Name = "Год";
-            this.Год.ReadOnly = true;
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Location = new System.Drawing.Point(16, 78);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(381, 49);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
-            // Название
+            // pictureBox1
             // 
-            this.Название.HeaderText = "Name";
-            this.Название.Name = "Название";
-            this.Название.ReadOnly = true;
-            this.Название.Width = 250;
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBox1.Location = new System.Drawing.Point(361, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(197, 257);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
             // 
-            // href
+            // radioButton1
             // 
-            this.href.HeaderText = "href";
-            this.href.Name = "href";
-            this.href.ReadOnly = true;
-            this.href.Visible = false;
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(13, 26);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(43, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Film";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(123, 28);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(78, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "serialAnime";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "theMovieOrg"});
+            this.comboBox1.Location = new System.Drawing.Point(139, 6);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(154, 21);
+            this.comboBox1.TabIndex = 8;
+            // 
+            // tabPageDataSerial
+            // 
+            this.tabPageDataSerial.Controls.Add(this.checkedListBoxGenreSerial);
+            this.tabPageDataSerial.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDataSerial.Name = "tabPageDataSerial";
+            this.tabPageDataSerial.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDataSerial.Size = new System.Drawing.Size(629, 432);
+            this.tabPageDataSerial.TabIndex = 2;
+            this.tabPageDataSerial.Text = "Сериал";
+            this.tabPageDataSerial.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBoxGenreSerial
+            // 
+            this.checkedListBoxGenreSerial.FormattingEnabled = true;
+            this.checkedListBoxGenreSerial.Location = new System.Drawing.Point(17, 76);
+            this.checkedListBoxGenreSerial.Name = "checkedListBoxGenreSerial";
+            this.checkedListBoxGenreSerial.Size = new System.Drawing.Size(317, 184);
+            this.checkedListBoxGenreSerial.TabIndex = 9;
             // 
             // FormSearch
             // 
@@ -286,7 +359,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFindingFilms)).EndInit();
             this.tabPageData.ResumeLayout(false);
             this.tabPageData.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPageDataSerial.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -309,11 +385,17 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dateTimePickerDateRus;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox checkedListBoxGenreFilm;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.DataGridViewTextBoxColumn Год;
         private System.Windows.Forms.DataGridViewTextBoxColumn Название;
         private System.Windows.Forms.DataGridViewTextBoxColumn href;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TabPage tabPageDataSerial;
+        private System.Windows.Forms.CheckedListBox checkedListBoxGenreSerial;
     }
 }
