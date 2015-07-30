@@ -67,6 +67,7 @@ namespace Filyama
         public String categoriesString;
         public DateTime dateWorld;
         public DateTime dateRus;
+        public List<Cast> casts;
 
         //------Сохранение в БД
         public long coverId;
@@ -116,6 +117,29 @@ namespace Filyama
         public override string ToString()
         {
             return String.Format("{0} episode '{1}'", number, name);
+        }
+    }
+
+    public struct Person
+    {
+        public int id;
+        public String ImdbId;
+        public String biography;
+        public DateTime birthday;
+        public DateTime deathday;
+        public String name;
+        public String place_of_birth;
+        public Image image;
+    }
+
+    public struct Cast
+    {
+        public int id;        
+        public Person person;
+        public String character;
+        public override string ToString()
+        {
+            return String.Format("{0} as '{1}'", person.name, character);
         }
     }
 

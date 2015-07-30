@@ -30,6 +30,10 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageSourceFilm = new System.Windows.Forms.TabPage();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.buttonDetail = new System.Windows.Forms.Button();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.dataGridViewFindingFilms = new System.Windows.Forms.DataGridView();
@@ -39,6 +43,7 @@
             this.textBoxNameSearch = new System.Windows.Forms.TextBox();
             this.labelNameSearch = new System.Windows.Forms.Label();
             this.tabPageData = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.checkedListBoxGenreFilm = new System.Windows.Forms.CheckedListBox();
             this.dateTimePickerDateRus = new System.Windows.Forms.DateTimePicker();
@@ -49,18 +54,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxTitleOrigin = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabPageDataSerial = new System.Windows.Forms.TabPage();
             this.checkedListBoxGenreSerial = new System.Windows.Forms.CheckedListBox();
+            this.labelCast = new System.Windows.Forms.Label();
+            this.listBoxCast = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPageSourceFilm.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFindingFilms)).BeginInit();
             this.tabPageData.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPageDataSerial.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +76,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(637, 458);
+            this.tabControl1.Size = new System.Drawing.Size(693, 401);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageSourceFilm
@@ -93,6 +95,49 @@
             this.tabPageSourceFilm.TabIndex = 0;
             this.tabPageSourceFilm.Text = "Поиск";
             this.tabPageSourceFilm.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "theMovieOrg"});
+            this.comboBox1.Location = new System.Drawing.Point(139, 6);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(154, 21);
+            this.comboBox1.TabIndex = 8;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Location = new System.Drawing.Point(16, 78);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(381, 49);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(123, 28);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(78, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "serialAnime";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(13, 26);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(43, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Film";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // buttonDetail
             // 
@@ -169,6 +214,8 @@
             // 
             // tabPageData
             // 
+            this.tabPageData.Controls.Add(this.listBoxCast);
+            this.tabPageData.Controls.Add(this.labelCast);
             this.tabPageData.Controls.Add(this.pictureBox1);
             this.tabPageData.Controls.Add(this.buttonAdd);
             this.tabPageData.Controls.Add(this.checkedListBoxGenreFilm);
@@ -183,15 +230,25 @@
             this.tabPageData.Location = new System.Drawing.Point(4, 22);
             this.tabPageData.Name = "tabPageData";
             this.tabPageData.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageData.Size = new System.Drawing.Size(629, 432);
+            this.tabPageData.Size = new System.Drawing.Size(685, 375);
             this.tabPageData.TabIndex = 1;
             this.tabPageData.Text = "Фильм";
             this.tabPageData.UseVisualStyleBackColor = true;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBox1.Location = new System.Drawing.Point(480, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(197, 257);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
+            // 
             // buttonAdd
             // 
             this.buttonAdd.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonAdd.Location = new System.Drawing.Point(14, 324);
+            this.buttonAdd.Location = new System.Drawing.Point(550, 310);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(127, 50);
             this.buttonAdd.TabIndex = 9;
@@ -202,9 +259,9 @@
             // checkedListBoxGenreFilm
             // 
             this.checkedListBoxGenreFilm.FormattingEnabled = true;
-            this.checkedListBoxGenreFilm.Location = new System.Drawing.Point(21, 190);
+            this.checkedListBoxGenreFilm.Location = new System.Drawing.Point(336, 27);
             this.checkedListBoxGenreFilm.Name = "checkedListBoxGenreFilm";
-            this.checkedListBoxGenreFilm.Size = new System.Drawing.Size(293, 124);
+            this.checkedListBoxGenreFilm.Size = new System.Drawing.Size(101, 124);
             this.checkedListBoxGenreFilm.TabIndex = 8;
             // 
             // dateTimePickerDateRus
@@ -273,59 +330,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "label3";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(16, 78);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 49);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBox1.Location = new System.Drawing.Point(361, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(197, 257);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 26);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(43, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Film";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(123, 28);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(78, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "serialAnime";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "theMovieOrg"});
-            this.comboBox1.Location = new System.Drawing.Point(139, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(154, 21);
-            this.comboBox1.TabIndex = 8;
-            // 
             // tabPageDataSerial
             // 
             this.tabPageDataSerial.Controls.Add(this.checkedListBoxGenreSerial);
@@ -345,22 +349,39 @@
             this.checkedListBoxGenreSerial.Size = new System.Drawing.Size(317, 184);
             this.checkedListBoxGenreSerial.TabIndex = 9;
             // 
+            // labelCast
+            // 
+            this.labelCast.AutoSize = true;
+            this.labelCast.Location = new System.Drawing.Point(20, 183);
+            this.labelCast.Name = "labelCast";
+            this.labelCast.Size = new System.Drawing.Size(35, 13);
+            this.labelCast.TabIndex = 11;
+            this.labelCast.Text = "label1";
+            // 
+            // listBoxCast
+            // 
+            this.listBoxCast.FormattingEnabled = true;
+            this.listBoxCast.Location = new System.Drawing.Point(25, 213);
+            this.listBoxCast.Name = "listBoxCast";
+            this.listBoxCast.Size = new System.Drawing.Size(285, 147);
+            this.listBoxCast.TabIndex = 12;
+            // 
             // FormSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 458);
+            this.ClientSize = new System.Drawing.Size(693, 401);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormSearch";
             this.Text = "FormSearch";
             this.tabControl1.ResumeLayout(false);
             this.tabPageSourceFilm.ResumeLayout(false);
             this.tabPageSourceFilm.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFindingFilms)).EndInit();
             this.tabPageData.ResumeLayout(false);
             this.tabPageData.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPageDataSerial.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -397,5 +418,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TabPage tabPageDataSerial;
         private System.Windows.Forms.CheckedListBox checkedListBoxGenreSerial;
+        private System.Windows.Forms.Label labelCast;
+        private System.Windows.Forms.ListBox listBoxCast;
     }
 }

@@ -16,6 +16,7 @@ using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Movies;
+using TMDbLib.Objects.People;
 using TMDbLib.Objects.TvShows;
 
 
@@ -29,6 +30,7 @@ namespace Filyama
         public DateTime dateRus;
         public List<String> genres = new List<string>();
         public String coverURL = "";
+        public List<Cast> casts = new List<Cast>();
 
         public FormSearch()
         {
@@ -71,6 +73,18 @@ namespace Filyama
             
         }
 
+        public String getImage(TMDbClient client,String filepath)
+        {
+            Uri poster = client.GetImageUrl("original", filepath);
+            string filename = System.IO.Path.GetFileName(poster.LocalPath);
+            String newFile = System.IO.Path.GetTempPath() + "\\" + filename;
+            using (var clientPoster = new WebClient())
+            {
+                clientPoster.DownloadFile(poster, newFile);                
+            }
+            return newFile;
+        }
+
         private void LoadFilm(String id)
         {
             TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
@@ -87,16 +101,26 @@ namespace Filyama
             }
             //String ut= client.Config.Images.PosterSizes.First();
             //String path = movie.PosterPath;
-            
-            Uri poster = client.GetImageUrl("original",movie.PosterPath);
-            string filename= System.IO.Path.GetFileName(poster.LocalPath);
-            String newCover = System.IO.Path.GetTempPath() + "\\" + filename;
-            using (var clientPoster = new WebClient())
-            {
-                clientPoster.DownloadFile(poster, newCover);
-                coverURL = newCover;
+                        
+            coverURL = getImage(client, movie.PosterPath);
+            pictureBox1.Load(coverURL);
+
+            //----------Cast            
+            TMDbLib.Objects.Movies.Credits resp = client.GetMovieCredits(Convert.ToInt32(id));
+            listBoxCast.Items.Clear();
+            foreach (TMDbLib.Objects.Movies.Cast cast in resp.Cast)
+            {                
+                Cast newCast = new Cast();
+                newCast.character = cast.Character;
+                TMDbLib.Objects.People.Person newPerson = client.GetPerson(cast.Id);
+                Person person = new Person();
+                person.name = newPerson.Name;
+                person.birthday = newPerson.Birthday ?? default(DateTime);
+                person.ImdbId = newPerson.ImdbId;
+                person.image = Image.FromFile(getImage(client,newPerson.ProfilePath));
+                newCast.person = person;
+                listBoxCast.Items.Add(newCast);
             }
-            pictureBox1.Load(newCover);
 
         }
         private void LoadFilms(String uri)
@@ -104,10 +128,10 @@ namespace Filyama
             TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
             SearchContainer<SearchMovie> results = client.SearchMovie(uri, "ru");
 
-            Console.WriteLine("Got {0} of {1} results", results.Results.Count, results.TotalResults);
+            //Console.WriteLine("Got {0} of {1} results", results.Results.Count, results.TotalResults);
             dataGridViewFindingFilms.Rows.Clear(); checkedListBoxGenreFilm.Items.Clear();
             foreach (SearchMovie result in results.Results){
-                Console.WriteLine(result.Title);
+                //Console.WriteLine(result.Title);
                 String year = null;
                 if (result.ReleaseDate != null)
                 {
@@ -154,6 +178,10 @@ namespace Filyama
             foreach (object itemChecked in checkedListBoxGenreFilm.CheckedItems)
             {
                 genres.Add((String)itemChecked);
+            }
+            foreach(var castItem in listBoxCast.Items)
+            {
+                casts.Add((Cast)castItem);
             }
         }
 

@@ -561,5 +561,54 @@ namespace Filyama
                 }
             }
         }
+
+        public static int FindPerson(Person person)
+        {
+            int id = -1;
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "SELECT id FROM [persons] WHERE ImdbId=@ImdbId LIMIT 1;";
+                cmd.Parameters.AddWithValue("@ImdbId", person.ImdbId);
+                try
+                {
+                    Object idPerson=cmd.ExecuteScalar();
+                    if (idPerson != null)
+                    {
+                        id = (int)idPerson;
+                    }
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return id;
+        }
+
+        public static int AddPerson(Person person)
+        {
+            int id = -1;
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO persons(name,birthday,ImdbId) VALUES(@name,@birthday,@ImdbId)";
+                cmd.Parameters.AddWithValue("@name", person.name);
+                cmd.Parameters.AddWithValue("@birthday", person.birthday);
+                cmd.Parameters.AddWithValue("@ImdbId", person.ImdbId);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                string sql = @"select last_insert_rowid()";
+                cmd.CommandText = sql;
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return id;
+        }
     }
 }

@@ -224,6 +224,9 @@
     <Content Include="Templates\Default\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Default\Window_Person.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\Default\Window_Film.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
