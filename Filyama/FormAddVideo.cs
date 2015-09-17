@@ -189,7 +189,7 @@ namespace Filyama
             newFilma.dateWorld = dateTimePickerDateWorld.Value;
             newFilma.dateRus = dateTimePickerDateRus.Value;
             String destPath = Common.imagesPath + "\\" + newFilma.id.ToString() + "\\" + "cover" + Path.GetExtension(coverURL);
-            string destFile = System.IO.Path.Combine(Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString(), "\\cover"+Path.GetExtension(coverURL));
+            string destFile = Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString()+ "\\cover"+Path.GetExtension(coverURL);
             // To copy a folder's contents to a new location:
             // Create a new target folder, if necessary.
             if (!System.IO.Directory.Exists(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString()))
@@ -314,7 +314,10 @@ namespace Filyama
                     Cast newCast = new Cast();
                     newCast.person = people;
                     newCast.character = cast.character;
-                    imageListPerson.Images.Add(people.image);
+                    if (people.image != null)
+                    {
+                        imageListPerson.Images.Add(people.image);
+                    }
                     listViewCast.Items.Add(newCast.ToString(), ind++);
                 }
                 LoadCover(search.coverURL);

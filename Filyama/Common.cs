@@ -147,7 +147,7 @@ namespace Filyama
     {
         static public SQLiteConnection connectionLocal;
 
-        static public String imagesPath="\\images\\";
+        static public String imagesPath="\\images\\films\\";
         static public int indexElement = 4;
 
         static public Dictionary<int, int> imageCategoryList;

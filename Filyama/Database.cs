@@ -219,13 +219,10 @@ namespace Filyama
                     catch (SQLiteException ex)
                     {
                         Console.WriteLine(ex.Message);
-                    }
-                    string sql = @"select last_insert_rowid()";
-                    cmd.CommandText = sql;
-                    long lastIdCover = (long)cmd.ExecuteScalar();
+                    }                    
                     cmd.CommandText = "UPDATE films SET id_cover=@id_cover WHERE id=@id;";
                     cmd.Parameters.Add(new SQLiteParameter("@id", newFilm.id));
-                    cmd.Parameters.Add(new SQLiteParameter("@id_cover", lastIdCover));
+                    cmd.Parameters.Add(new SQLiteParameter("@id_cover", newFilm.coverId));
                     try
                     {
                         cmd.ExecuteNonQuery();

@@ -505,7 +505,7 @@ namespace Filyama
                 using (ZipFile zip = new ZipFile())
                 {
                     zip.AddFile("main.db");                    
-                    zip.AddDirectory("images","images");
+                    zip.AddDirectory("images","images");                    
                     zip.AddDirectory("Templates", "Templates");                    
                     zip.AddEntry("property.ini","version="+System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
                     zip.Save(saveZipFileDialog.FileName);                    

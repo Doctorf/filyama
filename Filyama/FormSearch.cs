@@ -75,14 +75,18 @@ namespace Filyama
 
         public String getImage(TMDbClient client,String filepath)
         {
-            Uri poster = client.GetImageUrl("original", filepath);
-            string filename = System.IO.Path.GetFileName(poster.LocalPath);
-            String newFile = System.IO.Path.GetTempPath() + "\\" + filename;
-            using (var clientPoster = new WebClient())
+            if (filepath != null)
             {
-                clientPoster.DownloadFile(poster, newFile);                
+                Uri poster = client.GetImageUrl("original", filepath);
+                string filename = System.IO.Path.GetFileName(poster.LocalPath);
+                String newFile = System.IO.Path.GetTempPath() + "\\" + filename;
+                using (var clientPoster = new WebClient())
+                {
+                    clientPoster.DownloadFile(poster, newFile);
+                }
+                return newFile;
             }
-            return newFile;
+            else return null;
         }
 
         private void LoadFilm(String id)
@@ -117,7 +121,10 @@ namespace Filyama
                 person.name = newPerson.Name;
                 person.birthday = newPerson.Birthday ?? default(DateTime);
                 person.ImdbId = newPerson.ImdbId;
-                person.image = Image.FromFile(getImage(client,newPerson.ProfilePath));
+                if (newPerson.ProfilePath != null)
+                {
+                    person.image = Image.FromFile(getImage(client, newPerson.ProfilePath));
+                }
                 newCast.person = person;
                 listBoxCast.Items.Add(newCast);
             }
