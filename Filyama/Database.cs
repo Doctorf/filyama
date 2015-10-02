@@ -10,6 +10,19 @@ namespace Filyama
 {
     class Database
     {
+        public static int lastInsertId()
+        {
+            int id = -1;
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();                
+                string sql = @"select last_insert_rowid()";
+                cmd.CommandText = sql;
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return id;
+        }
+
         public static void RefreshCategoryImages()
         {
             Common.imageCategoryList.Clear(); Common.imageCategoryListData.Clear();
@@ -491,16 +504,27 @@ namespace Filyama
                 try
                 {
                     cmd.ExecuteNonQuery();
+                    int serialId = lastInsertId();
+                    foreach (Season season in serial.seasons)
+                    {
+                        int seasonId=AddSeason(season, serialId);
+                        foreach (Episode episode in season.episodes)
+                        {
+                            AddEpisode(episode, seasonId);
+                        }
+                    }
                 }
                 catch (SQLiteException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+
             }
         }
 
-        public static void AddSeason(Season season,int serialId)
+        public static int AddSeason(Season season,int serialId)
         {
+            int id = -1;
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
@@ -510,13 +534,14 @@ namespace Filyama
                 try
                 {
                     cmd.ExecuteNonQuery();
+                    id = lastInsertId();
                 }
                 catch (SQLiteException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
                 cmd.CommandText = "INSERT INTO season_serial(id_season,id_serial) VALUES(@id_season,@id_serial)";
-                cmd.Parameters.AddWithValue("@id_season", season.id);
+                cmd.Parameters.AddWithValue("@id_season", id);
                 cmd.Parameters.AddWithValue("@id_serial", serialId);
                 try
                 {
@@ -527,10 +552,12 @@ namespace Filyama
                     Console.WriteLine(ex.Message);
                 }
             }
+            return id;
         }
 
-        public static void AddEpisode(Episode episode,int seasonId)
+        public static int AddEpisode(Episode episode,int seasonId)
         {
+            int id = -1;
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
@@ -540,23 +567,28 @@ namespace Filyama
                 try
                 {
                     cmd.ExecuteNonQuery();
+                    id = lastInsertId();
                 }
                 catch (SQLiteException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-                cmd.CommandText = "INSERT INTO episode_season(id_episode,id_season) VALUES(@id_episode,@id_season)";
-                cmd.Parameters.AddWithValue("@id_episode", episode.id);
-                cmd.Parameters.AddWithValue("@id_season", seasonId);
-                try
+                if (id != -1)
                 {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SQLiteException ex)
-                {
-                    Console.WriteLine(ex.Message);
+                    cmd.CommandText = "INSERT INTO episode_season(id_episode,id_season) VALUES(@id_episode,@id_season)";
+                    cmd.Parameters.AddWithValue("@id_episode", id);
+                    cmd.Parameters.AddWithValue("@id_season", seasonId);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
+            return id;
         }
 
         public static int FindPerson(Person person)

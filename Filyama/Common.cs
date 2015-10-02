@@ -116,7 +116,7 @@ namespace Filyama
         public String name;
         public override string ToString()
         {
-            return String.Format("{0} episode '{1}'", number, name);
+            return String.Format("episode {0} '{1}'", number, name);
         }
     }
 

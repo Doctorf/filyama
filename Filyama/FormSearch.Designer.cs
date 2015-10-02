@@ -43,6 +43,8 @@
             this.textBoxNameSearch = new System.Windows.Forms.TextBox();
             this.labelNameSearch = new System.Windows.Forms.Label();
             this.tabPageData = new System.Windows.Forms.TabPage();
+            this.listBoxCast = new System.Windows.Forms.ListBox();
+            this.labelCast = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.checkedListBoxGenreFilm = new System.Windows.Forms.CheckedListBox();
@@ -55,9 +57,18 @@
             this.textBoxTitleOrigin = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageDataSerial = new System.Windows.Forms.TabPage();
+            this.listBoxSeasons = new System.Windows.Forms.ListBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.buttonAddSerial = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.dateTimePickerSerialLastAirDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerSerialFirstAirDate = new System.Windows.Forms.DateTimePicker();
+            this.textBoxSerialTitleRus = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxSerialTitleOrigin = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.checkedListBoxGenreSerial = new System.Windows.Forms.CheckedListBox();
-            this.labelCast = new System.Windows.Forms.Label();
-            this.listBoxCast = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPageSourceFilm.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -65,6 +76,7 @@
             this.tabPageData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPageDataSerial.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -91,7 +103,7 @@
             this.tabPageSourceFilm.Location = new System.Drawing.Point(4, 22);
             this.tabPageSourceFilm.Name = "tabPageSourceFilm";
             this.tabPageSourceFilm.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSourceFilm.Size = new System.Drawing.Size(629, 432);
+            this.tabPageSourceFilm.Size = new System.Drawing.Size(685, 375);
             this.tabPageSourceFilm.TabIndex = 0;
             this.tabPageSourceFilm.Text = "Поиск";
             this.tabPageSourceFilm.UseVisualStyleBackColor = true;
@@ -235,6 +247,23 @@
             this.tabPageData.Text = "Фильм";
             this.tabPageData.UseVisualStyleBackColor = true;
             // 
+            // listBoxCast
+            // 
+            this.listBoxCast.FormattingEnabled = true;
+            this.listBoxCast.Location = new System.Drawing.Point(25, 213);
+            this.listBoxCast.Name = "listBoxCast";
+            this.listBoxCast.Size = new System.Drawing.Size(285, 147);
+            this.listBoxCast.TabIndex = 12;
+            // 
+            // labelCast
+            // 
+            this.labelCast.AutoSize = true;
+            this.labelCast.Location = new System.Drawing.Point(20, 183);
+            this.labelCast.Name = "labelCast";
+            this.labelCast.Size = new System.Drawing.Size(28, 13);
+            this.labelCast.TabIndex = 11;
+            this.labelCast.Text = "Cast";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
@@ -276,9 +305,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(21, 154);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.Size = new System.Drawing.Size(47, 13);
             this.label6.TabIndex = 6;
-            this.label6.Text = "label6";
+            this.label6.Text = "Date rus";
             // 
             // dateTimePickerDateWorld
             // 
@@ -292,9 +321,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(20, 116);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(58, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "label5";
+            this.label5.Text = "Data world";
             // 
             // textBoxTitleRus
             // 
@@ -309,9 +338,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(23, 77);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.Size = new System.Drawing.Size(46, 13);
             this.label4.TabIndex = 2;
-            this.label4.Text = "label4";
+            this.label4.Text = "TitleRus";
             // 
             // textBoxTitleOrigin
             // 
@@ -326,45 +355,134 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(30, 39);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 0;
-            this.label3.Text = "label3";
+            this.label3.Text = "TitleOrigin";
             // 
             // tabPageDataSerial
             // 
+            this.tabPageDataSerial.Controls.Add(this.listBoxSeasons);
+            this.tabPageDataSerial.Controls.Add(this.pictureBox2);
+            this.tabPageDataSerial.Controls.Add(this.buttonAddSerial);
+            this.tabPageDataSerial.Controls.Add(this.label8);
+            this.tabPageDataSerial.Controls.Add(this.label7);
+            this.tabPageDataSerial.Controls.Add(this.dateTimePickerSerialLastAirDate);
+            this.tabPageDataSerial.Controls.Add(this.dateTimePickerSerialFirstAirDate);
+            this.tabPageDataSerial.Controls.Add(this.textBoxSerialTitleRus);
+            this.tabPageDataSerial.Controls.Add(this.label2);
+            this.tabPageDataSerial.Controls.Add(this.textBoxSerialTitleOrigin);
+            this.tabPageDataSerial.Controls.Add(this.label1);
             this.tabPageDataSerial.Controls.Add(this.checkedListBoxGenreSerial);
             this.tabPageDataSerial.Location = new System.Drawing.Point(4, 22);
             this.tabPageDataSerial.Name = "tabPageDataSerial";
             this.tabPageDataSerial.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDataSerial.Size = new System.Drawing.Size(629, 432);
+            this.tabPageDataSerial.Size = new System.Drawing.Size(685, 375);
             this.tabPageDataSerial.TabIndex = 2;
             this.tabPageDataSerial.Text = "Сериал";
             this.tabPageDataSerial.UseVisualStyleBackColor = true;
             // 
+            // listBoxSeasons
+            // 
+            this.listBoxSeasons.FormattingEnabled = true;
+            this.listBoxSeasons.Location = new System.Drawing.Point(15, 166);
+            this.listBoxSeasons.Name = "listBoxSeasons";
+            this.listBoxSeasons.Size = new System.Drawing.Size(306, 173);
+            this.listBoxSeasons.TabIndex = 20;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBox2.Location = new System.Drawing.Point(484, 11);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(197, 257);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 19;
+            this.pictureBox2.TabStop = false;
+            // 
+            // buttonAddSerial
+            // 
+            this.buttonAddSerial.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonAddSerial.Location = new System.Drawing.Point(589, 318);
+            this.buttonAddSerial.Name = "buttonAddSerial";
+            this.buttonAddSerial.Size = new System.Drawing.Size(85, 45);
+            this.buttonAddSerial.TabIndex = 18;
+            this.buttonAddSerial.Text = "Add Information";
+            this.buttonAddSerial.UseVisualStyleBackColor = true;
+            this.buttonAddSerial.Click += new System.EventHandler(this.buttonAddSerial_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(21, 134);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "label8";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(23, 97);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "label7";
+            // 
+            // dateTimePickerSerialLastAirDate
+            // 
+            this.dateTimePickerSerialLastAirDate.Location = new System.Drawing.Point(89, 128);
+            this.dateTimePickerSerialLastAirDate.Name = "dateTimePickerSerialLastAirDate";
+            this.dateTimePickerSerialLastAirDate.Size = new System.Drawing.Size(216, 20);
+            this.dateTimePickerSerialLastAirDate.TabIndex = 15;
+            // 
+            // dateTimePickerSerialFirstAirDate
+            // 
+            this.dateTimePickerSerialFirstAirDate.Location = new System.Drawing.Point(91, 97);
+            this.dateTimePickerSerialFirstAirDate.Name = "dateTimePickerSerialFirstAirDate";
+            this.dateTimePickerSerialFirstAirDate.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerSerialFirstAirDate.TabIndex = 14;
+            // 
+            // textBoxSerialTitleRus
+            // 
+            this.textBoxSerialTitleRus.Location = new System.Drawing.Point(84, 54);
+            this.textBoxSerialTitleRus.Name = "textBoxSerialTitleRus";
+            this.textBoxSerialTitleRus.ReadOnly = true;
+            this.textBoxSerialTitleRus.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSerialTitleRus.TabIndex = 13;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(44, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "label2";
+            // 
+            // textBoxSerialTitleOrigin
+            // 
+            this.textBoxSerialTitleOrigin.Location = new System.Drawing.Point(83, 23);
+            this.textBoxSerialTitleOrigin.Name = "textBoxSerialTitleOrigin";
+            this.textBoxSerialTitleOrigin.ReadOnly = true;
+            this.textBoxSerialTitleOrigin.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSerialTitleOrigin.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(34, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "label1";
+            // 
             // checkedListBoxGenreSerial
             // 
             this.checkedListBoxGenreSerial.FormattingEnabled = true;
-            this.checkedListBoxGenreSerial.Location = new System.Drawing.Point(17, 76);
+            this.checkedListBoxGenreSerial.Location = new System.Drawing.Point(321, 11);
             this.checkedListBoxGenreSerial.Name = "checkedListBoxGenreSerial";
-            this.checkedListBoxGenreSerial.Size = new System.Drawing.Size(317, 184);
+            this.checkedListBoxGenreSerial.Size = new System.Drawing.Size(157, 109);
             this.checkedListBoxGenreSerial.TabIndex = 9;
-            // 
-            // labelCast
-            // 
-            this.labelCast.AutoSize = true;
-            this.labelCast.Location = new System.Drawing.Point(20, 183);
-            this.labelCast.Name = "labelCast";
-            this.labelCast.Size = new System.Drawing.Size(35, 13);
-            this.labelCast.TabIndex = 11;
-            this.labelCast.Text = "label1";
-            // 
-            // listBoxCast
-            // 
-            this.listBoxCast.FormattingEnabled = true;
-            this.listBoxCast.Location = new System.Drawing.Point(25, 213);
-            this.listBoxCast.Name = "listBoxCast";
-            this.listBoxCast.Size = new System.Drawing.Size(285, 147);
-            this.listBoxCast.TabIndex = 12;
             // 
             // FormSearch
             // 
@@ -384,6 +502,8 @@
             this.tabPageData.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPageDataSerial.ResumeLayout(false);
+            this.tabPageDataSerial.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -420,5 +540,16 @@
         private System.Windows.Forms.CheckedListBox checkedListBoxGenreSerial;
         private System.Windows.Forms.Label labelCast;
         private System.Windows.Forms.ListBox listBoxCast;
+        private System.Windows.Forms.TextBox textBoxSerialTitleRus;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxSerialTitleOrigin;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerSerialLastAirDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerSerialFirstAirDate;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button buttonAddSerial;
+        private System.Windows.Forms.ListBox listBoxSeasons;
     }
 }

@@ -28,16 +28,18 @@ namespace Filyama
         public String rusTitle;
         public DateTime dateWorld;
         public DateTime dateRus;
+        public DateTime firstAirDate, lastAirDate;
         public List<String> genres = new List<string>();
         public String coverURL = "";
         public List<Cast> casts = new List<Cast>();
+        public List<Season> seasons = new List<Season>();
 
         public FormSearch()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Search()
         {
             if (radioButton1.Checked)
             {
@@ -47,6 +49,11 @@ namespace Filyama
             {
                 LoadSerials(textBoxNameSearch.Text);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Search();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -152,14 +159,37 @@ namespace Filyama
         {
             TMDbClient client = new TMDbClient(APIKeys.theMovieDB);
             client.GetConfig();
-            TvShow serial = client.GetTvShow(Convert.ToInt32(id));
+            TvShow serial = client.GetTvShow(Convert.ToInt32(id),TvShowMethods.Undefined,"ru");
 
             Console.WriteLine("Show name: {0}", serial.Name);
+            textBoxSerialTitleOrigin.Text = serial.OriginalName;
+            textBoxSerialTitleRus.Text = serial.Name;
+            dateTimePickerSerialFirstAirDate.Value = serial.FirstAirDate ?? default(DateTime);
+            dateTimePickerSerialLastAirDate.Value = serial.LastAirDate ?? default(DateTime);
             foreach (Genre genre in serial.Genres)
             {
                 checkedListBoxGenreSerial.Items.Add(Common.format(genre.Name), true);
             }
 
+            coverURL = getImage(client, serial.PosterPath);
+            pictureBox2.Load(coverURL);
+            listBoxSeasons.Items.Clear();
+            foreach (TvSeason season in serial.Seasons)
+            {
+                Season newSeason = new Season();
+                newSeason.name=season.Name;
+                newSeason.number=season.SeasonNumber;
+                newSeason.episodes = new List<Episode>();
+                TvSeason  getSeason=client.GetTvSeason(Convert.ToInt32(id), season.SeasonNumber, TvSeasonMethods.Undefined, "ru");
+                foreach (TvEpisode episode in getSeason.Episodes)
+                {
+                    Episode newEpisode = new Episode();
+                    newEpisode.name = episode.Name;
+                    newEpisode.number = episode.EpisodeNumber;                    
+                    newSeason.episodes.Add(newEpisode);
+                }
+                listBoxSeasons.Items.Add(newSeason);
+            }
         }
 
         private void LoadSerials(String uri)
@@ -196,7 +226,23 @@ namespace Filyama
         {
             if (e.KeyCode == Keys.Enter)
             {
-                LoadFilms(textBoxNameSearch.Text);   
+                Search();
+            }
+        }
+
+        private void buttonAddSerial_Click(object sender, EventArgs e)
+        {
+            originTitle = textBoxSerialTitleOrigin.Text;
+            rusTitle = textBoxSerialTitleRus.Text;
+            firstAirDate = dateTimePickerSerialFirstAirDate.Value;
+            lastAirDate = dateTimePickerSerialLastAirDate.Value;
+            foreach (object itemChecked in checkedListBoxGenreSerial.CheckedItems)
+            {                
+                genres.Add((String)itemChecked);
+            }
+            foreach (var seasonItem in listBoxSeasons.Items)
+            {
+                seasons.Add((Season)seasonItem);
             }
         }
     }
