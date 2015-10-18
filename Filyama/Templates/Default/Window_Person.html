@@ -1,0 +1,51 @@
+﻿<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+			<link rel="stylesheet" type="text/css" href="style.css">
+				${html.css}
+			</head>
+			<body>
+				<div class="person">
+					<div class="headerFilm">
+						<h1 class="moviename-big">${person.name}</h1>												
+						<div class="film-img-box">
+							<img src="${person.image}" alt="Изображние актера" width="205"/>
+						</div>
+					</div>    
+					<div class="infoTable">
+						<table class="info">
+							<tr class="border_bottom">
+								<td class="type">Дата рождения</td>
+								<td>
+									<div style="position: relative">
+											${films.year}
+									</div>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+								<td class="type">Дата смерти</td>
+								<td>
+									<div style="position: relative">
+											${films.director}
+									</div>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+								<td class="type">Место рождения</td>
+								<td>
+									<div style="position: relative">
+											${films.categorys}
+									</div>
+								</td>
+							</tr>																	
+						</table>
+						<h4 class="type">В главных ролях:</h4>
+						<ul>
+							<li>Я</li>
+							<li>Ты</li>
+							<li>Она</li>
+						</ul>
+					</div>
+				</div>
+			</body>
+		</html>

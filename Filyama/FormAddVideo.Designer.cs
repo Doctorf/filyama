@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAddVideo));
             this.labelPath = new System.Windows.Forms.Label();
             this.textBoxFullPath = new System.Windows.Forms.TextBox();
@@ -53,6 +54,8 @@
             this.dateTimePickerDateRus = new System.Windows.Forms.DateTimePicker();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.listViewCast = new System.Windows.Forms.ListView();
+            this.imageListPerson = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -121,9 +124,9 @@
             // 
             this.listBoxFiles.AllowDrop = true;
             this.listBoxFiles.FormattingEnabled = true;
-            this.listBoxFiles.Location = new System.Drawing.Point(18, 170);
+            this.listBoxFiles.Location = new System.Drawing.Point(370, 338);
             this.listBoxFiles.Name = "listBoxFiles";
-            this.listBoxFiles.Size = new System.Drawing.Size(241, 147);
+            this.listBoxFiles.Size = new System.Drawing.Size(271, 147);
             this.listBoxFiles.TabIndex = 16;
             this.listBoxFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxFiles_MouseDown);
             // 
@@ -240,7 +243,7 @@
             // 
             this.treeView1.Location = new System.Drawing.Point(15, 369);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(626, 116);
+            this.treeView1.Size = new System.Drawing.Size(336, 116);
             this.treeView1.TabIndex = 25;
             // 
             // panel1
@@ -254,11 +257,28 @@
             this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
             this.panel1.DragOver += new System.Windows.Forms.DragEventHandler(this.panel1_DragOver);
             // 
+            // listViewCast
+            // 
+            this.listViewCast.LargeImageList = this.imageListPerson;
+            this.listViewCast.Location = new System.Drawing.Point(16, 157);
+            this.listViewCast.Name = "listViewCast";
+            this.listViewCast.Size = new System.Drawing.Size(234, 168);
+            this.listViewCast.SmallImageList = this.imageListPerson;
+            this.listViewCast.TabIndex = 27;
+            this.listViewCast.UseCompatibleStateImageBehavior = false;
+            // 
+            // imageListPerson
+            // 
+            this.imageListPerson.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageListPerson.ImageSize = new System.Drawing.Size(50, 75);
+            this.imageListPerson.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // FormAddVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 543);
+            this.Controls.Add(this.listViewCast);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.textBoxNameRus);
@@ -318,5 +338,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerDateRus;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ListView listViewCast;
+        private System.Windows.Forms.ImageList imageListPerson;
     }
 }

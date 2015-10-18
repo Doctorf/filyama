@@ -67,6 +67,7 @@ namespace Filyama
         public String categoriesString;
         public DateTime dateWorld;
         public DateTime dateRus;
+        public List<Cast> casts;
 
         //------Сохранение в БД
         public long coverId;
@@ -98,15 +99,56 @@ namespace Filyama
     public struct Season
     {
         public int id;
+        public int parent_id;
         public int number;
         public String name;
+        public List<Episode> episodes;
+        public override string ToString()
+        {
+            return String.Format("{0} season '{1}'", number, name);
+        }
+    }
+
+    public struct Episode
+    {
+        public int id;
+        public int parent_id;
+        public int number;
+        public String name;
+        public override string ToString()
+        {
+            return String.Format("episode {0} '{1}'", number, name);
+        }
+    }
+
+    public struct Person
+    {
+        public int id;
+        public String ImdbId;
+        public String biography;
+        public DateTime birthday;
+        public DateTime deathday;
+        public String name;
+        public String place_of_birth;
+        public Image image;
+    }
+
+    public struct Cast
+    {
+        public int id;        
+        public Person person;
+        public String character;
+        public override string ToString()
+        {
+            return String.Format("{0} as '{1}'", person.name, character);
+        }
     }
 
     class Common
     {
         static public SQLiteConnection connectionLocal;
 
-        static public String imagesPath="\\images\\";
+        static public String imagesPath="\\images\\films\\";
         static public int indexElement = 4;
 
         static public Dictionary<int, int> imageCategoryList;

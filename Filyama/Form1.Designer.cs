@@ -45,12 +45,18 @@
             this.treeCategory = new System.Windows.Forms.TreeView();
             this.imageListCategory = new System.Windows.Forms.ImageList(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.webBrowserSerial = new System.Windows.Forms.WebBrowser();
             this.labelSerials = new System.Windows.Forms.Label();
             this.buttonDeleteSerials = new System.Windows.Forms.Button();
             this.buttonEditSerials = new System.Windows.Forms.Button();
             this.buttonAddSerials = new System.Windows.Forms.Button();
             this.treeViewListSerials = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonDeleteAnime = new System.Windows.Forms.Button();
+            this.buttonEditAnime = new System.Windows.Forms.Button();
+            this.buttonAddAnime = new System.Windows.Forms.Button();
+            this.treeAnime = new System.Windows.Forms.TreeView();
+            this.webBrowserAnime = new System.Windows.Forms.WebBrowser();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,12 +78,6 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.saveZipFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openZipFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.webBrowserSerial = new System.Windows.Forms.WebBrowser();
-            this.webBrowserAnime = new System.Windows.Forms.WebBrowser();
-            this.treeAnime = new System.Windows.Forms.TreeView();
-            this.buttonAddAnime = new System.Windows.Forms.Button();
-            this.buttonEditAnime = new System.Windows.Forms.Button();
-            this.buttonDeleteAnime = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFilms)).BeginInit();
@@ -244,6 +244,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabTVShows";
             // 
+            // webBrowserSerial
+            // 
+            this.webBrowserSerial.Location = new System.Drawing.Point(248, 11);
+            this.webBrowserSerial.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserSerial.Name = "webBrowserSerial";
+            this.webBrowserSerial.Size = new System.Drawing.Size(956, 469);
+            this.webBrowserSerial.TabIndex = 5;
+            // 
             // labelSerials
             // 
             this.labelSerials.AutoSize = true;
@@ -261,6 +269,7 @@
             this.buttonDeleteSerials.Size = new System.Drawing.Size(25, 25);
             this.buttonDeleteSerials.TabIndex = 3;
             this.buttonDeleteSerials.UseVisualStyleBackColor = true;
+            this.buttonDeleteSerials.Click += new System.EventHandler(this.buttonDeleteSerials_Click);
             // 
             // buttonEditSerials
             // 
@@ -279,6 +288,7 @@
             this.buttonAddSerials.Size = new System.Drawing.Size(25, 25);
             this.buttonAddSerials.TabIndex = 1;
             this.buttonAddSerials.UseVisualStyleBackColor = true;
+            this.buttonAddSerials.Click += new System.EventHandler(this.buttonAddSerials_Click);
             // 
             // treeViewListSerials
             // 
@@ -301,6 +311,48 @@
             this.tabPage3.Size = new System.Drawing.Size(1220, 496);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabAnime";
+            // 
+            // buttonDeleteAnime
+            // 
+            this.buttonDeleteAnime.BackgroundImage = global::Filyama.Properties.Resources.Minus;
+            this.buttonDeleteAnime.Location = new System.Drawing.Point(79, 6);
+            this.buttonDeleteAnime.Name = "buttonDeleteAnime";
+            this.buttonDeleteAnime.Size = new System.Drawing.Size(25, 25);
+            this.buttonDeleteAnime.TabIndex = 4;
+            this.buttonDeleteAnime.UseVisualStyleBackColor = true;
+            // 
+            // buttonEditAnime
+            // 
+            this.buttonEditAnime.BackgroundImage = global::Filyama.Properties.Resources.edit_25;
+            this.buttonEditAnime.Location = new System.Drawing.Point(48, 6);
+            this.buttonEditAnime.Name = "buttonEditAnime";
+            this.buttonEditAnime.Size = new System.Drawing.Size(25, 25);
+            this.buttonEditAnime.TabIndex = 3;
+            this.buttonEditAnime.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddAnime
+            // 
+            this.buttonAddAnime.BackgroundImage = global::Filyama.Properties.Resources.Plus;
+            this.buttonAddAnime.Location = new System.Drawing.Point(17, 6);
+            this.buttonAddAnime.Name = "buttonAddAnime";
+            this.buttonAddAnime.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddAnime.TabIndex = 2;
+            this.buttonAddAnime.UseVisualStyleBackColor = true;
+            // 
+            // treeAnime
+            // 
+            this.treeAnime.Location = new System.Drawing.Point(17, 41);
+            this.treeAnime.Name = "treeAnime";
+            this.treeAnime.Size = new System.Drawing.Size(227, 435);
+            this.treeAnime.TabIndex = 1;
+            // 
+            // webBrowserAnime
+            // 
+            this.webBrowserAnime.Location = new System.Drawing.Point(351, 13);
+            this.webBrowserAnime.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserAnime.Name = "webBrowserAnime";
+            this.webBrowserAnime.Size = new System.Drawing.Size(848, 463);
+            this.webBrowserAnime.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -330,38 +382,38 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.loadToolStripMenuItem.Text = "Load zip";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveZipToolStripMenuItem
             // 
             this.saveZipToolStripMenuItem.Name = "saveZipToolStripMenuItem";
-            this.saveZipToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveZipToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.saveZipToolStripMenuItem.Text = "Save zip";
             this.saveZipToolStripMenuItem.Click += new System.EventHandler(this.saveZipToolStripMenuItem_Click);
             // 
             // pushToolStripMenuItem
             // 
             this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
-            this.pushToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pushToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.pushToolStripMenuItem.Text = "Push zip";
             // 
             // preferenseToolStripMenuItem
             // 
             this.preferenseToolStripMenuItem.Name = "preferenseToolStripMenuItem";
-            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.preferenseToolStripMenuItem.Text = "Preferense";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -481,56 +533,6 @@
             // 
             this.openZipFileDialog.DefaultExt = "zip";
             this.openZipFileDialog.Filter = "Zip file|*.zip";
-            // 
-            // webBrowserSerial
-            // 
-            this.webBrowserSerial.Location = new System.Drawing.Point(248, 11);
-            this.webBrowserSerial.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowserSerial.Name = "webBrowserSerial";
-            this.webBrowserSerial.Size = new System.Drawing.Size(956, 469);
-            this.webBrowserSerial.TabIndex = 5;
-            // 
-            // webBrowserAnime
-            // 
-            this.webBrowserAnime.Location = new System.Drawing.Point(351, 13);
-            this.webBrowserAnime.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowserAnime.Name = "webBrowserAnime";
-            this.webBrowserAnime.Size = new System.Drawing.Size(848, 463);
-            this.webBrowserAnime.TabIndex = 0;
-            // 
-            // treeAnime
-            // 
-            this.treeAnime.Location = new System.Drawing.Point(17, 41);
-            this.treeAnime.Name = "treeAnime";
-            this.treeAnime.Size = new System.Drawing.Size(227, 435);
-            this.treeAnime.TabIndex = 1;
-            // 
-            // buttonAddAnime
-            // 
-            this.buttonAddAnime.BackgroundImage = global::Filyama.Properties.Resources.Plus;
-            this.buttonAddAnime.Location = new System.Drawing.Point(17, 6);
-            this.buttonAddAnime.Name = "buttonAddAnime";
-            this.buttonAddAnime.Size = new System.Drawing.Size(25, 25);
-            this.buttonAddAnime.TabIndex = 2;
-            this.buttonAddAnime.UseVisualStyleBackColor = true;
-            // 
-            // buttonEditAnime
-            // 
-            this.buttonEditAnime.BackgroundImage = global::Filyama.Properties.Resources.edit_25;
-            this.buttonEditAnime.Location = new System.Drawing.Point(48, 6);
-            this.buttonEditAnime.Name = "buttonEditAnime";
-            this.buttonEditAnime.Size = new System.Drawing.Size(25, 25);
-            this.buttonEditAnime.TabIndex = 3;
-            this.buttonEditAnime.UseVisualStyleBackColor = true;
-            // 
-            // buttonDeleteAnime
-            // 
-            this.buttonDeleteAnime.BackgroundImage = global::Filyama.Properties.Resources.Minus;
-            this.buttonDeleteAnime.Location = new System.Drawing.Point(79, 6);
-            this.buttonDeleteAnime.Name = "buttonDeleteAnime";
-            this.buttonDeleteAnime.Size = new System.Drawing.Size(25, 25);
-            this.buttonDeleteAnime.TabIndex = 4;
-            this.buttonDeleteAnime.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

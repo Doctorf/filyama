@@ -320,6 +320,24 @@ namespace Filyama
                         long idCategory=Database.AddCategory(newCategory, -1, Common.indexElement);                      
                     };
                 }
+                listViewCast.Clear(); imageListPerson.Images.Clear(); int ind = 0;
+                foreach (Cast cast in search.casts)
+                {
+                    Person people = cast.person;
+                    people.id=Database.FindPerson(people);
+                    if (people.id==-1)
+                    {
+                        people.id = Database.AddPerson(people);
+                    }
+                    Cast newCast = new Cast();
+                    newCast.person = people;
+                    newCast.character = cast.character;
+                    if (people.image != null)
+                    {
+                        imageListPerson.Images.Add(people.image);
+                    }
+                    listViewCast.Items.Add(newCast.ToString(), ind++);
+                }
                 LoadCover(search.coverURL);
                 RefreshCategories(search.genres);
             }
