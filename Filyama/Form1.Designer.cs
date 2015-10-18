@@ -382,38 +382,39 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load zip";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveZipToolStripMenuItem
             // 
             this.saveZipToolStripMenuItem.Name = "saveZipToolStripMenuItem";
-            this.saveZipToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.saveZipToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveZipToolStripMenuItem.Text = "Save zip";
             this.saveZipToolStripMenuItem.Click += new System.EventHandler(this.saveZipToolStripMenuItem_Click);
             // 
             // pushToolStripMenuItem
             // 
             this.pushToolStripMenuItem.Name = "pushToolStripMenuItem";
-            this.pushToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.pushToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pushToolStripMenuItem.Text = "Push zip";
             // 
             // preferenseToolStripMenuItem
             // 
             this.preferenseToolStripMenuItem.Name = "preferenseToolStripMenuItem";
-            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.preferenseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferenseToolStripMenuItem.Text = "Preferense";
+            this.preferenseToolStripMenuItem.Click += new System.EventHandler(this.preferenseToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(126, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

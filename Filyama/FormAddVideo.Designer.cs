@@ -88,6 +88,10 @@
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
             // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
+            // 
             // textBoxNameRus
             // 
             this.textBoxNameRus.Location = new System.Drawing.Point(99, 64);

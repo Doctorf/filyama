@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Filyama
 {
@@ -156,6 +157,7 @@ namespace Filyama
         static public Dictionary<int, byte[]> imageCategoryListData;
         static public Dictionary<int, Film> films;
         static public Dictionary<int, Serial> serials;
+        static public Dictionary<string, string> configs;
 
         public static Image byteArrayToImage(byte[] byteArrayIn)
         {
@@ -193,6 +195,11 @@ namespace Filyama
             if (String.IsNullOrEmpty(source))
                 throw new ArgumentException("String not found!");
             return source.First().ToString().ToUpper() + source.Substring(1);
+        }
+
+        public static void ShowError(String error_string, params string[] values)
+        {
+            MessageBox.Show(String.Format(error_string, values), "Error in application", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

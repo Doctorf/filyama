@@ -139,6 +139,8 @@ namespace Filyama
                         {
                             selectFilm.dateRus = Convert.ToDateTime(r["date_rus"]);
                         }
+                        //----------Медиа файлы
+                        selectFilm.mediafiles = new List<long>();
                         Common.films.Add(selectFilm.id, selectFilm);
                         if (!filterName.Equals(String.Empty))
                         {
@@ -212,7 +214,7 @@ namespace Filyama
         }
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();            
             CreateFolders();
             AddBrowser();
             Common.imageCategoryList = new Dictionary<int, int>();
@@ -261,6 +263,7 @@ namespace Filyama
                 cmd.CommandText = sql_command_create;
                 cmd.ExecuteNonQuery();*/
             }
+            Database.LoadConfigs();
             RefreshCategoryImages();
             RefreshCategory();
             RefreshFilms();
@@ -626,6 +629,12 @@ namespace Filyama
                     }
                 }
             }            
+        }
+
+        private void preferenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormPreference preference = new FormPreference();
+            preference.ShowDialog();
         }
     }
 }

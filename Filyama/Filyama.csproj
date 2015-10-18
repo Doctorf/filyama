@@ -145,6 +145,12 @@
     <Compile Include="FormAddVideo.Designer.cs">
       <DependentUpon>FormAddVideo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPreference.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPreference.Designer.cs">
+      <DependentUpon>FormPreference.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddVideo.resx">
       <DependentUpon>FormAddVideo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPreference.resx">
+      <DependentUpon>FormPreference.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSearch.resx">
       <DependentUpon>FormSearch.cs</DependentUpon>

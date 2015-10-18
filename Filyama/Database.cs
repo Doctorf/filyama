@@ -23,6 +23,33 @@ namespace Filyama
             return id;
         }
 
+        public static void LoadConfigs()
+        {
+            if (Common.configs == null)
+            {
+                Common.configs = new Dictionary<string, string>();
+            }
+            Common.configs.Clear();
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "SELECT * FROM configs";
+                try
+                {
+                    SQLiteDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        Common.configs.Add(Convert.ToString(r["name"]),Convert.ToString(r["value"]));                        
+                    }
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Common.ShowError(ex.Message);
+                }
+            }
+        }
+
         public static void RefreshCategoryImages()
         {
             Common.imageCategoryList.Clear(); Common.imageCategoryListData.Clear();
@@ -626,7 +653,7 @@ namespace Filyama
                     Object idPerson=cmd.ExecuteScalar();
                     if (idPerson != null)
                     {
-                        id = (int)idPerson;
+                        id = Convert.ToInt32(idPerson);
                     }
                 }
                 catch (SQLiteException ex)

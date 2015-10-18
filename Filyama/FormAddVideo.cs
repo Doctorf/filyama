@@ -184,6 +184,7 @@ namespace Filyama
                 }
             }
             RefreshCategories();
+            folderBrowserDialog1.SelectedPath = Common.configs["main_server"];
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -276,7 +277,10 @@ namespace Filyama
             coverURL = filename;
             try
             {
-                pictureBoxImage.Load(filename);
+                if (File.Exists(filename))
+                {
+                    pictureBoxImage.Load(filename);
+                }
             }
             catch (FileNotFoundException e)
             {
@@ -341,6 +345,11 @@ namespace Filyama
                 LoadCover(search.coverURL);
                 RefreshCategories(search.genres);
             }
+        }
+
+        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+        {
+
         }
     }
 }
