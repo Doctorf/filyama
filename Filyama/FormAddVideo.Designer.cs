@@ -38,7 +38,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxNameOrig = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.listBoxFiles = new System.Windows.Forms.ListBox();
             this.buttonSearch = new System.Windows.Forms.Button();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             this.buttonLoadCover = new System.Windows.Forms.Button();
@@ -56,8 +55,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.listViewCast = new System.Windows.Forms.ListView();
             this.imageListPerson = new System.Windows.Forms.ImageList(this.components);
+            this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
+            this.ColumnFilename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnView = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.ColumnCover = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnBinary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnFrame = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnThumbnails = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.SuspendLayout();
             // 
             // labelPath
@@ -123,16 +130,6 @@
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 17;
             this.label1.Text = "Name original";
-            // 
-            // listBoxFiles
-            // 
-            this.listBoxFiles.AllowDrop = true;
-            this.listBoxFiles.FormattingEnabled = true;
-            this.listBoxFiles.Location = new System.Drawing.Point(370, 338);
-            this.listBoxFiles.Name = "listBoxFiles";
-            this.listBoxFiles.Size = new System.Drawing.Size(271, 147);
-            this.listBoxFiles.TabIndex = 16;
-            this.listBoxFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxFiles_MouseDown);
             // 
             // buttonSearch
             // 
@@ -245,9 +242,9 @@
             // 
             // treeView1
             // 
-            this.treeView1.Location = new System.Drawing.Point(15, 369);
+            this.treeView1.Location = new System.Drawing.Point(439, 322);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(336, 116);
+            this.treeView1.Size = new System.Drawing.Size(211, 164);
             this.treeView1.TabIndex = 25;
             // 
             // panel1
@@ -277,11 +274,72 @@
             this.imageListPerson.ImageSize = new System.Drawing.Size(50, 75);
             this.imageListPerson.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // dataGridViewFiles
+            // 
+            this.dataGridViewFiles.AllowUserToAddRows = false;
+            this.dataGridViewFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnFilename,
+            this.ColumnView,
+            this.ColumnCover,
+            this.ColumnBinary,
+            this.ColumnFrame,
+            this.ColumnThumbnails});
+            this.dataGridViewFiles.Location = new System.Drawing.Point(3, 368);
+            this.dataGridViewFiles.Name = "dataGridViewFiles";
+            this.dataGridViewFiles.RowHeadersVisible = false;
+            this.dataGridViewFiles.Size = new System.Drawing.Size(430, 118);
+            this.dataGridViewFiles.TabIndex = 28;
+            this.dataGridViewFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellContentClick);
+            // 
+            // ColumnFilename
+            // 
+            this.ColumnFilename.FillWeight = 250F;
+            this.ColumnFilename.HeaderText = "Filename";
+            this.ColumnFilename.Name = "ColumnFilename";
+            this.ColumnFilename.Width = 250;
+            // 
+            // ColumnView
+            // 
+            this.ColumnView.FillWeight = 50F;
+            this.ColumnView.HeaderText = "View";
+            this.ColumnView.Name = "ColumnView";
+            this.ColumnView.Width = 50;
+            // 
+            // ColumnCover
+            // 
+            this.ColumnCover.FillWeight = 30F;
+            this.ColumnCover.HeaderText = "Cv.";
+            this.ColumnCover.Name = "ColumnCover";
+            this.ColumnCover.Width = 30;
+            // 
+            // ColumnBinary
+            // 
+            this.ColumnBinary.FillWeight = 30F;
+            this.ColumnBinary.HeaderText = "Bn.";
+            this.ColumnBinary.Name = "ColumnBinary";
+            this.ColumnBinary.Width = 30;
+            // 
+            // ColumnFrame
+            // 
+            this.ColumnFrame.FillWeight = 30F;
+            this.ColumnFrame.HeaderText = "Fr.";
+            this.ColumnFrame.Name = "ColumnFrame";
+            this.ColumnFrame.Width = 30;
+            // 
+            // ColumnThumbnails
+            // 
+            this.ColumnThumbnails.FillWeight = 30F;
+            this.ColumnThumbnails.HeaderText = "Th.";
+            this.ColumnThumbnails.Name = "ColumnThumbnails";
+            this.ColumnThumbnails.Width = 30;
+            // 
             // FormAddVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 543);
+            this.ClientSize = new System.Drawing.Size(673, 543);
+            this.Controls.Add(this.dataGridViewFiles);
             this.Controls.Add(this.listViewCast);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.treeView1);
@@ -300,7 +358,6 @@
             this.Controls.Add(this.dateTimePickerDateWorld);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.buttonCancel2);
-            this.Controls.Add(this.listBoxFiles);
             this.Controls.Add(this.checkedListBoxCategory);
             this.Controls.Add(this.buttonSearch);
             this.Controls.Add(this.buttonLoadCover);
@@ -311,6 +368,7 @@
             this.Load += new System.EventHandler(this.FormAddVideo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -330,7 +388,6 @@
         private System.Windows.Forms.Button buttonLoadCover;
         private System.Windows.Forms.CheckedListBox checkedListBoxCategory;
         private System.Windows.Forms.Button buttonSearch;
-        private System.Windows.Forms.ListBox listBoxFiles;
         private System.Windows.Forms.OpenFileDialog openFileDialogImage;
         private System.Windows.Forms.TextBox textBoxNameRus;
         private System.Windows.Forms.Label label2;
@@ -344,5 +401,12 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListView listViewCast;
         private System.Windows.Forms.ImageList imageListPerson;
+        private System.Windows.Forms.DataGridView dataGridViewFiles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFilename;
+        private System.Windows.Forms.DataGridViewButtonColumn ColumnView;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnCover;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnBinary;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnFrame;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnThumbnails;
     }
 }

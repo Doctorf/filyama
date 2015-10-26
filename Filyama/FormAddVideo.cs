@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace Filyama
 {
@@ -111,10 +112,12 @@ namespace Filyama
                 textBoxFullPath.Text = folderBrowserDialog1.SelectedPath;
                 List<BinaryData> files = new List<BinaryData>();
                 RecursiveAddMedia(treeView1.Nodes[0],true,files,"");
-                listBoxFiles.Items.Clear();
+                dataGridViewFiles.Rows.Clear();
                 foreach (BinaryData s in files)
                 {
-                    listBoxFiles.Items.Add(s);
+                    bool frame = s.foto;
+                    bool media = !s.foto;
+                    dataGridViewFiles.Rows.Add(s, null, false, media, frame, false);
                 }
             }
         }
@@ -179,9 +182,9 @@ namespace Filyama
                 {
                     LoadCover(Application.StartupPath + "\\" + editFilma.coverURL);
                 }
-                for(int i=0;i<editFilma.mediafiles.Count;i++) {
+                /*for(int i=0;i<editFilma.mediafiles.Count;i++) {
                     listBoxFiles.Items.Add(editFilma.mediafiles[i]);
-                }
+                }*/
             }
             RefreshCategories();
             folderBrowserDialog1.SelectedPath = Common.configs["main_server"];
@@ -217,7 +220,7 @@ namespace Filyama
                 newFilma.categories.Add(category.id);
             }
             //-------Медиа файлы
-            newFilma.mediafiles = new List<long>();
+            /*newFilma.mediafiles = new List<long>();
             foreach (var item in listBoxFiles.Items)
             {
                 BinaryData data=(BinaryData)item;
@@ -225,7 +228,7 @@ namespace Filyama
                     long mediaId = Database.AddMediaFile(data.path);
                     newFilma.mediafiles.Add(mediaId);
                 }
-            }
+            }*/
             if (newFilm)
             {
                 Database.AddFilm(newFilma);
@@ -238,7 +241,7 @@ namespace Filyama
 
         private void listBoxFiles_MouseDown(object sender, MouseEventArgs e)
         {
-            if (listBoxFiles.Items.Count == 0)
+            /*if (listBoxFiles.Items.Count == 0)
                 return;
 
             int index = listBoxFiles.IndexFromPoint(e.X, e.Y);
@@ -249,7 +252,7 @@ namespace Filyama
                     DragDropEffects.All);
                 listBoxFiles.Items.RemoveAt(index);
             }
-            else return;
+            else return;*/
         }
 
         private void pictureBoxImage_DragDrop(object sender, DragEventArgs e)
@@ -350,6 +353,30 @@ namespace Filyama
         private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridViewFiles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0)
+            {
+                BinaryData data = (BinaryData)senderGrid.Rows[e.RowIndex].Cells[0].Value;
+                Process.Start(data.fullpath);
+            }
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewCheckBoxColumn &&
+                e.RowIndex >= 0)
+            {
+                int selCheckBox = e.ColumnIndex;
+                for (int i = 2; i < senderGrid.Columns.Count; i++)
+                {
+                    DataGridViewCheckBoxCell chk = senderGrid.Rows[e.RowIndex].Cells[i] as DataGridViewCheckBoxCell;
+                    chk.Value = false;
+                }
+                DataGridViewCheckBoxCell chkSel = senderGrid.Rows[e.RowIndex].Cells[selCheckBox] as DataGridViewCheckBoxCell;
+                chkSel.Value = true;
+            }
         }
     }
 }
