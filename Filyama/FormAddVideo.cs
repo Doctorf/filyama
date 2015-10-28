@@ -101,15 +101,15 @@ namespace Filyama
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            if (vistaFolderBrowserDialog.ShowDialog()==DialogResult.OK)
             {
                 treeView1.Nodes.Clear();
-                TreeNode rootnode = new TreeNode(folderBrowserDialog1.SelectedPath);
+                TreeNode rootnode = new TreeNode(vistaFolderBrowserDialog.SelectedPath);
                 //TreeNode rootnode = new TreeNode(textBoxFullPath.Text);
                 treeView1.Nodes.Add(rootnode);
                 FillChildNodes(rootnode);
                 treeView1.ExpandAll();
-                textBoxFullPath.Text = folderBrowserDialog1.SelectedPath;
+                textBoxFullPath.Text = vistaFolderBrowserDialog.SelectedPath;
                 List<BinaryData> files = new List<BinaryData>();
                 RecursiveAddMedia(treeView1.Nodes[0],true,files,"");
                 dataGridViewFiles.Rows.Clear();
@@ -182,14 +182,40 @@ namespace Filyama
                 {
                     LoadCover(Application.StartupPath + "\\" + editFilma.coverURL);
                 }
-                /*for(int i=0;i<editFilma.mediafiles.Count;i++) {
-                    listBoxFiles.Items.Add(editFilma.mediafiles[i]);
-                }*/
+                editFilma.mediafiles = Database.GetMediaDataByFilmId(editFilma.id);
+                for(int i=0;i<editFilma.mediafiles.Count;i++) {
+                    dataGridViewFiles.Rows.Add(editFilma.mediafiles[i], null, editFilma.mediafiles[i].isCover, null, editFilma.mediafiles[i].isFrame, editFilma.mediafiles[i].isThumbnails);
+                }
             }
             RefreshCategories();
-            folderBrowserDialog1.SelectedPath = Common.configs["main_server"];
+            vistaFolderBrowserDialog.SelectedPath = Common.configs["main_server"];
         }
 
+        private String CopyImage(String sourceURL,int filmId, bool cover,out string destFileNameCommonOut,bool replace = true)
+        {
+            String destFileName = null; ;
+            if (cover)
+            {
+                destFileName = "cover" + Path.GetExtension(sourceURL);
+            }
+            else
+            {
+                destFileName = Path.GetFileName(sourceURL);
+            }
+            String CommonPath=Common.imagesPath + "\\" + Convert.ToString(filmId) + "\\";
+            destFileNameCommonOut = CommonPath + destFileName;
+            String destPath = Application.StartupPath + CommonPath;
+            String destFullPath = destPath + destFileName;
+            destFullPath = destFullPath.Replace("\\\\", "\\").Trim();
+            if (sourceURL == null || !System.IO.File.Exists(sourceURL) && sourceURL.Equals(destFullPath))
+                return null;
+            if (!System.IO.Directory.Exists(destPath))
+            {
+                System.IO.Directory.CreateDirectory(destPath);
+            }
+            System.IO.File.Copy(sourceURL, destFullPath, replace);
+            return destFullPath;
+        }
         private void button5_Click(object sender, EventArgs e)
         {
             Film newFilma = new Film();
@@ -198,17 +224,10 @@ namespace Filyama
             newFilma.nameRus = textBoxNameRus.Text;
             newFilma.dateWorld = dateTimePickerDateWorld.Value;
             newFilma.dateRus = dateTimePickerDateRus.Value;
-            String destPath = Common.imagesPath + "\\" + newFilma.id.ToString() + "\\" + "cover" + Path.GetExtension(coverURL);
-            string destFile = Application.StartupPath+Common.imagesPath+"\\"+newFilma.id.ToString()+ "\\cover"+Path.GetExtension(coverURL);
-            // To copy a folder's contents to a new location:
-            // Create a new target folder, if necessary.
-            if (!System.IO.Directory.Exists(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString()))
+            String destPath = null;
+            CopyImage(coverURL, newFilma.id, true,out destPath);
+            if (destPath!=null)
             {
-                System.IO.Directory.CreateDirectory(Application.StartupPath + Common.imagesPath + "\\" + newFilma.id.ToString());
-            }
-            if (coverURL != null&&System.IO.File.Exists(coverURL)&&!coverURL.Equals(destFile))
-            {
-                System.IO.File.Copy(coverURL, destFile, true);
                 long coverId = Database.AddBinaryData(destPath, false, false, true);
                 newFilma.coverId = coverId;
             }            
@@ -220,15 +239,29 @@ namespace Filyama
                 newFilma.categories.Add(category.id);
             }
             //-------Медиа файлы
-            /*newFilma.mediafiles = new List<long>();
-            foreach (var item in listBoxFiles.Items)
+            newFilma.mediafiles = new List<MediaData>();
+            for (int i = 0; i < dataGridViewFiles.Rows.Count;i++ )
             {
-                BinaryData data=(BinaryData)item;
-                if (!data.foto) {
+                BinaryData data = (BinaryData)dataGridViewFiles.Rows[i].Cells[0].Value;
+                Boolean cover = (Boolean)dataGridViewFiles.Rows[i].Cells[2].Value;
+                Boolean frame = (Boolean)dataGridViewFiles.Rows[i].Cells[4].Value;
+                Boolean thumbnails = (Boolean)dataGridViewFiles.Rows[i].Cells[5].Value;
+                if (!data.foto)
+                {
                     long mediaId = Database.AddMediaFile(data.path);
-                    newFilma.mediafiles.Add(mediaId);
+                    //newFilma.mediafiles.Add(mediaId);
                 }
-            }*/
+                else
+                {
+                    if (!cover&&(frame||thumbnails))
+                    {
+                        String filePath = null;
+                        CopyImage(data.fullpath, newFilma.id, false, out filePath);
+                        long mediaId = Database.AddBinaryData(filePath, thumbnails, frame, cover);
+                        //newFilma.mediafiles.Add(mediaId);
+                    }
+                }
+            }
             if (newFilm)
             {
                 Database.AddFilm(newFilma);
@@ -282,7 +315,7 @@ namespace Filyama
             {
                 if (File.Exists(filename))
                 {
-                    pictureBoxImage.Load(filename);
+                    pictureBoxImage.Load(filename);                    
                 }
             }
             catch (FileNotFoundException e)
@@ -346,6 +379,7 @@ namespace Filyama
                     listViewCast.Items.Add(newCast.ToString(), ind++);
                 }
                 LoadCover(search.coverURL);
+                addBinaryFile(null, search.coverURL, true);
                 RefreshCategories(search.genres);
             }
         }
@@ -376,6 +410,76 @@ namespace Filyama
                 }
                 DataGridViewCheckBoxCell chkSel = senderGrid.Rows[e.RowIndex].Cells[selCheckBox] as DataGridViewCheckBoxCell;
                 chkSel.Value = true;
+                if (e.ColumnIndex == 2)
+                {
+                    BinaryData data = (BinaryData)senderGrid.Rows[e.RowIndex].Cells[0].Value;
+                    LoadCover(data.fullpath);
+                }
+            }
+        }
+
+        private void addBinaryFile(String path, String fullpath,Boolean cover=false)
+        {
+            int mediaB = -1;
+            for (int i = 0; i < medias.Count; i++)
+            {
+                Media media = medias[i];
+                foreach (String mediaFilter in media.filter.Split(','))
+                {
+                    if (string.Equals(Path.GetExtension(fullpath), mediaFilter, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        mediaB = i;
+                    }
+                }
+            }
+            if (mediaB != -1)
+            {
+                BinaryData data = new BinaryData();
+                data.foto = medias[mediaB].foto;
+                data.name = Path.GetFileName(fullpath);
+                if (path != null)
+                {
+                    data.path = path;    
+                }
+                else
+                {
+                    data.path = data.name;
+                }
+                data.fullpath = fullpath;
+                bool frame = data.foto&&!cover;
+                bool media = !data.foto;
+                dataGridViewFiles.Rows.Add(data, null, cover, media, frame, false);
+            }
+        }
+        private void buttonAddFile_Click(object sender, EventArgs e)
+        {
+            vistaOpenFileDialog.InitialDirectory = vistaFolderBrowserDialog.SelectedPath;
+            if (vistaOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                addBinaryFile(null, vistaOpenFileDialog.FileName);
+            }
+        }
+
+        private void buttonAddFolder_Click(object sender, EventArgs e)
+        {
+            if (vistaFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                treeView1.Nodes.Clear();
+                TreeNode rootnode = new TreeNode(vistaFolderBrowserDialog.SelectedPath);
+                //TreeNode rootnode = new TreeNode(textBoxFullPath.Text);
+                treeView1.Nodes.Add(rootnode);
+                FillChildNodes(rootnode);
+                treeView1.ExpandAll();
+                textBoxFullPath.Text = vistaFolderBrowserDialog.SelectedPath;
+                List<BinaryData> files = new List<BinaryData>();
+                RecursiveAddMedia(treeView1.Nodes[0], true, files, "");
+                dataGridViewFiles.Rows.Clear();
+                foreach (BinaryData s in files)
+                {
+                    bool frame = s.foto;
+                    bool media = !s.foto;
+                    dataGridViewFiles.Rows.Add(s, null, false, media, frame, false);
+                }
             }
         }
     }

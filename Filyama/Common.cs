@@ -57,6 +57,18 @@ namespace Filyama
             return path;
         }
     }
+    public struct MediaData
+    {
+        public int id;
+        public String path;
+        public String fullpath;
+        public Boolean isCover, isThumbnails, isFrame;
+
+        public override string ToString()
+        {
+            return path;
+        }
+    }
 
     public struct Film
     {
@@ -73,7 +85,7 @@ namespace Filyama
         //------Сохранение в БД
         public long coverId;
         public List<int> categories;
-        public List<long> mediafiles;
+        public List<MediaData> mediafiles;
 
         public override string ToString()
         {

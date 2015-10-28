@@ -33,7 +33,6 @@
             this.labelPath = new System.Windows.Forms.Label();
             this.textBoxFullPath = new System.Windows.Forms.TextBox();
             this.buttonLoad = new System.Windows.Forms.Button();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.textBoxNameRus = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxNameOrig = new System.Windows.Forms.TextBox();
@@ -56,6 +55,10 @@
             this.listViewCast = new System.Windows.Forms.ListView();
             this.imageListPerson = new System.Windows.Forms.ImageList(this.components);
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
+            this.vistaFolderBrowserDialog = new Ookii.Dialogs.VistaFolderBrowserDialog();
+            this.buttonAddFile = new System.Windows.Forms.Button();
+            this.buttonAddFolder = new System.Windows.Forms.Button();
+            this.vistaOpenFileDialog = new Ookii.Dialogs.VistaOpenFileDialog();
             this.ColumnFilename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnView = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ColumnCover = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -94,10 +97,6 @@
             this.buttonLoad.Text = "Load";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
-            // 
-            // folderBrowserDialog1
-            // 
-            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
             // textBoxNameRus
             // 
@@ -144,7 +143,7 @@
             // pictureBoxImage
             // 
             this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBoxImage.Location = new System.Drawing.Point(13, 1);
+            this.pictureBoxImage.Location = new System.Drawing.Point(18, 0);
             this.pictureBoxImage.Name = "pictureBoxImage";
             this.pictureBoxImage.Size = new System.Drawing.Size(197, 257);
             this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -244,7 +243,7 @@
             // 
             this.treeView1.Location = new System.Drawing.Point(439, 322);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(211, 164);
+            this.treeView1.Size = new System.Drawing.Size(204, 164);
             this.treeView1.TabIndex = 25;
             // 
             // panel1
@@ -292,11 +291,36 @@
             this.dataGridViewFiles.TabIndex = 28;
             this.dataGridViewFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellContentClick);
             // 
+            // buttonAddFile
+            // 
+            this.buttonAddFile.Location = new System.Drawing.Point(357, 322);
+            this.buttonAddFile.Name = "buttonAddFile";
+            this.buttonAddFile.Size = new System.Drawing.Size(60, 19);
+            this.buttonAddFile.TabIndex = 29;
+            this.buttonAddFile.Text = "Add File";
+            this.buttonAddFile.UseVisualStyleBackColor = true;
+            this.buttonAddFile.Click += new System.EventHandler(this.buttonAddFile_Click);
+            // 
+            // buttonAddFolder
+            // 
+            this.buttonAddFolder.Location = new System.Drawing.Point(357, 343);
+            this.buttonAddFolder.Name = "buttonAddFolder";
+            this.buttonAddFolder.Size = new System.Drawing.Size(66, 25);
+            this.buttonAddFolder.TabIndex = 30;
+            this.buttonAddFolder.Text = "Add Folder";
+            this.buttonAddFolder.UseVisualStyleBackColor = true;
+            this.buttonAddFolder.Click += new System.EventHandler(this.buttonAddFolder_Click);
+            // 
+            // vistaOpenFileDialog
+            // 
+            this.vistaOpenFileDialog.Filter = null;
+            // 
             // ColumnFilename
             // 
             this.ColumnFilename.FillWeight = 250F;
             this.ColumnFilename.HeaderText = "Filename";
             this.ColumnFilename.Name = "ColumnFilename";
+            this.ColumnFilename.ReadOnly = true;
             this.ColumnFilename.Width = 250;
             // 
             // ColumnView
@@ -338,7 +362,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(673, 543);
+            this.ClientSize = new System.Drawing.Size(655, 543);
+            this.Controls.Add(this.buttonAddFolder);
+            this.Controls.Add(this.buttonAddFile);
             this.Controls.Add(this.dataGridViewFiles);
             this.Controls.Add(this.listViewCast);
             this.Controls.Add(this.panel1);
@@ -379,7 +405,6 @@
         private System.Windows.Forms.Label labelPath;
         private System.Windows.Forms.TextBox textBoxFullPath;
         private System.Windows.Forms.Button buttonLoad;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button buttonCancel2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.TextBox textBoxNumber;
@@ -402,6 +427,10 @@
         private System.Windows.Forms.ListView listViewCast;
         private System.Windows.Forms.ImageList imageListPerson;
         private System.Windows.Forms.DataGridView dataGridViewFiles;
+        private Ookii.Dialogs.VistaFolderBrowserDialog vistaFolderBrowserDialog;
+        private System.Windows.Forms.Button buttonAddFile;
+        private System.Windows.Forms.Button buttonAddFolder;
+        private Ookii.Dialogs.VistaOpenFileDialog vistaOpenFileDialog;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFilename;
         private System.Windows.Forms.DataGridViewButtonColumn ColumnView;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnCover;

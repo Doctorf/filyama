@@ -140,7 +140,8 @@ namespace Filyama
                             selectFilm.dateRus = Convert.ToDateTime(r["date_rus"]);
                         }
                         //----------Медиа файлы
-                        selectFilm.mediafiles = new List<long>();
+                        selectFilm.mediafiles = new List<MediaData>();
+
                         Common.films.Add(selectFilm.id, selectFilm);
                         if (!filterName.Equals(String.Empty))
                         {

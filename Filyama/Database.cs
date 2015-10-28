@@ -213,6 +213,39 @@ namespace Filyama
             return lastId;
         }
 
+        public static List<MediaData> GetMediaDataByFilmId(int filmId)
+        {
+            List<MediaData> result = new List<MediaData>();
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "SELECT * FROM binary_data_films bdf LEFT JOIN binary_data bd ON bd.id=bdf.id_binary_data WHERE bdf.id_films=@id_films";
+                cmd.Parameters.Add(new SQLiteParameter("@id_films", filmId));
+                try
+                {
+                    SQLiteDataReader r = cmd.ExecuteReader();
+                    while (r.Read())
+                    {
+                        MediaData mediaData = new MediaData();
+                        mediaData.id = Convert.ToInt32(r["id"]);
+                        mediaData.path = Convert.ToString(r["url"]);
+                        mediaData.fullpath = Convert.ToString(r["url"]);
+                        mediaData.isCover = Convert.ToBoolean(r["is_cover"]);
+                        mediaData.isFrame = Convert.ToBoolean(r["is_frame"]);
+                        mediaData.isThumbnails = Convert.ToBoolean(r["is_thumbnails"]);
+                        result.Add(mediaData);
+                    }
+                }
+                catch (SQLiteException ex)
+                {
+                    Common.ShowError("SQL ERROR");
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
+            return result;
+        }
+
         public static long AddMediaFile(String url)
         {
             return AddBinaryData(url, false, false, false);
