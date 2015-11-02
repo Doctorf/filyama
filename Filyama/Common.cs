@@ -44,7 +44,7 @@ namespace Filyama
         }
     }
 
-    public struct BinaryData
+    public class BinaryData
     {
         public int id;
         public String path;
@@ -57,16 +57,42 @@ namespace Filyama
             return path;
         }
     }
-    public struct MediaData
+    public class MediaData : BinaryData
     {
-        public int id;
-        public String path;
-        public String fullpath;
         public Boolean isCover, isThumbnails, isFrame;
+
+        public MediaData()
+        {
+
+        }
+
+        public MediaData(BinaryData data)
+        {
+            this.id = data.id;
+            this.path = data.path;
+            this.fullpath = data.fullpath;
+            this.name = data.name;
+            this.foto = data.foto;
+        }
 
         public override string ToString()
         {
             return path;
+        }
+
+        public Boolean isBinaryData()
+        {
+            return !this.isCover && !this.isFrame && !this.isThumbnails;
+        }
+
+        public static bool operator ==(MediaData c1, MediaData c2)
+        {
+            return (c1.path + ":" + c1.fullpath).Equals(c2.path + ":" + c2.fullpath);
+        }
+
+        public static bool operator !=(MediaData c1, MediaData c2)
+        {
+            return !(c1.path + ":" + c1.fullpath).Equals(c2.path + ":" + c2.fullpath);
         }
     }
 
@@ -81,6 +107,7 @@ namespace Filyama
         public DateTime dateWorld;
         public DateTime dateRus;
         public List<Cast> casts;
+        public String fullpath;
 
         //------Сохранение в БД
         public long coverId;

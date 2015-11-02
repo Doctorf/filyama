@@ -111,7 +111,7 @@ namespace Filyama
                         {
                             coverFilms = Common.imageToByteArray(imageListCategory.Images[2]);
                             selectFilm.coverId = Convert.ToInt32(r["id_cover"]);
-                            string sql_command_detail_cover = "SELECT url FROM binary_data WHERE id=@id;";
+                            string sql_command_detail_cover = "SELECT path FROM binary_data WHERE id=@id;";
                             SQLiteCommand cmd_detail_cover = Common.connectionLocal.CreateCommand();
                             cmd_detail_cover.CommandText = sql_command_detail_cover;
                             cmd_detail_cover.Parameters.AddWithValue("@id", selectFilm.coverId);
@@ -141,7 +141,10 @@ namespace Filyama
                         }
                         //----------Медиа файлы
                         selectFilm.mediafiles = new List<MediaData>();
-
+                        if (r["path"] != DBNull.Value)
+                        {
+                            selectFilm.fullpath = Convert.ToString(r["path"]);
+                        }
                         Common.films.Add(selectFilm.id, selectFilm);
                         if (!filterName.Equals(String.Empty))
                         {

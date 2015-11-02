@@ -187,14 +187,15 @@ namespace Filyama
             return medias;
         }
 
-        public static long AddBinaryData(String url,bool isThumbnails,bool isFrame,bool isCover)
+        public static int AddBinaryData(String url,String path,bool isThumbnails,bool isFrame,bool isCover)
         {
-            long lastId = -1;
+            int lastId = -1;
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
-                cmd.CommandText = "INSERT INTO binary_data(url,is_thumbnails,is_frame,is_cover) VALUES(@url,@is_thumbnails,@is_frame,@is_cover);";
+                cmd.CommandText = "INSERT INTO binary_data(url,path,is_thumbnails,is_frame,is_cover) VALUES(@url,@path,@is_thumbnails,@is_frame,@is_cover);";
                 cmd.Parameters.Add(new SQLiteParameter("@url", url));
+                cmd.Parameters.Add(new SQLiteParameter("@path", path));
                 cmd.Parameters.Add(new SQLiteParameter("@is_thumbnails", isThumbnails));
                 cmd.Parameters.Add(new SQLiteParameter("@is_frame", isFrame));
                 cmd.Parameters.Add(new SQLiteParameter("@is_cover", isCover));
@@ -208,7 +209,7 @@ namespace Filyama
                 }
                 string sql = @"select last_insert_rowid()";
                 cmd.CommandText = sql;
-                lastId = (long)cmd.ExecuteScalar();
+                lastId = Convert.ToInt32(cmd.ExecuteScalar());
             }
             return lastId;
         }
@@ -228,8 +229,11 @@ namespace Filyama
                     {
                         MediaData mediaData = new MediaData();
                         mediaData.id = Convert.ToInt32(r["id"]);
-                        mediaData.path = Convert.ToString(r["url"]);
-                        mediaData.fullpath = Convert.ToString(r["url"]);
+                        mediaData.path = Convert.ToString(r["path"]);
+                        if (r["url"] != DBNull.Value)
+                        {
+                            mediaData.fullpath = Convert.ToString(r["url"]);
+                        }
                         mediaData.isCover = Convert.ToBoolean(r["is_cover"]);
                         mediaData.isFrame = Convert.ToBoolean(r["is_frame"]);
                         mediaData.isThumbnails = Convert.ToBoolean(r["is_thumbnails"]);
@@ -246,21 +250,22 @@ namespace Filyama
             return result;
         }
 
-        public static long AddMediaFile(String url)
+        public static int AddMediaFile(String url,String path)
         {
-            return AddBinaryData(url, false, false, false);
+            return AddBinaryData(url,path, false, false, false);
         }
 
         public static void AddFilm(Film newFilm) {
             if (Common.connectionLocal.State == ConnectionState.Open)
             {
                 SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
-                cmd.CommandText = "INSERT INTO films(id,name_orig,name_rus,date_world,date_rus) VALUES(@id,@name_orig,@name_rus,@date_world,@date_rus);";
+                cmd.CommandText = "INSERT INTO films(id,name_orig,name_rus,date_world,date_rus,path) VALUES(@id,@name_orig,@name_rus,@date_world,@date_rus,@path);";
                 cmd.Parameters.Add(new SQLiteParameter("@id",newFilm.id));
                 cmd.Parameters.Add(new SQLiteParameter("@name_orig", newFilm.nameOrig));
                 cmd.Parameters.Add(new SQLiteParameter("@name_rus", newFilm.nameRus));
                 cmd.Parameters.Add(new SQLiteParameter("@date_world", newFilm.dateWorld));
                 cmd.Parameters.Add(new SQLiteParameter("@date_rus", newFilm.dateRus));
+                cmd.Parameters.Add(new SQLiteParameter("@path", newFilm.fullpath));
                 try
                 {
                     cmd.ExecuteNonQuery();
@@ -315,7 +320,7 @@ namespace Filyama
                 {
                     cmd.CommandText = "INSERT INTO binary_data_films(id_films,id_binary_data) VALUES(@id_films,@id_binary_data);";
                     cmd.Parameters.Add(new SQLiteParameter("@id_films", newFilm.id));
-                    cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", newFilm.mediafiles[i]));
+                    cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", newFilm.mediafiles[i].id));
                     try
                     {
                         cmd.ExecuteNonQuery();
@@ -396,6 +401,12 @@ namespace Filyama
                     cmd.CommandText += "date_rus=@date_rus,";
                     cmd.Parameters.Add(new SQLiteParameter("@date_rus", newFilm.dateRus));
                 }
+                if ((oldFilm.fullpath==null&&newFilm.fullpath!=null)||!oldFilm.fullpath.Equals(newFilm.fullpath))
+                {
+                    countSet++;
+                    cmd.CommandText += "path=@path,";
+                    cmd.Parameters.Add(new SQLiteParameter("@path", newFilm.fullpath));
+                }
                 if (countSet > 0)
                 {
                     cmd.CommandText = cmd.CommandText.Substring(0, cmd.CommandText.Length - 1);
@@ -419,10 +430,24 @@ namespace Filyama
                 var addGenre = newFilm.categories.Except(oldFilm.categories).ToList();
                 foreach (int addCategory in addGenre)
                 {
-                    Database.addCategoryToiFilm(addCategory, newFilm.id);
+                    Database.addCategoryToFilm(addCategory, newFilm.id);
                 }
                 //--------Медиа файлы
-
+                var addFiles=newFilm.mediafiles.Except(oldFilm.mediafiles).ToList();
+                foreach (MediaData addFile in addFiles)
+                {
+                    cmd.CommandText = "INSERT INTO binary_data_films(id_films,id_binary_data) VALUES(@id_films,@id_binary_data);";
+                    cmd.Parameters.Add(new SQLiteParameter("@id_films", newFilm.id));
+                    cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", addFile.id));
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
             }
         }
 
@@ -483,7 +508,7 @@ namespace Filyama
             }
         }
 
-        public static void addCategoryToiFilm(int idCategory, int idFilm)
+        public static void addCategoryToFilm(int idCategory, int idFilm)
         {
             if (Common.connectionLocal.State == ConnectionState.Open)
             {

@@ -38,7 +38,6 @@
             this.textBoxNameOrig = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSearch = new System.Windows.Forms.Button();
-            this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             this.buttonLoadCover = new System.Windows.Forms.Button();
             this.checkedListBoxCategory = new System.Windows.Forms.CheckedListBox();
             this.textBoxNumber = new System.Windows.Forms.TextBox();
@@ -51,29 +50,36 @@
             this.labelDateRus = new System.Windows.Forms.Label();
             this.dateTimePickerDateRus = new System.Windows.Forms.DateTimePicker();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.listViewCast = new System.Windows.Forms.ListView();
             this.imageListPerson = new System.Windows.Forms.ImageList(this.components);
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
-            this.vistaFolderBrowserDialog = new Ookii.Dialogs.VistaFolderBrowserDialog();
-            this.buttonAddFile = new System.Windows.Forms.Button();
-            this.buttonAddFolder = new System.Windows.Forms.Button();
-            this.vistaOpenFileDialog = new Ookii.Dialogs.VistaOpenFileDialog();
             this.ColumnFilename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnView = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ColumnCover = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColumnBinary = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColumnFrame = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColumnThumbnails = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.vistaFolderBrowserDialog = new Ookii.Dialogs.VistaFolderBrowserDialog();
+            this.buttonAddFile = new System.Windows.Forms.Button();
+            this.buttonAddFolder = new System.Windows.Forms.Button();
+            this.vistaOpenFileDialog = new Ookii.Dialogs.VistaOpenFileDialog();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageMain = new System.Windows.Forms.TabPage();
+            this.tabPageMedia = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPageMain.SuspendLayout();
+            this.tabPageMedia.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
             // labelPath
             // 
             this.labelPath.AutoSize = true;
-            this.labelPath.Location = new System.Drawing.Point(12, 343);
+            this.labelPath.Location = new System.Drawing.Point(17, 284);
             this.labelPath.Name = "labelPath";
             this.labelPath.Size = new System.Drawing.Size(29, 13);
             this.labelPath.TabIndex = 0;
@@ -81,16 +87,15 @@
             // 
             // textBoxFullPath
             // 
-            this.textBoxFullPath.Location = new System.Drawing.Point(62, 343);
+            this.textBoxFullPath.Location = new System.Drawing.Point(52, 284);
             this.textBoxFullPath.Name = "textBoxFullPath";
             this.textBoxFullPath.ReadOnly = true;
             this.textBoxFullPath.Size = new System.Drawing.Size(225, 20);
             this.textBoxFullPath.TabIndex = 1;
-            this.textBoxFullPath.Text = "\\\\SERVER44\\Downloads\\media\\films\\Movies(Фильмы)\\9 (Девять)";
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(305, 337);
+            this.buttonLoad.Location = new System.Drawing.Point(456, 368);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(46, 25);
             this.buttonLoad.TabIndex = 2;
@@ -100,7 +105,7 @@
             // 
             // textBoxNameRus
             // 
-            this.textBoxNameRus.Location = new System.Drawing.Point(99, 64);
+            this.textBoxNameRus.Location = new System.Drawing.Point(86, 96);
             this.textBoxNameRus.Name = "textBoxNameRus";
             this.textBoxNameRus.Size = new System.Drawing.Size(152, 20);
             this.textBoxNameRus.TabIndex = 20;
@@ -108,7 +113,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 63);
+            this.label2.Location = new System.Drawing.Point(3, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 13);
             this.label2.TabIndex = 19;
@@ -116,7 +121,7 @@
             // 
             // textBoxNameOrig
             // 
-            this.textBoxNameOrig.Location = new System.Drawing.Point(99, 38);
+            this.textBoxNameOrig.Location = new System.Drawing.Point(86, 57);
             this.textBoxNameOrig.Name = "textBoxNameOrig";
             this.textBoxNameOrig.Size = new System.Drawing.Size(152, 20);
             this.textBoxNameOrig.TabIndex = 18;
@@ -124,7 +129,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 38);
+            this.label1.Location = new System.Drawing.Point(2, 57);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 17;
@@ -132,7 +137,7 @@
             // 
             // buttonSearch
             // 
-            this.buttonSearch.Location = new System.Drawing.Point(507, 38);
+            this.buttonSearch.Location = new System.Drawing.Point(438, 52);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(91, 23);
             this.buttonSearch.TabIndex = 15;
@@ -140,20 +145,9 @@
             this.buttonSearch.UseVisualStyleBackColor = true;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
-            // pictureBoxImage
-            // 
-            this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBoxImage.Location = new System.Drawing.Point(18, 0);
-            this.pictureBoxImage.Name = "pictureBoxImage";
-            this.pictureBoxImage.Size = new System.Drawing.Size(197, 257);
-            this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxImage.TabIndex = 13;
-            this.pictureBoxImage.TabStop = false;
-            this.pictureBoxImage.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBoxImage_DragDrop);
-            // 
             // buttonLoadCover
             // 
-            this.buttonLoadCover.Location = new System.Drawing.Point(507, 6);
+            this.buttonLoadCover.Location = new System.Drawing.Point(438, 18);
             this.buttonLoadCover.Name = "buttonLoadCover";
             this.buttonLoadCover.Size = new System.Drawing.Size(91, 23);
             this.buttonLoadCover.TabIndex = 12;
@@ -164,14 +158,14 @@
             // checkedListBoxCategory
             // 
             this.checkedListBoxCategory.FormattingEnabled = true;
-            this.checkedListBoxCategory.Location = new System.Drawing.Point(507, 79);
+            this.checkedListBoxCategory.Location = new System.Drawing.Point(279, 18);
             this.checkedListBoxCategory.Name = "checkedListBoxCategory";
             this.checkedListBoxCategory.Size = new System.Drawing.Size(134, 214);
             this.checkedListBoxCategory.TabIndex = 11;
             // 
             // textBoxNumber
             // 
-            this.textBoxNumber.Location = new System.Drawing.Point(99, 6);
+            this.textBoxNumber.Location = new System.Drawing.Point(66, 31);
             this.textBoxNumber.Name = "textBoxNumber";
             this.textBoxNumber.ReadOnly = true;
             this.textBoxNumber.Size = new System.Drawing.Size(152, 20);
@@ -180,7 +174,7 @@
             // labelNumber
             // 
             this.labelNumber.AutoSize = true;
-            this.labelNumber.Location = new System.Drawing.Point(15, 6);
+            this.labelNumber.Location = new System.Drawing.Point(2, 34);
             this.labelNumber.Name = "labelNumber";
             this.labelNumber.Size = new System.Drawing.Size(44, 13);
             this.labelNumber.TabIndex = 9;
@@ -210,7 +204,7 @@
             // labeldateWorld
             // 
             this.labeldateWorld.AutoSize = true;
-            this.labeldateWorld.Location = new System.Drawing.Point(16, 98);
+            this.labeldateWorld.Location = new System.Drawing.Point(6, 134);
             this.labeldateWorld.Name = "labeldateWorld";
             this.labeldateWorld.Size = new System.Drawing.Size(58, 13);
             this.labeldateWorld.TabIndex = 21;
@@ -218,7 +212,7 @@
             // 
             // dateTimePickerDateWorld
             // 
-            this.dateTimePickerDateWorld.Location = new System.Drawing.Point(99, 98);
+            this.dateTimePickerDateWorld.Location = new System.Drawing.Point(89, 134);
             this.dateTimePickerDateWorld.Name = "dateTimePickerDateWorld";
             this.dateTimePickerDateWorld.Size = new System.Drawing.Size(152, 20);
             this.dateTimePickerDateWorld.TabIndex = 22;
@@ -226,7 +220,7 @@
             // labelDateRus
             // 
             this.labelDateRus.AutoSize = true;
-            this.labelDateRus.Location = new System.Drawing.Point(15, 130);
+            this.labelDateRus.Location = new System.Drawing.Point(8, 179);
             this.labelDateRus.Name = "labelDateRus";
             this.labelDateRus.Size = new System.Drawing.Size(47, 13);
             this.labelDateRus.TabIndex = 23;
@@ -234,33 +228,22 @@
             // 
             // dateTimePickerDateRus
             // 
-            this.dateTimePickerDateRus.Location = new System.Drawing.Point(99, 124);
+            this.dateTimePickerDateRus.Location = new System.Drawing.Point(92, 173);
             this.dateTimePickerDateRus.Name = "dateTimePickerDateRus";
             this.dateTimePickerDateRus.Size = new System.Drawing.Size(152, 20);
             this.dateTimePickerDateRus.TabIndex = 24;
             // 
             // treeView1
             // 
-            this.treeView1.Location = new System.Drawing.Point(439, 322);
+            this.treeView1.Location = new System.Drawing.Point(6, 10);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(204, 164);
+            this.treeView1.Size = new System.Drawing.Size(240, 246);
             this.treeView1.TabIndex = 25;
-            // 
-            // panel1
-            // 
-            this.panel1.AllowDrop = true;
-            this.panel1.Controls.Add(this.pictureBoxImage);
-            this.panel1.Location = new System.Drawing.Point(265, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(231, 311);
-            this.panel1.TabIndex = 26;
-            this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
-            this.panel1.DragOver += new System.Windows.Forms.DragEventHandler(this.panel1_DragOver);
             // 
             // listViewCast
             // 
             this.listViewCast.LargeImageList = this.imageListPerson;
-            this.listViewCast.Location = new System.Drawing.Point(16, 157);
+            this.listViewCast.Location = new System.Drawing.Point(11, 228);
             this.listViewCast.Name = "listViewCast";
             this.listViewCast.Size = new System.Drawing.Size(234, 168);
             this.listViewCast.SmallImageList = this.imageListPerson;
@@ -284,36 +267,12 @@
             this.ColumnBinary,
             this.ColumnFrame,
             this.ColumnThumbnails});
-            this.dataGridViewFiles.Location = new System.Drawing.Point(3, 368);
+            this.dataGridViewFiles.Location = new System.Drawing.Point(20, 322);
             this.dataGridViewFiles.Name = "dataGridViewFiles";
             this.dataGridViewFiles.RowHeadersVisible = false;
             this.dataGridViewFiles.Size = new System.Drawing.Size(430, 118);
             this.dataGridViewFiles.TabIndex = 28;
             this.dataGridViewFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellContentClick);
-            // 
-            // buttonAddFile
-            // 
-            this.buttonAddFile.Location = new System.Drawing.Point(357, 322);
-            this.buttonAddFile.Name = "buttonAddFile";
-            this.buttonAddFile.Size = new System.Drawing.Size(60, 19);
-            this.buttonAddFile.TabIndex = 29;
-            this.buttonAddFile.Text = "Add File";
-            this.buttonAddFile.UseVisualStyleBackColor = true;
-            this.buttonAddFile.Click += new System.EventHandler(this.buttonAddFile_Click);
-            // 
-            // buttonAddFolder
-            // 
-            this.buttonAddFolder.Location = new System.Drawing.Point(357, 343);
-            this.buttonAddFolder.Name = "buttonAddFolder";
-            this.buttonAddFolder.Size = new System.Drawing.Size(66, 25);
-            this.buttonAddFolder.TabIndex = 30;
-            this.buttonAddFolder.Text = "Add Folder";
-            this.buttonAddFolder.UseVisualStyleBackColor = true;
-            this.buttonAddFolder.Click += new System.EventHandler(this.buttonAddFolder_Click);
-            // 
-            // vistaOpenFileDialog
-            // 
-            this.vistaOpenFileDialog.Filter = null;
             // 
             // ColumnFilename
             // 
@@ -358,45 +317,123 @@
             this.ColumnThumbnails.Name = "ColumnThumbnails";
             this.ColumnThumbnails.Width = 30;
             // 
+            // buttonAddFile
+            // 
+            this.buttonAddFile.Location = new System.Drawing.Point(532, 343);
+            this.buttonAddFile.Name = "buttonAddFile";
+            this.buttonAddFile.Size = new System.Drawing.Size(60, 19);
+            this.buttonAddFile.TabIndex = 29;
+            this.buttonAddFile.Text = "Add File";
+            this.buttonAddFile.UseVisualStyleBackColor = true;
+            this.buttonAddFile.Click += new System.EventHandler(this.buttonAddFile_Click);
+            // 
+            // buttonAddFolder
+            // 
+            this.buttonAddFolder.Location = new System.Drawing.Point(542, 385);
+            this.buttonAddFolder.Name = "buttonAddFolder";
+            this.buttonAddFolder.Size = new System.Drawing.Size(66, 25);
+            this.buttonAddFolder.TabIndex = 30;
+            this.buttonAddFolder.Text = "Add Folder";
+            this.buttonAddFolder.UseVisualStyleBackColor = true;
+            this.buttonAddFolder.Click += new System.EventHandler(this.buttonAddFolder_Click);
+            // 
+            // vistaOpenFileDialog
+            // 
+            this.vistaOpenFileDialog.Filter = null;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPageMain);
+            this.tabControl1.Controls.Add(this.tabPageMedia);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(697, 485);
+            this.tabControl1.TabIndex = 31;
+            // 
+            // tabPageMain
+            // 
+            this.tabPageMain.Controls.Add(this.textBoxNumber);
+            this.tabPageMain.Controls.Add(this.labelNumber);
+            this.tabPageMain.Controls.Add(this.textBoxNameOrig);
+            this.tabPageMain.Controls.Add(this.label1);
+            this.tabPageMain.Controls.Add(this.buttonLoadCover);
+            this.tabPageMain.Controls.Add(this.buttonSearch);
+            this.tabPageMain.Controls.Add(this.checkedListBoxCategory);
+            this.tabPageMain.Controls.Add(this.listViewCast);
+            this.tabPageMain.Controls.Add(this.textBoxNameRus);
+            this.tabPageMain.Controls.Add(this.label2);
+            this.tabPageMain.Controls.Add(this.dateTimePickerDateWorld);
+            this.tabPageMain.Controls.Add(this.labeldateWorld);
+            this.tabPageMain.Controls.Add(this.dateTimePickerDateRus);
+            this.tabPageMain.Controls.Add(this.labelDateRus);
+            this.tabPageMain.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMain.Name = "tabPageMain";
+            this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMain.Size = new System.Drawing.Size(689, 459);
+            this.tabPageMain.TabIndex = 0;
+            this.tabPageMain.Text = "Main";
+            this.tabPageMain.UseVisualStyleBackColor = true;
+            // 
+            // tabPageMedia
+            // 
+            this.tabPageMedia.Controls.Add(this.panel1);
+            this.tabPageMedia.Controls.Add(this.dataGridViewFiles);
+            this.tabPageMedia.Controls.Add(this.buttonAddFolder);
+            this.tabPageMedia.Controls.Add(this.treeView1);
+            this.tabPageMedia.Controls.Add(this.textBoxFullPath);
+            this.tabPageMedia.Controls.Add(this.buttonLoad);
+            this.tabPageMedia.Controls.Add(this.buttonAddFile);
+            this.tabPageMedia.Controls.Add(this.labelPath);
+            this.tabPageMedia.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMedia.Name = "tabPageMedia";
+            this.tabPageMedia.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMedia.Size = new System.Drawing.Size(689, 459);
+            this.tabPageMedia.TabIndex = 1;
+            this.tabPageMedia.Text = "Media";
+            this.tabPageMedia.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.AllowDrop = true;
+            this.panel1.Controls.Add(this.pictureBoxImage);
+            this.panel1.Location = new System.Drawing.Point(326, 10);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(231, 294);
+            this.panel1.TabIndex = 31;
+            // 
+            // pictureBoxImage
+            // 
+            this.pictureBoxImage.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBoxImage.Location = new System.Drawing.Point(18, 0);
+            this.pictureBoxImage.Name = "pictureBoxImage";
+            this.pictureBoxImage.Size = new System.Drawing.Size(197, 257);
+            this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxImage.TabIndex = 13;
+            this.pictureBoxImage.TabStop = false;
+            // 
             // FormAddVideo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(655, 543);
-            this.Controls.Add(this.buttonAddFolder);
-            this.Controls.Add(this.buttonAddFile);
-            this.Controls.Add(this.dataGridViewFiles);
-            this.Controls.Add(this.listViewCast);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.textBoxNameRus);
-            this.Controls.Add(this.labelPath);
-            this.Controls.Add(this.labeldateWorld);
-            this.Controls.Add(this.buttonLoad);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBoxFullPath);
-            this.Controls.Add(this.labelDateRus);
-            this.Controls.Add(this.textBoxNameOrig);
-            this.Controls.Add(this.dateTimePickerDateRus);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxNumber);
-            this.Controls.Add(this.labelNumber);
-            this.Controls.Add(this.dateTimePickerDateWorld);
+            this.ClientSize = new System.Drawing.Size(697, 543);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.buttonCancel2);
-            this.Controls.Add(this.checkedListBoxCategory);
-            this.Controls.Add(this.buttonSearch);
-            this.Controls.Add(this.buttonLoadCover);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAddVideo";
             this.Text = "FormAddVideo";
             this.Load += new System.EventHandler(this.FormAddVideo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageMain.ResumeLayout(false);
+            this.tabPageMain.PerformLayout();
+            this.tabPageMedia.ResumeLayout(false);
+            this.tabPageMedia.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -409,7 +446,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.TextBox textBoxNumber;
         private System.Windows.Forms.Label labelNumber;
-        private System.Windows.Forms.PictureBox pictureBoxImage;
         private System.Windows.Forms.Button buttonLoadCover;
         private System.Windows.Forms.CheckedListBox checkedListBoxCategory;
         private System.Windows.Forms.Button buttonSearch;
@@ -423,7 +459,6 @@
         private System.Windows.Forms.Label labelDateRus;
         private System.Windows.Forms.DateTimePicker dateTimePickerDateRus;
         private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListView listViewCast;
         private System.Windows.Forms.ImageList imageListPerson;
         private System.Windows.Forms.DataGridView dataGridViewFiles;
@@ -437,5 +472,10 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnBinary;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnFrame;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnThumbnails;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPageMain;
+        private System.Windows.Forms.TabPage tabPageMedia;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBoxImage;
     }
 }
