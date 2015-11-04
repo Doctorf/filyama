@@ -214,6 +214,29 @@ namespace Filyama
             return lastId;
         }
 
+        public static void updateBinaryData(int id,String url, String path, bool isThumbnails, bool isFrame, bool isCover)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "UPDATE binary_data SET url=@url,path=@path,is_thumbnails=@is_thumbnails,is_frame=@is_frame,is_cover=@is_cover WHERE id=@id;";
+                cmd.Parameters.Add(new SQLiteParameter("@url", url));
+                cmd.Parameters.Add(new SQLiteParameter("@path", path));
+                cmd.Parameters.Add(new SQLiteParameter("@is_thumbnails", isThumbnails));
+                cmd.Parameters.Add(new SQLiteParameter("@is_frame", isFrame));
+                cmd.Parameters.Add(new SQLiteParameter("@is_cover", isCover));
+                cmd.Parameters.Add(new SQLiteParameter("@id", id));
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }                
+            }
+        }
+
         public static List<MediaData> GetMediaDataByFilmId(int filmId)
         {
             List<MediaData> result = new List<MediaData>();
@@ -233,6 +256,12 @@ namespace Filyama
                         if (r["url"] != DBNull.Value)
                         {
                             mediaData.fullpath = Convert.ToString(r["url"]);
+                        }
+                        if (mediaData.fullpath != null)
+                        {
+                            mediaData.name = System.IO.Path.GetFileName(mediaData.fullpath);
+                        } else {
+                            mediaData.name=System.IO.Path.GetFileName(mediaData.path);
                         }
                         mediaData.isCover = Convert.ToBoolean(r["is_cover"]);
                         mediaData.isFrame = Convert.ToBoolean(r["is_frame"]);
@@ -318,17 +347,10 @@ namespace Filyama
                 //-------Медиафайлы
                 for (int i = 0; i < newFilm.mediafiles.Count; i++)
                 {
-                    cmd.CommandText = "INSERT INTO binary_data_films(id_films,id_binary_data) VALUES(@id_films,@id_binary_data);";
-                    cmd.Parameters.Add(new SQLiteParameter("@id_films", newFilm.id));
-                    cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", newFilm.mediafiles[i].id));
-                    try
+                    if (!newFilm.mediafiles[i].isCover)
                     {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (SQLiteException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                        addBinaryDataToFilm(newFilm.id, newFilm.mediafiles[i].id);
+                    }                    
                 }
             }
         }
@@ -401,6 +423,13 @@ namespace Filyama
                     cmd.CommandText += "date_rus=@date_rus,";
                     cmd.Parameters.Add(new SQLiteParameter("@date_rus", newFilm.dateRus));
                 }
+                if (oldFilm.coverId != newFilm.coverId)
+                {
+                    countSet++;
+                    cmd.CommandText += "id_cover=@id_cover,";
+                    cmd.Parameters.Add(new SQLiteParameter("@id_cover", newFilm.coverId));
+                }
+                if (!(oldFilm.fullpath==null&&newFilm.fullpath==null))
                 if ((oldFilm.fullpath==null&&newFilm.fullpath!=null)||!oldFilm.fullpath.Equals(newFilm.fullpath))
                 {
                     countSet++;
@@ -433,20 +462,63 @@ namespace Filyama
                     Database.addCategoryToFilm(addCategory, newFilm.id);
                 }
                 //--------Медиа файлы
+                var removeFiles = oldFilm.mediafiles.Except(newFilm.mediafiles).ToList();
+                foreach (MediaData removeFile in removeFiles)
+                {
+                    removeBinaryDataFromFilm(newFilm.id, removeFile.id);
+                }
+                foreach(MediaData data in newFilm.mediafiles)
+                {
+                    if (data.id != 0)
+                    {
+                        updateBinaryData(data.id,data.fullpath, data.path, data.isThumbnails, data.isFrame, data.isCover);
+                    }
+                }
                 var addFiles=newFilm.mediafiles.Except(oldFilm.mediafiles).ToList();
                 foreach (MediaData addFile in addFiles)
                 {
-                    cmd.CommandText = "INSERT INTO binary_data_films(id_films,id_binary_data) VALUES(@id_films,@id_binary_data);";
-                    cmd.Parameters.Add(new SQLiteParameter("@id_films", newFilm.id));
-                    cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", addFile.id));
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (SQLiteException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    addBinaryDataToFilm(newFilm.id, addFile.id);
+                }
+            }
+        }
+
+        public static long addBinaryDataToFilm(int idFilm, int idBinaryData)
+        {
+            long lastId = -1;
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "INSERT INTO binary_data_films(id_films,id_binary_data) VALUES(@id_films,@id_binary_data);";
+                cmd.Parameters.Add(new SQLiteParameter("@id_films", idFilm));
+                cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", idBinaryData));
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                lastId = lastInsertId();
+            }
+            return lastId;
+        }
+
+        public static void removeBinaryDataFromFilm(int idFilm, int idBinaryData)
+        {
+            if (Common.connectionLocal.State == ConnectionState.Open)
+            {
+                SQLiteCommand cmd = Common.connectionLocal.CreateCommand();
+                cmd.CommandText = "DELETE FROM binary_data_films WHERE id_films=@id_films AND id_binary_data=@id_binary_data;";
+                cmd.Parameters.Add(new SQLiteParameter("@id_films", idFilm));
+                cmd.Parameters.Add(new SQLiteParameter("@id_binary_data", idBinaryData));
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

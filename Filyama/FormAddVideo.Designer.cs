@@ -239,6 +239,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(240, 246);
             this.treeView1.TabIndex = 25;
+            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
             // 
             // listViewCast
             // 
@@ -343,8 +344,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPageMain);
             this.tabControl1.Controls.Add(this.tabPageMedia);
+            this.tabControl1.Controls.Add(this.tabPageMain);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;

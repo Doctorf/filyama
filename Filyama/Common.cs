@@ -60,6 +60,7 @@ namespace Filyama
     public class MediaData : BinaryData
     {
         public Boolean isCover, isThumbnails, isFrame;
+        public Boolean isOther = false, isSearchable=false;
 
         public MediaData()
         {
@@ -77,7 +78,7 @@ namespace Filyama
 
         public override string ToString()
         {
-            return path;
+            return name;
         }
 
         public Boolean isBinaryData()
