@@ -37,6 +37,7 @@ namespace Filyama
         public FormSearch()
         {
             InitializeComponent();
+            comboBoxSource.SelectedIndex = 0;
         }
 
         private void Search()

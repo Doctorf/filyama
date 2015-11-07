@@ -30,7 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageSourceFilm = new System.Windows.Forms.TabPage();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxSource = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -93,7 +93,7 @@
             // 
             // tabPageSourceFilm
             // 
-            this.tabPageSourceFilm.Controls.Add(this.comboBox1);
+            this.tabPageSourceFilm.Controls.Add(this.comboBoxSource);
             this.tabPageSourceFilm.Controls.Add(this.groupBox1);
             this.tabPageSourceFilm.Controls.Add(this.buttonDetail);
             this.tabPageSourceFilm.Controls.Add(this.buttonSearch);
@@ -108,15 +108,15 @@
             this.tabPageSourceFilm.Text = "Поиск";
             this.tabPageSourceFilm.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // comboBoxSource
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBoxSource.FormattingEnabled = true;
+            this.comboBoxSource.Items.AddRange(new object[] {
             "theMovieOrg"});
-            this.comboBox1.Location = new System.Drawing.Point(139, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(154, 21);
-            this.comboBox1.TabIndex = 8;
+            this.comboBoxSource.Location = new System.Drawing.Point(139, 6);
+            this.comboBoxSource.Name = "comboBoxSource";
+            this.comboBoxSource.Size = new System.Drawing.Size(154, 21);
+            this.comboBoxSource.TabIndex = 8;
             // 
             // groupBox1
             // 
@@ -535,7 +535,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxSource;
         private System.Windows.Forms.TabPage tabPageDataSerial;
         private System.Windows.Forms.CheckedListBox checkedListBoxGenreSerial;
         private System.Windows.Forms.Label labelCast;

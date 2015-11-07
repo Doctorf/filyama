@@ -183,3 +183,5 @@ UpgradeLog*.htm
 FakesAssemblies/
 # TheMovieDB.org
 Filyama/APIKeys.cs
+msi/Filyama-cache/
+*.msi
